@@ -1,867 +1,1761 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Painel · Mariana Rosa</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<style>
-/* ── RESET & VARS ── */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --gold:#c9a84c;--gold-light:#e8c97a;--gold-dim:#8a6a28;
-  --purple:#0d0010;--purple-mid:#1a0028;--purple-card:#160020;
-  --purple-bright:#7b2ff7;--purple-glow:#9d4edd;
-  --text:#f0e6ff;--text-muted:#a89bc0;--text-dim:#6a5a80;
-  --border:#c9a84c18;--border-hover:#c9a84c44;
-  --green:#22c55e;--red:#ef4444;--blue:#60a5fa;
-  --sidebar:260px;
-}
-html{scroll-behavior:smooth}
-body{background:var(--purple);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;line-height:1.6;overflow-x:hidden}
-button{cursor:pointer;font-family:'Inter',sans-serif}
-input,textarea,select{font-family:'Inter',sans-serif}
-a{color:var(--gold);text-decoration:none}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel · Mariana Rosa</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ── RESET & VARS ── */
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --gold: #c9a84c;
+        --gold-light: #e8c97a;
+        --gold-dim: #8a6a28;
+        --purple: #0d0010;
+        --purple-mid: #1a0028;
+        --purple-card: #160020;
+        --purple-bright: #7b2ff7;
+        --purple-glow: #9d4edd;
+        --text: #f0e6ff;
+        --text-muted: #a89bc0;
+        --text-dim: #6a5a80;
+        --border: #c9a84c18;
+        --border-hover: #c9a84c44;
+        --green: #22c55e;
+        --red: #ef4444;
+        --blue: #60a5fa;
+        --sidebar: 260px;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--purple);
+        color: var(--text);
+        font-family: "Inter", sans-serif;
+        font-size: 14px;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+      button {
+        cursor: pointer;
+        font-family: "Inter", sans-serif;
+      }
+      input,
+      textarea,
+      select {
+        font-family: "Inter", sans-serif;
+      }
+      a {
+        color: var(--gold);
+        text-decoration: none;
+      }
 
-/* ── LOGIN ── */
-#loginScreen{
-  position:fixed;inset:0;z-index:9999;
-  background:radial-gradient(ellipse 80% 80% at 50% 0%,#3a006a,var(--purple));
-  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0;
-}
-.login-box{
-  background:linear-gradient(160deg,#1a003088,#0d001288);
-  border:1px solid var(--border-hover);
-  padding:48px 40px;width:360px;
-  position:relative;overflow:hidden;
-}
-.login-box::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,var(--purple-glow),var(--gold),var(--purple-glow));
-}
-.login-logo{
-  font-family:'Cinzel',serif;font-size:1.1rem;font-weight:700;
-  background:linear-gradient(135deg,var(--gold),var(--gold-light));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;text-align:center;margin-bottom:6px;
-}
-.login-sub{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(--text-dim);text-align:center;margin-bottom:32px}
-.login-box label{font-size:.75rem;color:var(--text-muted);letter-spacing:.05em;display:block;margin-bottom:6px;margin-top:16px}
-.login-box input{
-  width:100%;background:#0d001288;border:1px solid var(--border);color:var(--text);
-  padding:10px 14px;font-size:.9rem;outline:none;transition:border-color .3s;
-}
-.login-box input:focus{border-color:var(--gold)}
-.btn-login{
-  width:100%;margin-top:24px;padding:12px;
-  background:linear-gradient(135deg,var(--gold-dim),var(--gold));
-  color:#0d0010;font-weight:600;font-size:.85rem;letter-spacing:.05em;
-  border:none;transition:filter .3s,transform .2s;
-}
-.btn-login:hover{filter:brightness(1.1);transform:translateY(-1px)}
-.login-err{color:var(--red);font-size:.8rem;text-align:center;margin-top:12px;min-height:20px}
+      /* ── LOGIN ── */
+      #loginScreen {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        background: radial-gradient(
+          ellipse 80% 80% at 50% 0%,
+          #3a006a,
+          var(--purple)
+        );
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 0;
+      }
+      .login-box {
+        background: linear-gradient(160deg, #1a003088, #0d001288);
+        border: 1px solid var(--border-hover);
+        padding: 48px 40px;
+        width: 360px;
+        position: relative;
+        overflow: hidden;
+      }
+      .login-box::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(
+          90deg,
+          var(--purple-glow),
+          var(--gold),
+          var(--purple-glow)
+        );
+      }
+      .login-logo {
+        font-family: "Cinzel", serif;
+        font-size: 1.1rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--gold), var(--gold-light));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-align: center;
+        margin-bottom: 6px;
+      }
+      .login-sub {
+        font-family: "Cinzel", serif;
+        font-size: 0.55rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        text-align: center;
+        margin-bottom: 32px;
+      }
+      .login-box label {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        letter-spacing: 0.05em;
+        display: block;
+        margin-bottom: 6px;
+        margin-top: 16px;
+      }
+      .login-box input {
+        width: 100%;
+        background: #0d001288;
+        border: 1px solid var(--border);
+        color: var(--text);
+        padding: 10px 14px;
+        font-size: 0.9rem;
+        outline: none;
+        transition: border-color 0.3s;
+      }
+      .login-box input:focus {
+        border-color: var(--gold);
+      }
+      .btn-login {
+        width: 100%;
+        margin-top: 24px;
+        padding: 12px;
+        background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+        color: #0d0010;
+        font-weight: 600;
+        font-size: 0.85rem;
+        letter-spacing: 0.05em;
+        border: none;
+        transition:
+          filter 0.3s,
+          transform 0.2s;
+      }
+      .btn-login:hover {
+        filter: brightness(1.1);
+        transform: translateY(-1px);
+      }
+      .login-err {
+        color: var(--red);
+        font-size: 0.8rem;
+        text-align: center;
+        margin-top: 12px;
+        min-height: 20px;
+      }
 
-/* ── LAYOUT ── */
-#app{display:none;min-height:100vh}
-.layout{display:flex;min-height:100vh}
+      /* ── LAYOUT ── */
+      #app {
+        display: none;
+        min-height: 100vh;
+      }
+      .layout {
+        display: flex;
+        min-height: 100vh;
+      }
 
-/* ── SIDEBAR ── */
-.sidebar{
-  width:var(--sidebar);flex-shrink:0;
-  background:linear-gradient(180deg,#13001e,#0d0010);
-  border-right:1px solid var(--border);
-  display:flex;flex-direction:column;
-  position:fixed;top:0;left:0;bottom:0;overflow-y:auto;z-index:50;
-}
-.sidebar-logo{padding:24px 20px 16px;border-bottom:1px solid var(--border)}
-.sidebar-logo-title{font-family:'Cinzel',serif;font-size:.9rem;font-weight:700;
-  background:linear-gradient(135deg,var(--gold),var(--gold-light));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.sidebar-logo-sub{font-size:.65rem;color:var(--text-dim);letter-spacing:.1em;margin-top:2px}
-.sidebar-nav{padding:16px 0;flex:1}
-.nav-group-label{
-  font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;
-  color:var(--text-dim);padding:12px 20px 6px;font-family:'Cinzel',serif;
-}
-.nav-item{
-  display:flex;align-items:center;gap:10px;
-  padding:9px 20px;color:var(--text-muted);font-size:.82rem;
-  transition:background .2s,color .2s;border:none;background:none;
-  width:100%;text-align:left;position:relative;
-}
-.nav-item:hover{background:#c9a84c08;color:var(--text)}
-.nav-item.active{background:linear-gradient(90deg,#c9a84c15,transparent);color:var(--gold)}
-.nav-item.active::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--gold)}
-.nav-icon{font-size:1rem;width:18px;text-align:center;flex-shrink:0}
-.sidebar-footer{padding:16px 20px;border-top:1px solid var(--border)}
-.btn-logout{
-  width:100%;padding:8px;background:transparent;border:1px solid var(--border);
-  color:var(--text-dim);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;
-  transition:border-color .3s,color .3s;
-}
-.btn-logout:hover{border-color:var(--red);color:var(--red)}
+      /* ── SIDEBAR ── */
+      .sidebar {
+        width: var(--sidebar);
+        flex-shrink: 0;
+        background: linear-gradient(180deg, #13001e, #0d0010);
+        border-right: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        overflow-y: auto;
+        z-index: 50;
+      }
+      .sidebar-logo {
+        padding: 24px 20px 16px;
+        border-bottom: 1px solid var(--border);
+      }
+      .sidebar-logo-title {
+        font-family: "Cinzel", serif;
+        font-size: 0.9rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--gold), var(--gold-light));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      .sidebar-logo-sub {
+        font-size: 0.65rem;
+        color: var(--text-dim);
+        letter-spacing: 0.1em;
+        margin-top: 2px;
+      }
+      .sidebar-nav {
+        padding: 16px 0;
+        flex: 1;
+      }
+      .nav-group-label {
+        font-size: 0.58rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        padding: 12px 20px 6px;
+        font-family: "Cinzel", serif;
+      }
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 20px;
+        color: var(--text-muted);
+        font-size: 0.82rem;
+        transition:
+          background 0.2s,
+          color 0.2s;
+        border: none;
+        background: none;
+        width: 100%;
+        text-align: left;
+        position: relative;
+      }
+      .nav-item:hover {
+        background: #c9a84c08;
+        color: var(--text);
+      }
+      .nav-item.active {
+        background: linear-gradient(90deg, #c9a84c15, transparent);
+        color: var(--gold);
+      }
+      .nav-item.active::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--gold);
+      }
+      .nav-icon {
+        font-size: 1rem;
+        width: 18px;
+        text-align: center;
+        flex-shrink: 0;
+      }
+      .sidebar-footer {
+        padding: 16px 20px;
+        border-top: 1px solid var(--border);
+      }
+      .btn-logout {
+        width: 100%;
+        padding: 8px;
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--text-dim);
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        transition:
+          border-color 0.3s,
+          color 0.3s;
+      }
+      .btn-logout:hover {
+        border-color: var(--red);
+        color: var(--red);
+      }
 
-/* ── MAIN ── */
-.main{margin-left:var(--sidebar);flex:1;display:flex;flex-direction:column;min-height:100vh}
-.topbar{
-  background:#0d001099;backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--border);
-  padding:14px 32px;display:flex;align-items:center;justify-content:space-between;
-  position:sticky;top:0;z-index:40;
-}
-.topbar-title{font-family:'Cinzel',serif;font-size:.85rem;font-weight:600;color:var(--text)}
-.topbar-actions{display:flex;align-items:center;gap:12px}
-.status-dot{
-  width:8px;height:8px;border-radius:50%;background:var(--text-dim);
-  transition:background .3s;flex-shrink:0;
-}
-.status-dot.saved{background:var(--green);box-shadow:0 0 6px var(--green)}
-.status-dot.saving{background:var(--gold);box-shadow:0 0 6px var(--gold);animation:pulse .8s infinite}
-.status-dot.error{background:var(--red);box-shadow:0 0 6px var(--red)}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.status-label{font-size:.72rem;color:var(--text-muted)}
+      /* ── MAIN ── */
+      .main {
+        margin-left: var(--sidebar);
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      .topbar {
+        background: #0d001099;
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid var(--border);
+        padding: 14px 32px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: sticky;
+        top: 0;
+        z-index: 40;
+      }
+      .topbar-title {
+        font-family: "Cinzel", serif;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text);
+      }
+      .topbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--text-dim);
+        transition: background 0.3s;
+        flex-shrink: 0;
+      }
+      .status-dot.saved {
+        background: var(--green);
+        box-shadow: 0 0 6px var(--green);
+      }
+      .status-dot.saving {
+        background: var(--gold);
+        box-shadow: 0 0 6px var(--gold);
+        animation: pulse 0.8s infinite;
+      }
+      .status-dot.error {
+        background: var(--red);
+        box-shadow: 0 0 6px var(--red);
+      }
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.4;
+        }
+      }
+      .status-label {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+      }
 
-.btn-save{
-  padding:9px 22px;background:linear-gradient(135deg,var(--gold-dim),var(--gold));
-  color:#0d0010;font-weight:600;font-size:.78rem;letter-spacing:.08em;
-  border:none;transition:filter .3s,transform .2s,opacity .2s;
-  clip-path:polygon(5px 0%,100% 0%,calc(100% - 5px) 100%,0% 100%);
-}
-.btn-save:hover:not(:disabled){filter:brightness(1.1);transform:translateY(-1px)}
-.btn-save:disabled{opacity:.5;cursor:not-allowed}
-.btn-preview{
-  padding:9px 18px;background:transparent;
-  border:1px solid var(--border-hover);color:var(--gold);
-  font-size:.78rem;letter-spacing:.08em;transition:background .3s;
-}
-.btn-preview:hover{background:#c9a84c10}
+      .btn-save {
+        padding: 9px 22px;
+        background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+        color: #0d0010;
+        font-weight: 600;
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        border: none;
+        transition:
+          filter 0.3s,
+          transform 0.2s,
+          opacity 0.2s;
+        clip-path: polygon(5px 0%, 100% 0%, calc(100% - 5px) 100%, 0% 100%);
+      }
+      .btn-save:hover:not(:disabled) {
+        filter: brightness(1.1);
+        transform: translateY(-1px);
+      }
+      .btn-save:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .btn-preview {
+        padding: 9px 18px;
+        background: transparent;
+        border: 1px solid var(--border-hover);
+        color: var(--gold);
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        transition: background 0.3s;
+      }
+      .btn-preview:hover {
+        background: #c9a84c10;
+      }
 
-.content{padding:32px;flex:1}
+      .content {
+        padding: 32px;
+        flex: 1;
+      }
 
-/* ── PANELS ── */
-.panel{display:none}
-.panel.active{display:block}
+      /* ── PANELS ── */
+      .panel {
+        display: none;
+      }
+      .panel.active {
+        display: block;
+      }
 
-/* ── CARDS ── */
-.card{
-  background:linear-gradient(135deg,#1a003022,#0d001222);
-  border:1px solid var(--border);padding:24px;margin-bottom:16px;
-  transition:border-color .3s;
-}
-.card:hover{border-color:var(--border-hover)}
-.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;cursor:pointer}
-.card-title{font-family:'Cinzel',serif;font-size:.82rem;font-weight:600;color:var(--text);display:flex;align-items:center;gap:8px}
-.card-badge{font-size:.58rem;padding:3px 10px;background:#c9a84c15;border:1px solid var(--border-hover);color:var(--gold);letter-spacing:.15em;text-transform:uppercase}
-.card-toggle{color:var(--text-dim);font-size:1rem;transition:transform .3s}
-.card-body{overflow:hidden;max-height:0;transition:max-height .4s ease}
-.card-body.open{max-height:9999px}
+      /* ── CARDS ── */
+      .card {
+        background: linear-gradient(135deg, #1a003022, #0d001222);
+        border: 1px solid var(--border);
+        padding: 24px;
+        margin-bottom: 16px;
+        transition: border-color 0.3s;
+      }
+      .card:hover {
+        border-color: var(--border-hover);
+      }
+      .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+        cursor: pointer;
+      }
+      .card-title {
+        font-family: "Cinzel", serif;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .card-badge {
+        font-size: 0.58rem;
+        padding: 3px 10px;
+        background: #c9a84c15;
+        border: 1px solid var(--border-hover);
+        color: var(--gold);
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+      .card-toggle {
+        color: var(--text-dim);
+        font-size: 1rem;
+        transition: transform 0.3s;
+      }
+      .card-body {
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.4s ease;
+      }
+      .card-body.open {
+        max-height: 9999px;
+      }
 
-/* ── FORM ── */
-.field{margin-bottom:18px}
-.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
-.field-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px}
-label.lbl{font-size:.72rem;color:var(--text-muted);letter-spacing:.08em;display:block;margin-bottom:6px}
-label.lbl span{color:var(--gold);font-size:.65rem;margin-left:4px}
-.inp,.tex,.sel{
-  width:100%;background:#0a000f;border:1px solid var(--border);
-  color:var(--text);padding:9px 13px;font-size:.85rem;outline:none;
-  transition:border-color .3s,background .3s;resize:vertical;
-}
-.inp:focus,.tex:focus,.sel:focus{border-color:var(--gold);background:#0d0016}
-.tex{min-height:90px;line-height:1.6}
-.tex.tall{min-height:160px}
-.tex.xtall{min-height:240px}
-.sel option{background:#1a0028}
-.helper{font-size:.7rem;color:var(--text-dim);margin-top:4px}
+      /* ── FORM ── */
+      .field {
+        margin-bottom: 18px;
+      }
+      .field-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+      .field-row-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 18px;
+      }
+      label.lbl {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        letter-spacing: 0.08em;
+        display: block;
+        margin-bottom: 6px;
+      }
+      label.lbl span {
+        color: var(--gold);
+        font-size: 0.65rem;
+        margin-left: 4px;
+      }
+      .inp,
+      .tex,
+      .sel {
+        width: 100%;
+        background: #0a000f;
+        border: 1px solid var(--border);
+        color: var(--text);
+        padding: 9px 13px;
+        font-size: 0.85rem;
+        outline: none;
+        transition:
+          border-color 0.3s,
+          background 0.3s;
+        resize: vertical;
+      }
+      .inp:focus,
+      .tex:focus,
+      .sel:focus {
+        border-color: var(--gold);
+        background: #0d0016;
+      }
+      .tex {
+        min-height: 90px;
+        line-height: 1.6;
+      }
+      .tex.tall {
+        min-height: 160px;
+      }
+      .tex.xtall {
+        min-height: 240px;
+      }
+      .sel option {
+        background: #1a0028;
+      }
+      .helper {
+        font-size: 0.7rem;
+        color: var(--text-dim);
+        margin-top: 4px;
+      }
 
-/* ── IMAGE UPLOAD ── */
-.img-upload-area{
-  border:2px dashed var(--border);padding:24px;text-align:center;
-  transition:border-color .3s,background .3s;position:relative;cursor:pointer;
-}
-.img-upload-area:hover,.img-upload-area.drag{border-color:var(--gold);background:#c9a84c08}
-.img-upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
-.img-upload-icon{font-size:2rem;margin-bottom:8px}
-.img-upload-label{font-size:.8rem;color:var(--text-muted)}
-.img-upload-label strong{color:var(--gold)}
-.img-preview{max-width:100%;max-height:200px;object-fit:contain;margin-top:12px;border:1px solid var(--border);display:none}
-.img-current{font-size:.72rem;color:var(--text-dim);margin-top:6px;word-break:break-all}
+      /* ── IMAGE UPLOAD ── */
+      .img-upload-area {
+        border: 2px dashed var(--border);
+        padding: 24px;
+        text-align: center;
+        transition:
+          border-color 0.3s,
+          background 0.3s;
+        position: relative;
+        cursor: pointer;
+      }
+      .img-upload-area:hover,
+      .img-upload-area.drag {
+        border-color: var(--gold);
+        background: #c9a84c08;
+      }
+      .img-upload-area input[type="file"] {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        cursor: pointer;
+      }
+      .img-upload-icon {
+        font-size: 2rem;
+        margin-bottom: 8px;
+      }
+      .img-upload-label {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+      .img-upload-label strong {
+        color: var(--gold);
+      }
+      .img-preview {
+        max-width: 100%;
+        max-height: 200px;
+        object-fit: contain;
+        margin-top: 12px;
+        border: 1px solid var(--border);
+        display: none;
+      }
+      .img-current {
+        font-size: 0.72rem;
+        color: var(--text-dim);
+        margin-top: 6px;
+        word-break: break-all;
+      }
 
-/* ── BLOG CARDS ── */
-.blog-list{display:flex;flex-direction:column;gap:8px}
-.blog-item{
-  background:#ffffff04;border:1px solid var(--border);padding:16px 18px;
-  display:grid;grid-template-columns:32px 1fr auto;gap:12px;align-items:start;
-  transition:border-color .3s,background .3s;
-}
-.blog-item:hover{border-color:var(--border-hover);background:#c9a84c06}
-.blog-item-num{font-family:'Cinzel',serif;font-size:.75rem;color:var(--gold-dim);padding-top:2px}
-.blog-item-info{}
-.blog-item-title{font-size:.85rem;color:var(--text);font-weight:500;margin-bottom:3px}
-.blog-item-cat{font-size:.7rem;color:var(--text-dim);font-family:'Cinzel',serif;letter-spacing:.1em}
-.blog-item-actions{display:flex;gap:8px;flex-shrink:0}
-.btn-xs{
-  padding:5px 12px;font-size:.7rem;letter-spacing:.08em;border:none;
-  transition:filter .2s,transform .2s;
-}
-.btn-edit{background:#9d4edd22;color:#c084fc;border:1px solid #9d4edd44}
-.btn-edit:hover{background:#9d4edd33}
-.btn-del{background:transparent;color:var(--red);border:1px solid #ef444433}
-.btn-del:hover{background:#ef444415}
-.btn-add{
-  padding:10px 20px;background:transparent;border:1px solid var(--border-hover);
-  color:var(--gold);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;font-family:'Cinzel',serif;
-  display:flex;align-items:center;gap:8px;transition:background .3s;margin-top:12px;
-}
-.btn-add:hover{background:#c9a84c10}
+      /* ── BLOG CARDS ── */
+      .blog-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .blog-item {
+        background: #ffffff04;
+        border: 1px solid var(--border);
+        padding: 16px 18px;
+        display: grid;
+        grid-template-columns: 32px 1fr auto;
+        gap: 12px;
+        align-items: start;
+        transition:
+          border-color 0.3s,
+          background 0.3s;
+      }
+      .blog-item:hover {
+        border-color: var(--border-hover);
+        background: #c9a84c06;
+      }
+      .blog-item-num {
+        font-family: "Cinzel", serif;
+        font-size: 0.75rem;
+        color: var(--gold-dim);
+        padding-top: 2px;
+      }
+      .blog-item-info {
+      }
+      .blog-item-title {
+        font-size: 0.85rem;
+        color: var(--text);
+        font-weight: 500;
+        margin-bottom: 3px;
+      }
+      .blog-item-cat {
+        font-size: 0.7rem;
+        color: var(--text-dim);
+        font-family: "Cinzel", serif;
+        letter-spacing: 0.1em;
+      }
+      .blog-item-actions {
+        display: flex;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+      .btn-xs {
+        padding: 5px 12px;
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+        border: none;
+        transition:
+          filter 0.2s,
+          transform 0.2s;
+      }
+      .btn-edit {
+        background: #9d4edd22;
+        color: #c084fc;
+        border: 1px solid #9d4edd44;
+      }
+      .btn-edit:hover {
+        background: #9d4edd33;
+      }
+      .btn-del {
+        background: transparent;
+        color: var(--red);
+        border: 1px solid #ef444433;
+      }
+      .btn-del:hover {
+        background: #ef444415;
+      }
+      .btn-add {
+        padding: 10px 20px;
+        background: transparent;
+        border: 1px solid var(--border-hover);
+        color: var(--gold);
+        font-size: 0.78rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-family: "Cinzel", serif;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: background 0.3s;
+        margin-top: 12px;
+      }
+      .btn-add:hover {
+        background: #c9a84c10;
+      }
 
-/* ── PIGMENTADORAS / REINOS grid ── */
-.pig-grid,.reinos-grid-adm{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2px;
-}
-.pig-card,.reino-card-adm{
-  background:#ffffff04;border:1px solid var(--border);padding:18px;
-  transition:border-color .3s;position:relative;
-}
-.pig-card:hover,.reino-card-adm:hover{border-color:var(--border-hover)}
-.pig-card-header,.reino-card-header-adm{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.pig-gem{width:14px;height:14px;border-radius:50%;flex-shrink:0;box-shadow:0 0 8px var(--pc,#c9a84c)}
-.pig-name,.reino-name-adm{font-family:'Cinzel',serif;font-size:.85rem;color:var(--text);font-weight:600}
-.pig-realm,.reino-sub-adm{font-size:.68rem;color:var(--text-dim);letter-spacing:.1em}
+      /* ── PIGMENTADORAS / REINOS grid ── */
+      .pig-grid,
+      .reinos-grid-adm {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2px;
+      }
+      .pig-card,
+      .reino-card-adm {
+        background: #ffffff04;
+        border: 1px solid var(--border);
+        padding: 18px;
+        transition: border-color 0.3s;
+        position: relative;
+      }
+      .pig-card:hover,
+      .reino-card-adm:hover {
+        border-color: var(--border-hover);
+      }
+      .pig-card-header,
+      .reino-card-header-adm {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+      .pig-gem {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        box-shadow: 0 0 8px var(--pc, #c9a84c);
+      }
+      .pig-name,
+      .reino-name-adm {
+        font-family: "Cinzel", serif;
+        font-size: 0.85rem;
+        color: var(--text);
+        font-weight: 600;
+      }
+      .pig-realm,
+      .reino-sub-adm {
+        font-size: 0.68rem;
+        color: var(--text-dim);
+        letter-spacing: 0.1em;
+      }
 
-/* ── MODAL EDITOR ── */
-.modal-overlay{
-  position:fixed;inset:0;z-index:200;
-  background:#0d001099;backdrop-filter:blur(20px);
-  display:flex;align-items:center;justify-content:center;padding:24px;
-  opacity:0;pointer-events:none;transition:opacity .3s;
-}
-.modal-overlay.open{opacity:1;pointer-events:all}
-.modal{
-  max-width:680px;width:100%;
-  background:linear-gradient(160deg,#1a003088,#0d001299);
-  border:1px solid var(--border-hover);padding:32px;
-  position:relative;max-height:92vh;overflow-y:auto;
-  transform:translateY(16px);transition:transform .3s;
-}
-.modal-overlay.open .modal{transform:translateY(0)}
-.modal-title{font-family:'Cinzel',serif;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border)}
-.modal-close{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--text-dim);font-size:1.2rem;transition:color .2s}
-.modal-close:hover{color:var(--text)}
-.modal-footer{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
-.btn-cancel{padding:9px 20px;background:transparent;border:1px solid var(--border);color:var(--text-muted);font-size:.78rem}
-.btn-confirm{padding:9px 22px;background:linear-gradient(135deg,var(--gold-dim),var(--gold));color:#0d0010;font-weight:600;font-size:.78rem;border:none}
+      /* ── MODAL EDITOR ── */
+      .modal-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        background: #0d001099;
+        backdrop-filter: blur(20px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+      }
+      .modal-overlay.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .modal {
+        max-width: 680px;
+        width: 100%;
+        background: linear-gradient(160deg, #1a003088, #0d001299);
+        border: 1px solid var(--border-hover);
+        padding: 32px;
+        position: relative;
+        max-height: 92vh;
+        overflow-y: auto;
+        transform: translateY(16px);
+        transition: transform 0.3s;
+      }
+      .modal-overlay.open .modal {
+        transform: translateY(0);
+      }
+      .modal-title {
+        font-family: "Cinzel", serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 20px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--border);
+      }
+      .modal-close {
+        position: absolute;
+        top: 14px;
+        right: 16px;
+        background: none;
+        border: none;
+        color: var(--text-dim);
+        font-size: 1.2rem;
+        transition: color 0.2s;
+      }
+      .modal-close:hover {
+        color: var(--text);
+      }
+      .modal-footer {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        margin-top: 20px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
+      }
+      .btn-cancel {
+        padding: 9px 20px;
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--text-muted);
+        font-size: 0.78rem;
+      }
+      .btn-confirm {
+        padding: 9px 22px;
+        background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+        color: #0d0010;
+        font-weight: 600;
+        font-size: 0.78rem;
+        border: none;
+      }
 
-/* ── DASHBOARD ── */
-.dash-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:28px}
-.dash-card{background:#ffffff04;border:1px solid var(--border);padding:20px;text-align:center;transition:border-color .3s}
-.dash-card:hover{border-color:var(--border-hover)}
-.dash-num{font-family:'Cinzel',serif;font-size:2rem;font-weight:700;color:var(--gold);line-height:1}
-.dash-label{font-size:.72rem;color:var(--text-dim);margin-top:6px;letter-spacing:.1em;text-transform:uppercase}
-.dash-tip{background:#c9a84c08;border:1px solid var(--border);border-left:3px solid var(--gold);padding:16px 20px;margin-bottom:16px}
-.dash-tip-title{font-size:.8rem;color:var(--gold);font-weight:600;margin-bottom:6px}
-.dash-tip-text{font-size:.78rem;color:var(--text-muted);line-height:1.7}
-.dash-steps{counter-reset:steps;display:flex;flex-direction:column;gap:10px}
-.dash-step{
-  display:grid;grid-template-columns:32px 1fr;gap:12px;
-  background:#ffffff03;border:1px solid var(--border);padding:14px 16px;
-  counter-increment:steps;
-}
-.dash-step::before{
-  content:counter(steps);
-  font-family:'Cinzel',serif;font-size:.8rem;color:var(--gold);
-  width:32px;height:32px;border:1px solid var(--border-hover);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:-2px;
-}
-.dash-step-title{font-size:.82rem;color:var(--text);font-weight:500;margin-bottom:3px}
-.dash-step-desc{font-size:.75rem;color:var(--text-muted);line-height:1.6}
-.dash-step-desc code{background:#c9a84c15;color:var(--gold);padding:1px 6px;font-size:.75rem}
+      /* ── DASHBOARD ── */
+      .dash-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+      .dash-card {
+        background: #ffffff04;
+        border: 1px solid var(--border);
+        padding: 20px;
+        text-align: center;
+        transition: border-color 0.3s;
+      }
+      .dash-card:hover {
+        border-color: var(--border-hover);
+      }
+      .dash-num {
+        font-family: "Cinzel", serif;
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--gold);
+        line-height: 1;
+      }
+      .dash-label {
+        font-size: 0.72rem;
+        color: var(--text-dim);
+        margin-top: 6px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+      .dash-tip {
+        background: #c9a84c08;
+        border: 1px solid var(--border);
+        border-left: 3px solid var(--gold);
+        padding: 16px 20px;
+        margin-bottom: 16px;
+      }
+      .dash-tip-title {
+        font-size: 0.8rem;
+        color: var(--gold);
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+      .dash-tip-text {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        line-height: 1.7;
+      }
+      .dash-steps {
+        counter-reset: steps;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .dash-step {
+        display: grid;
+        grid-template-columns: 32px 1fr;
+        gap: 12px;
+        background: #ffffff03;
+        border: 1px solid var(--border);
+        padding: 14px 16px;
+        counter-increment: steps;
+      }
+      .dash-step::before {
+        content: counter(steps);
+        font-family: "Cinzel", serif;
+        font-size: 0.8rem;
+        color: var(--gold);
+        width: 32px;
+        height: 32px;
+        border: 1px solid var(--border-hover);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-top: -2px;
+      }
+      .dash-step-title {
+        font-size: 0.82rem;
+        color: var(--text);
+        font-weight: 500;
+        margin-bottom: 3px;
+      }
+      .dash-step-desc {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+      }
+      .dash-step-desc code {
+        background: #c9a84c15;
+        color: var(--gold);
+        padding: 1px 6px;
+        font-size: 0.75rem;
+      }
 
-/* ── TOAST ── */
-.toast{
-  position:fixed;bottom:24px;right:24px;z-index:9999;
-  background:linear-gradient(135deg,#1a0028,#0d0010);
-  border:1px solid var(--border-hover);padding:14px 20px;
-  display:flex;align-items:center;gap:12px;
-  transform:translateY(80px);opacity:0;transition:transform .3s,opacity .3s;
-  max-width:360px;
-}
-.toast.show{transform:translateY(0);opacity:1}
-.toast-icon{font-size:1.1rem;flex-shrink:0}
-.toast-msg{font-size:.82rem;color:var(--text);line-height:1.5}
-.toast.success .toast-icon::before{content:'✓';color:var(--green)}
-.toast.error .toast-icon::before{content:'✕';color:var(--red)}
-.toast.info .toast-icon::before{content:'✦';color:var(--gold)}
+      /* ── TOAST ── */
+      .toast {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 9999;
+        background: linear-gradient(135deg, #1a0028, #0d0010);
+        border: 1px solid var(--border-hover);
+        padding: 14px 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        transform: translateY(80px);
+        opacity: 0;
+        transition:
+          transform 0.3s,
+          opacity 0.3s;
+        max-width: 360px;
+      }
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      .toast-icon {
+        font-size: 1.1rem;
+        flex-shrink: 0;
+      }
+      .toast-msg {
+        font-size: 0.82rem;
+        color: var(--text);
+        line-height: 1.5;
+      }
+      .toast.success .toast-icon::before {
+        content: "✓";
+        color: var(--green);
+      }
+      .toast.error .toast-icon::before {
+        content: "✕";
+        color: var(--red);
+      }
+      .toast.info .toast-icon::before {
+        content: "✦";
+        color: var(--gold);
+      }
 
-/* ── SEPARADORES ── */
-.section-sep{border:none;border-top:1px solid var(--border);margin:24px 0}
-.section-label{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:14px}
+      /* ── SEPARADORES ── */
+      .section-sep {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 24px 0;
+      }
+      .section-label {
+        font-family: "Cinzel", serif;
+        font-size: 0.65rem;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--gold-dim);
+        margin-bottom: 14px;
+      }
 
-/* ── RESPONSIVE ── */
-@media(max-width:768px){
-  .sidebar{transform:translateX(-100%);transition:transform .3s}
-  .sidebar.open{transform:translateX(0)}
-  .main{margin-left:0}
-  .field-row,.field-row-3{grid-template-columns:1fr}
-  .pig-grid,.reinos-grid-adm{grid-template-columns:1fr}
-}
-</style>
-</head>
-<body>
-
-<!-- ── LOGIN ── -->
-<div id="loginScreen">
-  <div class="login-box">
-    <div class="login-logo">Mariana Rosa</div>
-    <div class="login-sub">Painel de Controle</div>
-    <label>Senha de acesso</label>
-    <input type="password" id="loginInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()"/>
-    <button class="btn-login" onclick="doLogin()">Entrar no painel</button>
-    <div class="login-err" id="loginErr"></div>
-  </div>
-</div>
-
-<!-- ── APP ── -->
-<div id="app">
-<div class="layout">
-
-  <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-logo">
-      <div class="sidebar-logo-title">✦ CMS</div>
-      <div class="sidebar-logo-sub">Mariana Rosa</div>
-    </div>
-    <nav class="sidebar-nav">
-      <div class="nav-group-label">Geral</div>
-      <button class="nav-item active" data-panel="dashboard" onclick="switchPanel(this)">
-        <span class="nav-icon">⬡</span> Dashboard
-      </button>
-      <button class="nav-item" data-panel="index" onclick="switchPanel(this)">
-        <span class="nav-icon">🏠</span> Página Principal
-      </button>
-      <div class="nav-group-label">Área de Membros</div>
-      <button class="nav-item" data-panel="blog" onclick="switchPanel(this)">
-        <span class="nav-icon">📖</span> Diário da Autora
-      </button>
-      <button class="nav-item" data-panel="galeria" onclick="switchPanel(this)">
-        <span class="nav-icon">🖼</span> Galeria
-      </button>
-      <button class="nav-item" data-panel="pigmentadoras" onclick="switchPanel(this)">
-        <span class="nav-icon">🖌</span> Pigmentadoras
-      </button>
-      <button class="nav-item" data-panel="reinos" onclick="switchPanel(this)">
-        <span class="nav-icon">🌌</span> Reinos
-      </button>
-    </nav>
-    <div class="sidebar-footer">
-      <button class="btn-logout" onclick="doLogout()">✕ Sair</button>
-    </div>
-  </aside>
-
-  <!-- MAIN -->
-  <div class="main">
-    <div class="topbar">
-      <div class="topbar-title" id="topbarTitle">Dashboard</div>
-      <div class="topbar-actions">
-        <div class="status-dot" id="statusDot"></div>
-        <span class="status-label" id="statusLabel">Nenhuma alteração</span>
-        <button class="btn-preview" onclick="openPreview()">👁 Visualizar</button>
-        <button class="btn-save" id="btnSave" onclick="saveContent()" disabled>💾 Salvar e publicar</button>
+      /* ── RESPONSIVE ── */
+      @media (max-width: 768px) {
+        .sidebar {
+          transform: translateX(-100%);
+          transition: transform 0.3s;
+        }
+        .sidebar.open {
+          transform: translateX(0);
+        }
+        .main {
+          margin-left: 0;
+        }
+        .field-row,
+        .field-row-3 {
+          grid-template-columns: 1fr;
+        }
+        .pig-grid,
+        .reinos-grid-adm {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ── LOGIN ── -->
+    <div id="loginScreen">
+      <div class="login-box">
+        <div class="login-logo">Mariana Rosa</div>
+        <div class="login-sub">Painel de Controle</div>
+        <label>Senha de acesso</label>
+        <input
+          type="password"
+          id="loginInput"
+          placeholder="••••••••"
+          onkeydown="if (event.key === 'Enter') doLogin();"
+        />
+        <button class="btn-login" onclick="doLogin()">Entrar no painel</button>
+        <div class="login-err" id="loginErr"></div>
       </div>
     </div>
 
-    <div class="content">
-
-      <!-- ── DASHBOARD ── -->
-      <div class="panel active" id="panel-dashboard">
-        <div class="dash-grid">
-          <div class="dash-card"><div class="dash-num" id="d-blog">7</div><div class="dash-label">Posts no Diário</div></div>
-          <div class="dash-card"><div class="dash-num" id="d-pig">9</div><div class="dash-label">Pigmentadoras</div></div>
-          <div class="dash-card"><div class="dash-num" id="d-reinos">9</div><div class="dash-label">Reinos</div></div>
-          <div class="dash-card"><div class="dash-num">∞</div><div class="dash-label">Publicações</div></div>
-        </div>
-
-        <div class="dash-tip">
-          <div class="dash-tip-title">✦ Como funciona o painel</div>
-          <div class="dash-tip-text">
-            Edite qualquer texto, imagem ou link nos menus à esquerda. Quando terminar, clique em <strong>Salvar e publicar</strong> — as alterações serão enviadas ao GitHub e o Vercel fará o deploy automaticamente em cerca de 30 segundos.
+    <!-- ── APP ── -->
+    <div id="app">
+      <div class="layout">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+          <div class="sidebar-logo">
+            <div class="sidebar-logo-title">✦ CMS</div>
+            <div class="sidebar-logo-sub">Mariana Rosa</div>
           </div>
-        </div>
+          <nav class="sidebar-nav">
+            <div class="nav-group-label">Geral</div>
+            <button
+              class="nav-item active"
+              data-panel="dashboard"
+              onclick="switchPanel(this)"
+            >
+              <span class="nav-icon">⬡</span> Dashboard
+            </button>
+            <button
+              class="nav-item"
+              data-panel="index"
+              onclick="switchPanel(this)"
+            >
+              <span class="nav-icon">🏠</span> Página Principal
+            </button>
+            <div class="nav-group-label">Área de Membros</div>
+            <button
+              class="nav-item"
+              data-panel="blog"
+              onclick="switchPanel(this)"
+            >
+              <span class="nav-icon">📖</span> Diário da Autora
+            </button>
+            <button
+              class="nav-item"
+              data-panel="galeria"
+              onclick="switchPanel(this)"
+            >
+              <span class="nav-icon">🖼</span> Galeria
+            </button>
+            <button
+              class="nav-item"
+              data-panel="pigmentadoras"
+              onclick="switchPanel(this)"
+            >
+              <span class="nav-icon">🖌</span> Pigmentadoras
+            </button>
+            <button
+              class="nav-item"
+              data-panel="reinos"
+              onclick="switchPanel(this)"
+            >
+              <span class="nav-icon">🌌</span> Reinos
+            </button>
+          </nav>
+          <div class="sidebar-footer">
+            <button class="btn-logout" onclick="doLogout()">✕ Sair</button>
+          </div>
+        </aside>
 
-        <div class="section-label">Primeiro acesso — configuração inicial</div>
-        <div class="dash-steps">
-          <div class="dash-step">
-            <div>
-              <div class="dash-step-title">Criar repositório no GitHub</div>
-              <div class="dash-step-desc">Crie um repositório <strong>privado</strong> em <a href="https://github.com/new" target="_blank">github.com/new</a> e faça upload de todos os arquivos do site para ele.</div>
+        <!-- MAIN -->
+        <div class="main">
+          <div class="topbar">
+            <div class="topbar-title" id="topbarTitle">Dashboard</div>
+            <div class="topbar-actions">
+              <div class="status-dot" id="statusDot"></div>
+              <span class="status-label" id="statusLabel"
+                >Nenhuma alteração</span
+              >
+              <button class="btn-preview" onclick="openPreview()">
+                👁 Visualizar
+              </button>
+              <button
+                class="btn-save"
+                id="btnSave"
+                onclick="saveContent()"
+                disabled
+              >
+                💾 Salvar e publicar
+              </button>
             </div>
           </div>
-          <div class="dash-step">
-            <div>
-              <div class="dash-step-title">Gerar Token do GitHub</div>
-              <div class="dash-step-desc">Em <a href="https://github.com/settings/tokens" target="_blank">Settings → Developer Settings → Tokens (classic)</a>, crie um token com permissão <code>repo</code>. Guarde — só aparece uma vez.</div>
-            </div>
-          </div>
-          <div class="dash-step">
-            <div>
-              <div class="dash-step-title">Conectar ao Vercel</div>
-              <div class="dash-step-desc">Em <a href="https://vercel.com" target="_blank">vercel.com</a>, importe o repositório. O Vercel detectará os arquivos e fará o primeiro deploy.</div>
-            </div>
-          </div>
-          <div class="dash-step">
-            <div>
-              <div class="dash-step-title">Configurar variáveis de ambiente no Vercel</div>
-              <div class="dash-step-desc">
-                No painel do Vercel → Settings → Environment Variables, adicione:<br>
-                <code>GITHUB_TOKEN</code> → seu token gerado<br>
-                <code>GITHUB_OWNER</code> → seu usuário GitHub<br>
-                <code>GITHUB_REPO</code> → nome do repositório<br>
-                <code>ADMIN_PASSWORD</code> → senha deste painel
+
+          <div class="content">
+            <!-- ── DASHBOARD ── -->
+            <div class="panel active" id="panel-dashboard">
+              <div class="dash-grid">
+                <div class="dash-card">
+                  <div class="dash-num" id="d-blog">7</div>
+                  <div class="dash-label">Posts no Diário</div>
+                </div>
+                <div class="dash-card">
+                  <div class="dash-num" id="d-pig">9</div>
+                  <div class="dash-label">Pigmentadoras</div>
+                </div>
+                <div class="dash-card">
+                  <div class="dash-num" id="d-reinos">9</div>
+                  <div class="dash-label">Reinos</div>
+                </div>
+                <div class="dash-card">
+                  <div class="dash-num">∞</div>
+                  <div class="dash-label">Publicações</div>
+                </div>
+              </div>
+
+              <div class="dash-tip">
+                <div class="dash-tip-title">✦ Como funciona o painel</div>
+                <div class="dash-tip-text">
+                  Edite qualquer texto, imagem ou link nos menus à esquerda.
+                  Quando terminar, clique em
+                  <strong>Salvar e publicar</strong> — as alterações serão
+                  enviadas ao GitHub e o Vercel fará o deploy automaticamente em
+                  cerca de 30 segundos.
+                </div>
+              </div>
+
+              <div class="section-label">
+                Primeiro acesso — configuração inicial
+              </div>
+              <div class="dash-steps">
+                <div class="dash-step">
+                  <div>
+                    <div class="dash-step-title">
+                      Criar repositório no GitHub
+                    </div>
+                    <div class="dash-step-desc">
+                      Crie um repositório <strong>privado</strong> em
+                      <a href="https://github.com/new" target="_blank"
+                        >github.com/new</a
+                      >
+                      e faça upload de todos os arquivos do site para ele.
+                    </div>
+                  </div>
+                </div>
+                <div class="dash-step">
+                  <div>
+                    <div class="dash-step-title">Gerar Token do GitHub</div>
+                    <div class="dash-step-desc">
+                      Em
+                      <a
+                        href="https://github.com/settings/tokens"
+                        target="_blank"
+                        >Settings → Developer Settings → Tokens (classic)</a
+                      >, crie um token com permissão <code>repo</code>. Guarde —
+                      só aparece uma vez.
+                    </div>
+                  </div>
+                </div>
+                <div class="dash-step">
+                  <div>
+                    <div class="dash-step-title">Conectar ao Vercel</div>
+                    <div class="dash-step-desc">
+                      Em
+                      <a href="https://vercel.com" target="_blank">vercel.com</a
+                      >, importe o repositório. O Vercel detectará os arquivos e
+                      fará o primeiro deploy.
+                    </div>
+                  </div>
+                </div>
+                <div class="dash-step">
+                  <div>
+                    <div class="dash-step-title">
+                      Configurar variáveis de ambiente no Vercel
+                    </div>
+                    <div class="dash-step-desc">
+                      No painel do Vercel → Settings → Environment Variables,
+                      adicione:<br />
+                      <code>GITHUB_TOKEN</code> → seu token gerado<br />
+                      <code>GITHUB_OWNER</code> → seu usuário GitHub<br />
+                      <code>GITHUB_REPO</code> → nome do repositório<br />
+                      <code>ADMIN_PASSWORD</code> → senha deste painel
+                    </div>
+                  </div>
+                </div>
+                <div class="dash-step">
+                  <div>
+                    <div class="dash-step-title">
+                      Configurar a URL da API neste painel
+                    </div>
+                    <div class="dash-step-desc">
+                      Após o deploy, edite o arquivo
+                      <code>admin/index.html</code> e substitua
+                      <code>SEU-DOMINIO.vercel.app</code> pela URL real do seu
+                      projeto Vercel.
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="dash-step">
-            <div>
-              <div class="dash-step-title">Configurar a URL da API neste painel</div>
-              <div class="dash-step-desc">Após o deploy, edite o arquivo <code>admin/index.html</code> e substitua <code>SEU-DOMINIO.vercel.app</code> pela URL real do seu projeto Vercel.</div>
+
+            <!-- ── PÁGINA PRINCIPAL ── -->
+            <div class="panel" id="panel-index">
+              <div class="section-label">Hero — Seção principal</div>
+              <div class="card">
+                <div class="card-header" onclick="toggleCard(this)">
+                  <div class="card-title">🏠 Hero da página principal</div>
+                  <span class="card-toggle">▾</span>
+                </div>
+                <div class="card-body open">
+                  <div class="field-row">
+                    <div class="field">
+                      <label class="lbl"
+                        >Tag acima do título
+                        <span>(ex: "Uma Romantasia Sáfica")</span></label
+                      >
+                      <input
+                        class="inp"
+                        id="idx-hero-tag"
+                        oninput="markDirty()"
+                      />
+                    </div>
+                    <div class="field">
+                      <label class="lbl"
+                        >Destaque do título <span>(parte dourada)</span></label
+                      >
+                      <input
+                        class="inp"
+                        id="idx-hero-titleHighlight"
+                        oninput="markDirty()"
+                      />
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label class="lbl">Título principal</label>
+                    <input
+                      class="inp"
+                      id="idx-hero-title"
+                      oninput="markDirty()"
+                    />
+                  </div>
+                  <div class="field">
+                    <label class="lbl">Subtítulo / texto de abertura</label>
+                    <textarea
+                      class="tex"
+                      id="idx-hero-subtitle"
+                      oninput="markDirty()"
+                    ></textarea>
+                  </div>
+                  <div class="field-row">
+                    <div class="field">
+                      <label class="lbl">Botão principal — texto</label>
+                      <input
+                        class="inp"
+                        id="idx-hero-ctaLabel"
+                        oninput="markDirty()"
+                      />
+                    </div>
+                    <div class="field">
+                      <label class="lbl">Botão principal — link</label>
+                      <input
+                        class="inp"
+                        id="idx-hero-ctaLink"
+                        placeholder="https://..."
+                        oninput="markDirty()"
+                      />
+                    </div>
+                  </div>
+                  <div class="field-row">
+                    <div class="field">
+                      <label class="lbl">Botão secundário — texto</label>
+                      <input
+                        class="inp"
+                        id="idx-hero-ctaSecondaryLabel"
+                        oninput="markDirty()"
+                      />
+                    </div>
+                    <div class="field">
+                      <label class="lbl">Botão secundário — link</label>
+                      <input
+                        class="inp"
+                        id="idx-hero-ctaSecondaryLink"
+                        placeholder="membros.html"
+                        oninput="markDirty()"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header" onclick="toggleCard(this)">
+                  <div class="card-title">📖 Sinopse</div>
+                  <span class="card-toggle">▾</span>
+                </div>
+                <div class="card-body open">
+                  <div class="field">
+                    <label class="lbl"
+                      >Texto da sinopse
+                      <span>(pressione Enter para parágrafos)</span></label
+                    >
+                    <textarea
+                      class="tex xtall"
+                      id="idx-sinopse-text"
+                      oninput="markDirty()"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header" onclick="toggleCard(this)">
+                  <div class="card-title">🏷 Tropes</div>
+                  <span class="card-toggle">▾</span>
+                </div>
+                <div class="card-body open">
+                  <div class="field">
+                    <label class="lbl"
+                      >Tropes <span>(um por linha)</span></label
+                    >
+                    <textarea
+                      class="tex"
+                      id="idx-tropes"
+                      placeholder="Romantasia Sáfica&#10;Found Family&#10;..."
+                      oninput="markDirty()"
+                    ></textarea>
+                    <div class="helper">
+                      Cada linha vira um trope exibido no site.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header" onclick="toggleCard(this)">
+                  <div class="card-title">🛒 Seção de compra</div>
+                  <span class="card-toggle">▾</span>
+                </div>
+                <div class="card-body open">
+                  <div class="field-row">
+                    <div class="field">
+                      <label class="lbl">Preço exibido</label>
+                      <input
+                        class="inp"
+                        id="idx-comprar-price"
+                        placeholder="R$ 00,00"
+                        oninput="markDirty()"
+                      />
+                    </div>
+                    <div class="field">
+                      <label class="lbl">Link de compra</label>
+                      <input
+                        class="inp"
+                        id="idx-comprar-link"
+                        placeholder="https://..."
+                        oninput="markDirty()"
+                      />
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label class="lbl">Subtítulo da seção</label>
+                    <input
+                      class="inp"
+                      id="idx-comprar-subtitle"
+                      oninput="markDirty()"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ── GALERIA ── -->
+            <div class="panel" id="panel-galeria">
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  margin-bottom: 20px;
+                "
+              >
+                <div class="section-label" style="margin: 0">
+                  Imagens da Galeria de Downloads
+                </div>
+                <button class="btn-add" onclick="openGaleriaModal(null)">
+                  + Nova imagem
+                </button>
+              </div>
+              <div class="helper" style="margin-bottom: 16px">
+                Caminhos relativos à pasta <code>public/</code>. Ex:
+                <code>src/assets/gallery/arte1.jpg</code>
+              </div>
+              <div class="blog-list" id="galeriaList"></div>
+            </div>
+
+            <!-- ── BLOG / DIÁRIO ── -->
+            <div class="panel" id="panel-blog">
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  margin-bottom: 20px;
+                "
+              >
+                <div class="section-label" style="margin: 0">
+                  Posts do Diário da Autora
+                </div>
+                <button class="btn-add" onclick="openBlogModal(null)">
+                  + Novo post
+                </button>
+              </div>
+              <div class="blog-list" id="blogList"></div>
+            </div>
+
+            <!-- ── PIGMENTADORAS ── -->
+            <div class="panel" id="panel-pigmentadoras">
+              <div class="section-label">As Guardiãs dos Reinos</div>
+              <div class="pig-grid" id="pigGrid"></div>
+            </div>
+
+            <!-- ── REINOS ── -->
+            <div class="panel" id="panel-reinos">
+              <div class="section-label">Os Nove Reinos</div>
+              <div class="reinos-grid-adm" id="reinosGrid"></div>
             </div>
           </div>
+          <!-- /content -->
+        </div>
+        <!-- /main -->
+      </div>
+      <!-- /layout -->
+    </div>
+    <!-- /app -->
+
+    <!-- ── MODAL EDITOR GALERIA ── -->
+    <div class="modal-overlay" id="galeriaModal">
+      <div class="modal">
+        <button class="modal-close" onclick="closeGaleriaModal()">✕</button>
+        <div class="modal-title" id="galeriaModalTitle">Nova Imagem</div>
+        <input type="hidden" id="galeriaEditId" />
+        <div class="field">
+          <label class="lbl">Título da imagem</label>
+          <input
+            class="inp"
+            id="gm-title"
+            placeholder="Tainá — A Pigmentadora"
+          />
+        </div>
+        <div class="field">
+          <label class="lbl"
+            >Caminho da thumbnail
+            <span>(imagem de exibição — JPG ou WebP)</span></label
+          >
+          <input
+            class="inp"
+            id="gm-thumb"
+            placeholder="src/assets/gallery/taina.jpg"
+          />
+          <div class="helper">Caminho relativo à pasta public/</div>
+        </div>
+        <div class="field">
+          <label class="lbl"
+            >Caminho do download <span>(PNG de alta qualidade)</span></label
+          >
+          <input
+            class="inp"
+            id="gm-download"
+            placeholder="src/assets/gallery/taina.png"
+          />
+        </div>
+        <div class="modal-footer">
+          <button class="btn-cancel" onclick="closeGaleriaModal()">
+            Cancelar
+          </button>
+          <button class="btn-confirm" onclick="saveGaleriaItem()">
+            Salvar
+          </button>
         </div>
       </div>
+    </div>
 
-      <!-- ── PÁGINA PRINCIPAL ── -->
-      <div class="panel" id="panel-index">
-        <div class="section-label">Hero — Seção principal</div>
-        <div class="card">
-          <div class="card-header" onclick="toggleCard(this)">
-            <div class="card-title">🏠 Hero da página principal</div>
-            <span class="card-toggle">▾</span>
+    <!-- ── MODAL EDITOR BLOG ── -->
+    <div class="modal-overlay" id="blogModal">
+      <div class="modal">
+        <button class="modal-close" onclick="closeBlogModal()">✕</button>
+        <div class="modal-title" id="blogModalTitle">Novo Post</div>
+        <input type="hidden" id="blogEditId" />
+        <div class="field-row">
+          <div class="field">
+            <label class="lbl"
+              >Eyebrow <span>(categoria interna do modal)</span></label
+            >
+            <input
+              class="inp"
+              id="be-eyebrow"
+              placeholder="Bastidores · Criação"
+            />
           </div>
-          <div class="card-body open">
-            <div class="field-row">
-              <div class="field">
-                <label class="lbl">Tag acima do título <span>(ex: "Uma Romantasia Sáfica")</span></label>
-                <input class="inp" id="idx-hero-tag" oninput="markDirty()"/>
-              </div>
-              <div class="field">
-                <label class="lbl">Destaque do título <span>(parte dourada)</span></label>
-                <input class="inp" id="idx-hero-titleHighlight" oninput="markDirty()"/>
-              </div>
-            </div>
-            <div class="field">
-              <label class="lbl">Título principal</label>
-              <input class="inp" id="idx-hero-title" oninput="markDirty()"/>
-            </div>
-            <div class="field">
-              <label class="lbl">Subtítulo / texto de abertura</label>
-              <textarea class="tex" id="idx-hero-subtitle" oninput="markDirty()"></textarea>
-            </div>
-            <div class="field-row">
-              <div class="field">
-                <label class="lbl">Botão principal — texto</label>
-                <input class="inp" id="idx-hero-ctaLabel" oninput="markDirty()"/>
-              </div>
-              <div class="field">
-                <label class="lbl">Botão principal — link</label>
-                <input class="inp" id="idx-hero-ctaLink" placeholder="https://..." oninput="markDirty()"/>
-              </div>
-            </div>
-            <div class="field-row">
-              <div class="field">
-                <label class="lbl">Botão secundário — texto</label>
-                <input class="inp" id="idx-hero-ctaSecondaryLabel" oninput="markDirty()"/>
-              </div>
-              <div class="field">
-                <label class="lbl">Botão secundário — link</label>
-                <input class="inp" id="idx-hero-ctaSecondaryLink" placeholder="membros.html" oninput="markDirty()"/>
-              </div>
-            </div>
+          <div class="field">
+            <label class="lbl">Categoria <span>(exibida no card)</span></label>
+            <input class="inp" id="be-cat" placeholder="Bastidores · Criação" />
           </div>
         </div>
-
-        <div class="card">
-          <div class="card-header" onclick="toggleCard(this)">
-            <div class="card-title">📖 Sinopse</div>
-            <span class="card-toggle">▾</span>
-          </div>
-          <div class="card-body open">
-            <div class="field">
-              <label class="lbl">Texto da sinopse <span>(pressione Enter para parágrafos)</span></label>
-              <textarea class="tex xtall" id="idx-sinopse-text" oninput="markDirty()"></textarea>
-            </div>
-          </div>
+        <div class="field">
+          <label class="lbl">Título do post</label>
+          <input class="inp" id="be-title" />
         </div>
-
-        <div class="card">
-          <div class="card-header" onclick="toggleCard(this)">
-            <div class="card-title">🏷 Tropes</div>
-            <span class="card-toggle">▾</span>
-          </div>
-          <div class="card-body open">
-            <div class="field">
-              <label class="lbl">Tropes <span>(um por linha)</span></label>
-              <textarea class="tex" id="idx-tropes" placeholder="Romantasia Sáfica&#10;Found Family&#10;..." oninput="markDirty()"></textarea>
-              <div class="helper">Cada linha vira um trope exibido no site.</div>
-            </div>
-          </div>
+        <div class="field">
+          <label class="lbl">Trecho exibido no card</label>
+          <textarea class="tex" id="be-excerpt"></textarea>
         </div>
-
-        <div class="card">
-          <div class="card-header" onclick="toggleCard(this)">
-            <div class="card-title">🛒 Seção de compra</div>
-            <span class="card-toggle">▾</span>
-          </div>
-          <div class="card-body open">
-            <div class="field-row">
-              <div class="field">
-                <label class="lbl">Preço exibido</label>
-                <input class="inp" id="idx-comprar-price" placeholder="R$ 00,00" oninput="markDirty()"/>
-              </div>
-              <div class="field">
-                <label class="lbl">Link de compra</label>
-                <input class="inp" id="idx-comprar-link" placeholder="https://..." oninput="markDirty()"/>
-              </div>
-            </div>
-            <div class="field">
-              <label class="lbl">Subtítulo da seção</label>
-              <input class="inp" id="idx-comprar-subtitle" oninput="markDirty()"/>
-            </div>
-          </div>
+        <div class="field">
+          <label class="lbl"
+            >Conteúdo completo
+            <span
+              >(HTML básico: &lt;p&gt;, &lt;strong&gt;, &lt;em&gt;)</span
+            ></label
+          >
+          <textarea class="tex xtall" id="be-body"></textarea>
+        </div>
+        <div class="field">
+          <label class="lbl"
+            >Post em destaque? <span>(aparece grande, primeiro)</span></label
+          >
+          <select class="sel" id="be-featured">
+            <option value="false">Não — card normal</option>
+            <option value="true">Sim — post featured</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-cancel" onclick="closeBlogModal()">
+            Cancelar
+          </button>
+          <button class="btn-confirm" onclick="saveBlogPost()">
+            Salvar post
+          </button>
         </div>
       </div>
+    </div>
 
-      <!-- ── GALERIA ── -->
-      <div class="panel" id="panel-galeria">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
-          <div class="section-label" style="margin:0">Imagens da Galeria de Downloads</div>
-          <button class="btn-add" onclick="openGaleriaModal(null)">+ Nova imagem</button>
+    <!-- ── MODAL EDITOR PIGMENTADORA ── -->
+    <div class="modal-overlay" id="pigModal">
+      <div class="modal">
+        <button class="modal-close" onclick="closePigModal()">✕</button>
+        <div class="modal-title" id="pigModalTitle">Editar Pigmentadora</div>
+        <input type="hidden" id="pigEditIdx" />
+        <div class="field-row">
+          <div class="field">
+            <label class="lbl">Nome</label>
+            <input class="inp" id="pm-name" />
+          </div>
+          <div class="field">
+            <label class="lbl">Número <span>(ex: 01)</span></label>
+            <input class="inp" id="pm-num" placeholder="01" />
+          </div>
         </div>
-        <div class="helper" style="margin-bottom:16px">Caminhos relativos à pasta <code>public/</code>. Ex: <code>src/assets/gallery/arte1.jpg</code></div>
-        <div class="blog-list" id="galeriaList"></div>
-      </div>
-
-      <!-- ── BLOG / DIÁRIO ── -->
-      <div class="panel" id="panel-blog">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
-          <div class="section-label" style="margin:0">Posts do Diário da Autora</div>
-          <button class="btn-add" onclick="openBlogModal(null)">+ Novo post</button>
+        <div class="field-row">
+          <div class="field">
+            <label class="lbl">Reino</label>
+            <input class="inp" id="pm-realm" />
+          </div>
+          <div class="field">
+            <label class="lbl">Poder / Magia</label>
+            <input class="inp" id="pm-power" />
+          </div>
         </div>
-        <div class="blog-list" id="blogList"></div>
-      </div>
-
-      <!-- ── PIGMENTADORAS ── -->
-      <div class="panel" id="panel-pigmentadoras">
-        <div class="section-label">As Guardiãs dos Reinos</div>
-        <div class="pig-grid" id="pigGrid"></div>
-      </div>
-
-      <!-- ── REINOS ── -->
-      <div class="panel" id="panel-reinos">
-        <div class="section-label">Os Nove Reinos</div>
-        <div class="reinos-grid-adm" id="reinosGrid"></div>
-      </div>
-
-    </div><!-- /content -->
-  </div><!-- /main -->
-</div><!-- /layout -->
-</div><!-- /app -->
-
-<!-- ── MODAL EDITOR GALERIA ── -->
-<div class="modal-overlay" id="galeriaModal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeGaleriaModal()">✕</button>
-    <div class="modal-title" id="galeriaModalTitle">Nova Imagem</div>
-    <input type="hidden" id="galeriaEditId"/>
-    <div class="field">
-      <label class="lbl">Título da imagem</label>
-      <input class="inp" id="gm-title" placeholder="Tainá — A Pigmentadora"/>
-    </div>
-    <div class="field">
-      <label class="lbl">Caminho da thumbnail <span>(imagem de exibição — JPG ou WebP)</span></label>
-      <input class="inp" id="gm-thumb" placeholder="src/assets/gallery/taina.jpg"/>
-      <div class="helper">Caminho relativo à pasta public/</div>
-    </div>
-    <div class="field">
-      <label class="lbl">Caminho do download <span>(PNG de alta qualidade)</span></label>
-      <input class="inp" id="gm-download" placeholder="src/assets/gallery/taina.png"/>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeGaleriaModal()">Cancelar</button>
-      <button class="btn-confirm" onclick="saveGaleriaItem()">Salvar</button>
-    </div>
-  </div>
-</div>
-
-<!-- ── MODAL EDITOR BLOG ── -->
-<div class="modal-overlay" id="blogModal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeBlogModal()">✕</button>
-    <div class="modal-title" id="blogModalTitle">Novo Post</div>
-    <input type="hidden" id="blogEditId"/>
-    <div class="field-row">
-      <div class="field">
-        <label class="lbl">Eyebrow <span>(categoria interna do modal)</span></label>
-        <input class="inp" id="be-eyebrow" placeholder="Bastidores · Criação"/>
-      </div>
-      <div class="field">
-        <label class="lbl">Categoria <span>(exibida no card)</span></label>
-        <input class="inp" id="be-cat" placeholder="Bastidores · Criação"/>
+        <div class="field-row">
+          <div class="field">
+            <label class="lbl">Cor da gema <span>(hex)</span></label>
+            <input
+              class="inp"
+              id="pm-color"
+              placeholder="#d500f9"
+              oninput="updateColorPreview()"
+            />
+          </div>
+          <div class="field">
+            <label class="lbl"
+              >Cor de fundo do card <span>(hex escuro)</span></label
+            >
+            <input class="inp" id="pm-colorBg" placeholder="#2d004a" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="lbl">Descrição</label>
+          <textarea class="tex tall" id="pm-desc"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-cancel" onclick="closePigModal()">Cancelar</button>
+          <button class="btn-confirm" onclick="savePigmentadora()">
+            Salvar
+          </button>
+        </div>
       </div>
     </div>
-    <div class="field">
-      <label class="lbl">Título do post</label>
-      <input class="inp" id="be-title"/>
-    </div>
-    <div class="field">
-      <label class="lbl">Trecho exibido no card</label>
-      <textarea class="tex" id="be-excerpt"></textarea>
-    </div>
-    <div class="field">
-      <label class="lbl">Conteúdo completo <span>(HTML básico: &lt;p&gt;, &lt;strong&gt;, &lt;em&gt;)</span></label>
-      <textarea class="tex xtall" id="be-body"></textarea>
-    </div>
-    <div class="field">
-      <label class="lbl">Post em destaque? <span>(aparece grande, primeiro)</span></label>
-      <select class="sel" id="be-featured">
-        <option value="false">Não — card normal</option>
-        <option value="true">Sim — post featured</option>
-      </select>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeBlogModal()">Cancelar</button>
-      <button class="btn-confirm" onclick="saveBlogPost()">Salvar post</button>
-    </div>
-  </div>
-</div>
 
-<!-- ── MODAL EDITOR PIGMENTADORA ── -->
-<div class="modal-overlay" id="pigModal">
-  <div class="modal">
-    <button class="modal-close" onclick="closePigModal()">✕</button>
-    <div class="modal-title" id="pigModalTitle">Editar Pigmentadora</div>
-    <input type="hidden" id="pigEditIdx"/>
-    <div class="field-row">
-      <div class="field">
-        <label class="lbl">Nome</label>
-        <input class="inp" id="pm-name"/>
-      </div>
-      <div class="field">
-        <label class="lbl">Número <span>(ex: 01)</span></label>
-        <input class="inp" id="pm-num" placeholder="01"/>
+    <!-- ── MODAL EDITOR REINO ── -->
+    <div class="modal-overlay" id="reinoModal">
+      <div class="modal">
+        <button class="modal-close" onclick="closeReinoModal()">✕</button>
+        <div class="modal-title">Editar Reino</div>
+        <input type="hidden" id="re-idx" />
+        <div class="field-row">
+          <div class="field">
+            <label class="lbl">Nome do reino</label>
+            <input class="inp" id="re-name" />
+          </div>
+          <div class="field">
+            <label class="lbl">Gema <span>(ex: Gema Magenta)</span></label>
+            <input class="inp" id="re-sub" />
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label class="lbl">Cor da gema <span>(hex)</span></label>
+            <input class="inp" id="re-color" placeholder="#d500f9" />
+          </div>
+          <div class="field">
+            <label class="lbl">Pigmentadora residente</label>
+            <input class="inp" id="re-resident" />
+          </div>
+        </div>
+        <div class="field">
+          <label class="lbl">Descrição do reino</label>
+          <textarea class="tex tall" id="re-text"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-cancel" onclick="closeReinoModal()">
+            Cancelar
+          </button>
+          <button class="btn-confirm" onclick="saveReino()">Salvar</button>
+        </div>
       </div>
     </div>
-    <div class="field-row">
-      <div class="field">
-        <label class="lbl">Reino</label>
-        <input class="inp" id="pm-realm"/>
-      </div>
-      <div class="field">
-        <label class="lbl">Poder / Magia</label>
-        <input class="inp" id="pm-power"/>
-      </div>
+
+    <!-- ── TOAST ── -->
+    <div class="toast" id="toast">
+      <div class="toast-icon"></div>
+      <div class="toast-msg" id="toastMsg"></div>
     </div>
-    <div class="field-row">
-      <div class="field">
-        <label class="lbl">Cor da gema <span>(hex)</span></label>
-        <input class="inp" id="pm-color" placeholder="#d500f9" oninput="updateColorPreview()"/>
-      </div>
-      <div class="field">
-        <label class="lbl">Cor de fundo do card <span>(hex escuro)</span></label>
-        <input class="inp" id="pm-colorBg" placeholder="#2d004a"/>
-      </div>
-    </div>
-    <div class="field">
-      <label class="lbl">Descrição</label>
-      <textarea class="tex tall" id="pm-desc"></textarea>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closePigModal()">Cancelar</button>
-      <button class="btn-confirm" onclick="savePigmentadora()">Salvar</button>
-    </div>
-  </div>
-</div>
 
-<!-- ── MODAL EDITOR REINO ── -->
-<div class="modal-overlay" id="reinoModal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeReinoModal()">✕</button>
-    <div class="modal-title">Editar Reino</div>
-    <input type="hidden" id="re-idx"/>
-    <div class="field-row">
-      <div class="field">
-        <label class="lbl">Nome do reino</label>
-        <input class="inp" id="re-name"/>
-      </div>
-      <div class="field">
-        <label class="lbl">Gema <span>(ex: Gema Magenta)</span></label>
-        <input class="inp" id="re-sub"/>
-      </div>
-    </div>
-    <div class="field-row">
-      <div class="field">
-        <label class="lbl">Cor da gema <span>(hex)</span></label>
-        <input class="inp" id="re-color" placeholder="#d500f9"/>
-      </div>
-      <div class="field">
-        <label class="lbl">Pigmentadora residente</label>
-        <input class="inp" id="re-resident"/>
-      </div>
-    </div>
-    <div class="field">
-      <label class="lbl">Descrição do reino</label>
-      <textarea class="tex tall" id="re-text"></textarea>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-cancel" onclick="closeReinoModal()">Cancelar</button>
-      <button class="btn-confirm" onclick="saveReino()">Salvar</button>
-    </div>
-  </div>
-</div>
+    <script>
+      // ═══════════════════════════════════════════
+      // CONFIG — altere após o deploy no Vercel
+      // ═══════════════════════════════════════════
+      const API_BASE = "https://mariana-rosa-cms.vercel.app/";
 
-<!-- ── TOAST ── -->
-<div class="toast" id="toast">
-  <div class="toast-icon"></div>
-  <div class="toast-msg" id="toastMsg"></div>
-</div>
+      // ═══════════════════════════════════════════
+      // ESTADO
+      // ═══════════════════════════════════════════
+      let token = "";
+      let content = null;
+      let dirty = false;
 
-<script>
-// ═══════════════════════════════════════════
-// CONFIG — altere após o deploy no Vercel
-// ═══════════════════════════════════════════
-const API_BASE = 'https://SEU-DOMINIO.vercel.app';
-// Exemplo: const API_BASE = 'https://mariana-rosa.vercel.app';
+      // ═══════════════════════════════════════════
+      // LOGIN
+      // ═══════════════════════════════════════════
+      function doLogin() {
+        const pwd = document.getElementById("loginInput").value.trim();
+        if (!pwd) {
+          showErr("Digite a senha");
+          return;
+        }
+        // Validação básica — a senha real fica no Vercel (ADMIN_PASSWORD)
+        // Aqui só verificamos localmente que há algo digitado e guardamos o token
+        token = pwd;
+        // Tenta carregar o conteúdo (se a senha estiver errada, a API retornará 401 ao salvar)
+        fetchContent();
+      }
 
-// ═══════════════════════════════════════════
-// ESTADO
-// ═══════════════════════════════════════════
-let token = '';
-let content = null;
-let dirty = false;
+      function showErr(msg) {
+        document.getElementById("loginErr").textContent = msg;
+      }
 
-// ═══════════════════════════════════════════
-// LOGIN
-// ═══════════════════════════════════════════
-function doLogin() {
-  const pwd = document.getElementById('loginInput').value.trim();
-  if (!pwd) { showErr('Digite a senha'); return; }
-  // Validação básica — a senha real fica no Vercel (ADMIN_PASSWORD)
-  // Aqui só verificamos localmente que há algo digitado e guardamos o token
-  token = pwd;
-  // Tenta carregar o conteúdo (se a senha estiver errada, a API retornará 401 ao salvar)
-  fetchContent();
-}
+      function doLogout() {
+        token = "";
+        content = null;
+        document.getElementById("loginScreen").style.display = "flex";
+        document.getElementById("app").style.display = "none";
+      }
 
-function showErr(msg) {
-  document.getElementById('loginErr').textContent = msg;
-}
+      async function fetchContent() {
+        try {
+          // Tenta carregar o content.json do próprio servidor
+          const res = await fetch("/content.json?" + Date.now());
+          if (!res.ok) throw new Error("Arquivo não encontrado");
+          content = await res.json();
+          document.getElementById("loginScreen").style.display = "none";
+          document.getElementById("app").style.display = "block";
+          populateAll();
+          updateDashboard();
+        } catch (e) {
+          showErr("Erro ao carregar conteúdo: " + e.message);
+        }
+      }
 
-function doLogout() {
-  token = '';
-  content = null;
-  document.getElementById('loginScreen').style.display = 'flex';
-  document.getElementById('app').style.display = 'none';
-}
+      // ═══════════════════════════════════════════
+      // NAVEGAÇÃO
+      // ═══════════════════════════════════════════
+      const PANEL_TITLES = {
+        dashboard: "Dashboard",
+        index: "Página Principal",
+        blog: "Diário da Autora",
+        galeria: "Galeria",
+        pigmentadoras: "As Pigmentadoras",
+        reinos: "Os Reinos",
+      };
 
-async function fetchContent() {
-  try {
-    // Tenta carregar o content.json do próprio servidor
-    const res = await fetch('/content.json?' + Date.now());
-    if (!res.ok) throw new Error('Arquivo não encontrado');
-    content = await res.json();
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('app').style.display = 'block';
-    populateAll();
-    updateDashboard();
-  } catch(e) {
-    showErr('Erro ao carregar conteúdo: ' + e.message);
-  }
-}
+      function switchPanel(btn) {
+        document
+          .querySelectorAll(".nav-item")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        const panel = btn.dataset.panel;
+        document
+          .querySelectorAll(".panel")
+          .forEach((p) => p.classList.remove("active"));
+        document.getElementById("panel-" + panel).classList.add("active");
+        document.getElementById("topbarTitle").textContent =
+          PANEL_TITLES[panel] || panel;
+      }
 
-// ═══════════════════════════════════════════
-// NAVEGAÇÃO
-// ═══════════════════════════════════════════
-const PANEL_TITLES = {
-  dashboard: 'Dashboard',
-  index: 'Página Principal',
-  blog: 'Diário da Autora',
-  galeria: 'Galeria',
-  pigmentadoras: 'As Pigmentadoras',
-  reinos: 'Os Reinos',
-};
+      function toggleCard(header) {
+        const body = header.nextElementSibling;
+        const toggle = header.querySelector(".card-toggle");
+        body.classList.toggle("open");
+        toggle.style.transform = body.classList.contains("open")
+          ? ""
+          : "rotate(-90deg)";
+      }
 
-function switchPanel(btn) {
-  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  const panel = btn.dataset.panel;
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('panel-' + panel).classList.add('active');
-  document.getElementById('topbarTitle').textContent = PANEL_TITLES[panel] || panel;
-}
+      // ═══════════════════════════════════════════
+      // POPULATE — preenche campos com o content.json
+      // ═══════════════════════════════════════════
+      function populateAll() {
+        populateIndex();
+        populateBlog();
+        populateGaleria();
+        populatePigmentadoras();
+        populateReinos();
+      }
 
-function toggleCard(header) {
-  const body = header.nextElementSibling;
-  const toggle = header.querySelector('.card-toggle');
-  body.classList.toggle('open');
-  toggle.style.transform = body.classList.contains('open') ? '' : 'rotate(-90deg)';
-}
+      function populateIndex() {
+        const h = content.index.hero;
+        set("idx-hero-tag", h.tag);
+        set("idx-hero-title", h.title);
+        set("idx-hero-titleHighlight", h.titleHighlight);
+        set("idx-hero-subtitle", h.subtitle);
+        set("idx-hero-ctaLabel", h.ctaLabel);
+        set("idx-hero-ctaLink", h.ctaLink);
+        set("idx-hero-ctaSecondaryLabel", h.ctaSecondaryLabel);
+        set("idx-hero-ctaSecondaryLink", h.ctaSecondaryLink);
+        set("idx-sinopse-text", content.index.sinopse.text);
+        set("idx-tropes", (content.index.tropes || []).join("\n"));
+        set("idx-comprar-price", content.index.comprar.price);
+        set("idx-comprar-link", content.index.comprar.link);
+        set("idx-comprar-subtitle", content.index.comprar.subtitle);
+      }
 
-// ═══════════════════════════════════════════
-// POPULATE — preenche campos com o content.json
-// ═══════════════════════════════════════════
-function populateAll() {
-  populateIndex();
-  populateBlog();
-  populateGaleria();
-  populatePigmentadoras();
-  populateReinos();
-}
-
-function populateIndex() {
-  const h = content.index.hero;
-  set('idx-hero-tag', h.tag);
-  set('idx-hero-title', h.title);
-  set('idx-hero-titleHighlight', h.titleHighlight);
-  set('idx-hero-subtitle', h.subtitle);
-  set('idx-hero-ctaLabel', h.ctaLabel);
-  set('idx-hero-ctaLink', h.ctaLink);
-  set('idx-hero-ctaSecondaryLabel', h.ctaSecondaryLabel);
-  set('idx-hero-ctaSecondaryLink', h.ctaSecondaryLink);
-  set('idx-sinopse-text', content.index.sinopse.text);
-  set('idx-tropes', (content.index.tropes || []).join('\n'));
-  set('idx-comprar-price', content.index.comprar.price);
-  set('idx-comprar-link', content.index.comprar.link);
-  set('idx-comprar-subtitle', content.index.comprar.subtitle);
-}
-
-function populateBlog() {
-  const list = document.getElementById('blogList');
-  list.innerHTML = '';
-  (content.membros.blog || []).forEach((post, i) => {
-    const div = document.createElement('div');
-    div.className = 'blog-item';
-    div.innerHTML = `
-      <div class="blog-item-num">${String(i+1).padStart(2,'0')}</div>
+      function populateBlog() {
+        const list = document.getElementById("blogList");
+        list.innerHTML = "";
+        (content.membros.blog || []).forEach((post, i) => {
+          const div = document.createElement("div");
+          div.className = "blog-item";
+          div.innerHTML = `
+      <div class="blog-item-num">${String(i + 1).padStart(2, "0")}</div>
       <div class="blog-item-info">
         <div class="blog-item-title">${esc(post.title)}</div>
-        <div class="blog-item-cat">${esc(post.cat)} ${post.featured ? '· ★ Featured' : ''}</div>
+        <div class="blog-item-cat">${esc(post.cat)} ${post.featured ? "· ★ Featured" : ""}</div>
       </div>
       <div class="blog-item-actions">
         <button class="btn-xs btn-edit" onclick="openBlogModal(${i})">Editar</button>
         <button class="btn-xs btn-del" onclick="deleteBlogPost(${i})">✕</button>
       </div>`;
-    list.appendChild(div);
-  });
-  updateDashboard();
-}
+          list.appendChild(div);
+        });
+        updateDashboard();
+      }
 
-function populatePigmentadoras() {
-  const grid = document.getElementById('pigGrid');
-  grid.innerHTML = '';
-  (content.membros.pigmentadoras || []).forEach((p, i) => {
-    const card = document.createElement('div');
-    card.className = 'pig-card';
-    card.style.setProperty('--pc', p.color);
-    card.innerHTML = `
+      function populatePigmentadoras() {
+        const grid = document.getElementById("pigGrid");
+        grid.innerHTML = "";
+        (content.membros.pigmentadoras || []).forEach((p, i) => {
+          const card = document.createElement("div");
+          card.className = "pig-card";
+          card.style.setProperty("--pc", p.color);
+          card.innerHTML = `
       <div class="pig-card-header">
         <div class="pig-gem" style="background:${p.color}"></div>
         <div>
@@ -871,17 +1765,17 @@ function populatePigmentadoras() {
       </div>
       <div class="pig-card-desc" style="font-size:.78rem;color:var(--text-muted);font-style:italic;margin-bottom:12px">${esc(p.desc)}</div>
       <button class="btn-xs btn-edit" onclick="openPigModal(${i})" style="width:100%">✏ Editar</button>`;
-    grid.appendChild(card);
-  });
-}
+          grid.appendChild(card);
+        });
+      }
 
-function populateReinos() {
-  const grid = document.getElementById('reinosGrid');
-  grid.innerHTML = '';
-  (content.membros.reinos || []).forEach((r, i) => {
-    const card = document.createElement('div');
-    card.className = 'reino-card-adm';
-    card.innerHTML = `
+      function populateReinos() {
+        const grid = document.getElementById("reinosGrid");
+        grid.innerHTML = "";
+        (content.membros.reinos || []).forEach((r, i) => {
+          const card = document.createElement("div");
+          card.className = "reino-card-adm";
+          card.innerHTML = `
       <div class="reino-card-header-adm">
         <div class="pig-gem" style="background:${r.color}"></div>
         <div>
@@ -891,41 +1785,46 @@ function populateReinos() {
       </div>
       <div style="font-size:.78rem;color:var(--text-muted);font-style:italic;margin-bottom:12px">${esc(r.text)}</div>
       <button class="btn-xs btn-edit" onclick="openReinoModal(${i})" style="width:100%">✏ Editar</button>`;
-    grid.appendChild(card);
-  });
-}
+          grid.appendChild(card);
+        });
+      }
 
-// ═══════════════════════════════════════════
-// COLLECT — lê os campos e atualiza o content
-// ═══════════════════════════════════════════
-function collectIndex() {
-  content.index.hero.tag                 = get('idx-hero-tag');
-  content.index.hero.title               = get('idx-hero-title');
-  content.index.hero.titleHighlight      = get('idx-hero-titleHighlight');
-  content.index.hero.subtitle            = get('idx-hero-subtitle');
-  content.index.hero.ctaLabel            = get('idx-hero-ctaLabel');
-  content.index.hero.ctaLink             = get('idx-hero-ctaLink');
-  content.index.hero.ctaSecondaryLabel   = get('idx-hero-ctaSecondaryLabel');
-  content.index.hero.ctaSecondaryLink    = get('idx-hero-ctaSecondaryLink');
-  content.index.sinopse.text             = get('idx-sinopse-text');
-  content.index.tropes                   = get('idx-tropes').split('\n').map(s=>s.trim()).filter(Boolean);
-  content.index.comprar.price            = get('idx-comprar-price');
-  content.index.comprar.link             = get('idx-comprar-link');
-  content.index.comprar.subtitle         = get('idx-comprar-subtitle');
-}
+      // ═══════════════════════════════════════════
+      // COLLECT — lê os campos e atualiza o content
+      // ═══════════════════════════════════════════
+      function collectIndex() {
+        content.index.hero.tag = get("idx-hero-tag");
+        content.index.hero.title = get("idx-hero-title");
+        content.index.hero.titleHighlight = get("idx-hero-titleHighlight");
+        content.index.hero.subtitle = get("idx-hero-subtitle");
+        content.index.hero.ctaLabel = get("idx-hero-ctaLabel");
+        content.index.hero.ctaLink = get("idx-hero-ctaLink");
+        content.index.hero.ctaSecondaryLabel = get(
+          "idx-hero-ctaSecondaryLabel",
+        );
+        content.index.hero.ctaSecondaryLink = get("idx-hero-ctaSecondaryLink");
+        content.index.sinopse.text = get("idx-sinopse-text");
+        content.index.tropes = get("idx-tropes")
+          .split("\n")
+          .map((s) => s.trim())
+          .filter(Boolean);
+        content.index.comprar.price = get("idx-comprar-price");
+        content.index.comprar.link = get("idx-comprar-link");
+        content.index.comprar.subtitle = get("idx-comprar-subtitle");
+      }
 
-// ═══════════════════════════════════════════
-// GALERIA
-// ═══════════════════════════════════════════
-function populateGaleria() {
-  const list = document.getElementById('galeriaList');
-  if (!list) return;
-  list.innerHTML = '';
-  (content.membros.gallery || []).forEach((it, i) => {
-    const div = document.createElement('div');
-    div.className = 'blog-item';
-    div.innerHTML = `
-      <div class="blog-item-num">${String(i+1).padStart(2,'0')}</div>
+      // ═══════════════════════════════════════════
+      // GALERIA
+      // ═══════════════════════════════════════════
+      function populateGaleria() {
+        const list = document.getElementById("galeriaList");
+        if (!list) return;
+        list.innerHTML = "";
+        (content.membros.gallery || []).forEach((it, i) => {
+          const div = document.createElement("div");
+          div.className = "blog-item";
+          div.innerHTML = `
+      <div class="blog-item-num">${String(i + 1).padStart(2, "0")}</div>
       <div class="blog-item-info">
         <div class="blog-item-title">${esc(it.title)}</div>
         <div class="blog-item-cat" style="font-size:.68rem;color:var(--text-dim)">${esc(it.thumb)}</div>
@@ -934,238 +1833,303 @@ function populateGaleria() {
         <button class="btn-xs btn-edit" onclick="openGaleriaModal(${i})">Editar</button>
         <button class="btn-xs btn-del" onclick="deleteGaleriaItem(${i})">✕</button>
       </div>`;
-    list.appendChild(div);
-  });
-}
+          list.appendChild(div);
+        });
+      }
 
-function openGaleriaModal(idx) {
-  document.getElementById('galeriaEditId').value = idx !== null ? idx : '';
-  document.getElementById('galeriaModalTitle').textContent = idx !== null ? 'Editar Imagem' : 'Nova Imagem';
-  if (idx !== null) {
-    const it = content.membros.gallery[idx];
-    set('gm-title', it.title);
-    set('gm-thumb', it.thumb);
-    set('gm-download', it.download);
-  } else {
-    set('gm-title',''); set('gm-thumb',''); set('gm-download','');
-  }
-  openModal('galeriaModal');
-}
-function closeGaleriaModal() { closeModal('galeriaModal'); }
+      function openGaleriaModal(idx) {
+        document.getElementById("galeriaEditId").value =
+          idx !== null ? idx : "";
+        document.getElementById("galeriaModalTitle").textContent =
+          idx !== null ? "Editar Imagem" : "Nova Imagem";
+        if (idx !== null) {
+          const it = content.membros.gallery[idx];
+          set("gm-title", it.title);
+          set("gm-thumb", it.thumb);
+          set("gm-download", it.download);
+        } else {
+          set("gm-title", "");
+          set("gm-thumb", "");
+          set("gm-download", "");
+        }
+        openModal("galeriaModal");
+      }
+      function closeGaleriaModal() {
+        closeModal("galeriaModal");
+      }
 
-function saveGaleriaItem() {
-  if (!content.membros.gallery) content.membros.gallery = [];
-  const idx = document.getElementById('galeriaEditId').value;
-  const item = { title: get('gm-title'), thumb: get('gm-thumb'), download: get('gm-download') };
-  if (idx !== '') content.membros.gallery[parseInt(idx)] = item;
-  else content.membros.gallery.push(item);
-  populateGaleria();
-  closeGaleriaModal();
-  markDirty();
-  toast('Imagem salva! Clique em "Salvar e publicar".', 'info');
-}
+      function saveGaleriaItem() {
+        if (!content.membros.gallery) content.membros.gallery = [];
+        const idx = document.getElementById("galeriaEditId").value;
+        const item = {
+          title: get("gm-title"),
+          thumb: get("gm-thumb"),
+          download: get("gm-download"),
+        };
+        if (idx !== "") content.membros.gallery[parseInt(idx)] = item;
+        else content.membros.gallery.push(item);
+        populateGaleria();
+        closeGaleriaModal();
+        markDirty();
+        toast('Imagem salva! Clique em "Salvar e publicar".', "info");
+      }
 
-function deleteGaleriaItem(idx) {
-  if (!confirm('Remover esta imagem da galeria?')) return;
-  content.membros.gallery.splice(idx, 1);
-  populateGaleria();
-  markDirty();
-}
+      function deleteGaleriaItem(idx) {
+        if (!confirm("Remover esta imagem da galeria?")) return;
+        content.membros.gallery.splice(idx, 1);
+        populateGaleria();
+        markDirty();
+      }
 
-// ═══════════════════════════════════════════
-// BLOG MODAL
-// ═══════════════════════════════════════════
-function openBlogModal(idx) {
-  document.getElementById('blogEditId').value = idx !== null ? idx : '';
-  document.getElementById('blogModalTitle').textContent = idx !== null ? 'Editar Post' : 'Novo Post';
-  if (idx !== null) {
-    const p = content.membros.blog[idx];
-    set('be-eyebrow', p.eyebrow); set('be-cat', p.cat);
-    set('be-title', p.title); set('be-excerpt', p.excerpt);
-    set('be-body', p.body);
-    document.getElementById('be-featured').value = p.featured ? 'true' : 'false';
-  } else {
-    ['be-eyebrow','be-cat','be-title','be-excerpt','be-body'].forEach(id => set(id,''));
-    document.getElementById('be-featured').value = 'false';
-  }
-  openModal('blogModal');
-}
+      // ═══════════════════════════════════════════
+      // BLOG MODAL
+      // ═══════════════════════════════════════════
+      function openBlogModal(idx) {
+        document.getElementById("blogEditId").value = idx !== null ? idx : "";
+        document.getElementById("blogModalTitle").textContent =
+          idx !== null ? "Editar Post" : "Novo Post";
+        if (idx !== null) {
+          const p = content.membros.blog[idx];
+          set("be-eyebrow", p.eyebrow);
+          set("be-cat", p.cat);
+          set("be-title", p.title);
+          set("be-excerpt", p.excerpt);
+          set("be-body", p.body);
+          document.getElementById("be-featured").value = p.featured
+            ? "true"
+            : "false";
+        } else {
+          ["be-eyebrow", "be-cat", "be-title", "be-excerpt", "be-body"].forEach(
+            (id) => set(id, ""),
+          );
+          document.getElementById("be-featured").value = "false";
+        }
+        openModal("blogModal");
+      }
 
-function closeBlogModal() { closeModal('blogModal'); }
+      function closeBlogModal() {
+        closeModal("blogModal");
+      }
 
-function saveBlogPost() {
-  const idx = document.getElementById('blogEditId').value;
-  const post = {
-    id: idx !== '' ? content.membros.blog[parseInt(idx)].id : Date.now(),
-    eyebrow: get('be-eyebrow'), cat: get('be-cat'),
-    title: get('be-title'), excerpt: get('be-excerpt'),
-    body: get('be-body'),
-    featured: document.getElementById('be-featured').value === 'true',
-  };
-  if (idx !== '') content.membros.blog[parseInt(idx)] = post;
-  else content.membros.blog.push(post);
-  populateBlog();
-  closeBlogModal();
-  markDirty();
-  toast('Post salvo! Clique em "Salvar e publicar" para publicar.', 'info');
-}
+      function saveBlogPost() {
+        const idx = document.getElementById("blogEditId").value;
+        const post = {
+          id: idx !== "" ? content.membros.blog[parseInt(idx)].id : Date.now(),
+          eyebrow: get("be-eyebrow"),
+          cat: get("be-cat"),
+          title: get("be-title"),
+          excerpt: get("be-excerpt"),
+          body: get("be-body"),
+          featured: document.getElementById("be-featured").value === "true",
+        };
+        if (idx !== "") content.membros.blog[parseInt(idx)] = post;
+        else content.membros.blog.push(post);
+        populateBlog();
+        closeBlogModal();
+        markDirty();
+        toast(
+          'Post salvo! Clique em "Salvar e publicar" para publicar.',
+          "info",
+        );
+      }
 
-function deleteBlogPost(idx) {
-  if (!confirm('Excluir este post?')) return;
-  content.membros.blog.splice(idx, 1);
-  populateBlog();
-  markDirty();
-}
+      function deleteBlogPost(idx) {
+        if (!confirm("Excluir este post?")) return;
+        content.membros.blog.splice(idx, 1);
+        populateBlog();
+        markDirty();
+      }
 
-// ═══════════════════════════════════════════
-// PIGMENTADORA MODAL
-// ═══════════════════════════════════════════
-function openPigModal(idx) {
-  const p = content.membros.pigmentadoras[idx];
-  document.getElementById('pigEditIdx').value = idx;
-  document.getElementById('pigModalTitle').textContent = 'Editar — ' + p.name;
-  set('pm-name', p.name); set('pm-num', p.num);
-  set('pm-realm', p.realm); set('pm-power', p.power);
-  set('pm-color', p.color); set('pm-colorBg', p.colorBg);
-  set('pm-desc', p.desc);
-  openModal('pigModal');
-}
+      // ═══════════════════════════════════════════
+      // PIGMENTADORA MODAL
+      // ═══════════════════════════════════════════
+      function openPigModal(idx) {
+        const p = content.membros.pigmentadoras[idx];
+        document.getElementById("pigEditIdx").value = idx;
+        document.getElementById("pigModalTitle").textContent =
+          "Editar — " + p.name;
+        set("pm-name", p.name);
+        set("pm-num", p.num);
+        set("pm-realm", p.realm);
+        set("pm-power", p.power);
+        set("pm-color", p.color);
+        set("pm-colorBg", p.colorBg);
+        set("pm-desc", p.desc);
+        openModal("pigModal");
+      }
 
-function closePigModal() { closeModal('pigModal'); }
+      function closePigModal() {
+        closeModal("pigModal");
+      }
 
-function savePigmentadora() {
-  const idx = parseInt(document.getElementById('pigEditIdx').value);
-  content.membros.pigmentadoras[idx] = {
-    num: get('pm-num'), name: get('pm-name'),
-    realm: get('pm-realm'), power: get('pm-power'),
-    color: get('pm-color'), colorBg: get('pm-colorBg'),
-    desc: get('pm-desc'),
-  };
-  populatePigmentadoras();
-  closePigModal();
-  markDirty();
-  toast('Pigmentadora atualizada!', 'info');
-}
+      function savePigmentadora() {
+        const idx = parseInt(document.getElementById("pigEditIdx").value);
+        content.membros.pigmentadoras[idx] = {
+          num: get("pm-num"),
+          name: get("pm-name"),
+          realm: get("pm-realm"),
+          power: get("pm-power"),
+          color: get("pm-color"),
+          colorBg: get("pm-colorBg"),
+          desc: get("pm-desc"),
+        };
+        populatePigmentadoras();
+        closePigModal();
+        markDirty();
+        toast("Pigmentadora atualizada!", "info");
+      }
 
-// ═══════════════════════════════════════════
-// REINO MODAL
-// ═══════════════════════════════════════════
-function openReinoModal(idx) {
-  const r = content.membros.reinos[idx];
-  document.getElementById('re-idx').value = idx;
-  set('re-name', r.name); set('re-sub', r.sub);
-  set('re-color', r.color); set('re-resident', r.resident);
-  set('re-text', r.text);
-  openModal('reinoModal');
-}
+      // ═══════════════════════════════════════════
+      // REINO MODAL
+      // ═══════════════════════════════════════════
+      function openReinoModal(idx) {
+        const r = content.membros.reinos[idx];
+        document.getElementById("re-idx").value = idx;
+        set("re-name", r.name);
+        set("re-sub", r.sub);
+        set("re-color", r.color);
+        set("re-resident", r.resident);
+        set("re-text", r.text);
+        openModal("reinoModal");
+      }
 
-function closeReinoModal() { closeModal('reinoModal'); }
+      function closeReinoModal() {
+        closeModal("reinoModal");
+      }
 
-function saveReino() {
-  const idx = parseInt(document.getElementById('re-idx').value);
-  content.membros.reinos[idx] = {
-    name: get('re-name'), sub: get('re-sub'),
-    color: get('re-color'), resident: get('re-resident'),
-    text: get('re-text'),
-  };
-  populateReinos();
-  closeReinoModal();
-  markDirty();
-  toast('Reino atualizado!', 'info');
-}
+      function saveReino() {
+        const idx = parseInt(document.getElementById("re-idx").value);
+        content.membros.reinos[idx] = {
+          name: get("re-name"),
+          sub: get("re-sub"),
+          color: get("re-color"),
+          resident: get("re-resident"),
+          text: get("re-text"),
+        };
+        populateReinos();
+        closeReinoModal();
+        markDirty();
+        toast("Reino atualizado!", "info");
+      }
 
-// ═══════════════════════════════════════════
-// SALVAR — envia para a API Vercel → GitHub
-// ═══════════════════════════════════════════
-async function saveContent() {
-  collectIndex();
-  setStatus('saving', 'Salvando...');
-  document.getElementById('btnSave').disabled = true;
+      // ═══════════════════════════════════════════
+      // SALVAR — envia para a API Vercel → GitHub
+      // ═══════════════════════════════════════════
+      async function saveContent() {
+        collectIndex();
+        setStatus("saving", "Salvando...");
+        document.getElementById("btnSave").disabled = true;
 
-  try {
-    const res = await fetch(`${API_BASE}/api/save-content`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
-      body: JSON.stringify({ content }),
-    });
+        try {
+          const res = await fetch(`${API_BASE}/api/save-content`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ content }),
+          });
 
-    const data = await res.json();
+          const data = await res.json();
 
-    if (!res.ok) throw new Error(data.error || 'Erro ao salvar');
+          if (!res.ok) throw new Error(data.error || "Erro ao salvar");
 
-    dirty = false;
-    setStatus('saved', 'Publicado ✓');
-    toast('✦ Salvo com sucesso! O site será atualizado em ~30 segundos.', 'success');
-    if (data.commit) {
-      setTimeout(() => toast('Deploy iniciado no Vercel!', 'info'), 2000);
-    }
-  } catch(e) {
-    setStatus('error', 'Erro: ' + e.message);
-    toast('Erro ao salvar: ' + e.message, 'error');
-    document.getElementById('btnSave').disabled = false;
-  }
-}
+          dirty = false;
+          setStatus("saved", "Publicado ✓");
+          toast(
+            "✦ Salvo com sucesso! O site será atualizado em ~30 segundos.",
+            "success",
+          );
+          if (data.commit) {
+            setTimeout(() => toast("Deploy iniciado no Vercel!", "info"), 2000);
+          }
+        } catch (e) {
+          setStatus("error", "Erro: " + e.message);
+          toast("Erro ao salvar: " + e.message, "error");
+          document.getElementById("btnSave").disabled = false;
+        }
+      }
 
-// ═══════════════════════════════════════════
-// UTILITÁRIOS
-// ═══════════════════════════════════════════
-function get(id) { return (document.getElementById(id)?.value || '').trim(); }
-function set(id, val) { const el = document.getElementById(id); if(el) el.value = val ?? ''; }
-function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+      // ═══════════════════════════════════════════
+      // UTILITÁRIOS
+      // ═══════════════════════════════════════════
+      function get(id) {
+        return (document.getElementById(id)?.value || "").trim();
+      }
+      function set(id, val) {
+        const el = document.getElementById(id);
+        if (el) el.value = val ?? "";
+      }
+      function esc(s) {
+        return String(s || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+      }
 
-function markDirty() {
-  dirty = true;
-  setStatus('', 'Alterações não salvas');
-  document.getElementById('btnSave').disabled = false;
-  document.getElementById('statusDot').className = 'status-dot saving';
-}
+      function markDirty() {
+        dirty = true;
+        setStatus("", "Alterações não salvas");
+        document.getElementById("btnSave").disabled = false;
+        document.getElementById("statusDot").className = "status-dot saving";
+      }
 
-function setStatus(type, label) {
-  const dot = document.getElementById('statusDot');
-  dot.className = 'status-dot' + (type ? ' ' + type : '');
-  document.getElementById('statusLabel').textContent = label;
-}
+      function setStatus(type, label) {
+        const dot = document.getElementById("statusDot");
+        dot.className = "status-dot" + (type ? " " + type : "");
+        document.getElementById("statusLabel").textContent = label;
+      }
 
-function openModal(id) { document.getElementById(id).classList.add('open'); }
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+      function openModal(id) {
+        document.getElementById(id).classList.add("open");
+      }
+      function closeModal(id) {
+        document.getElementById(id).classList.remove("open");
+      }
 
-function openPreview() {
-  window.open('/', '_blank');
-}
+      function openPreview() {
+        window.open("/", "_blank");
+      }
 
-// Toast
-let toastTimer;
-function toast(msg, type = 'info') {
-  const t = document.getElementById('toast');
-  const m = document.getElementById('toastMsg');
-  t.className = 'toast ' + type;
-  m.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 4000);
-}
+      // Toast
+      let toastTimer;
+      function toast(msg, type = "info") {
+        const t = document.getElementById("toast");
+        const m = document.getElementById("toastMsg");
+        t.className = "toast " + type;
+        m.textContent = msg;
+        t.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => t.classList.remove("show"), 4000);
+      }
 
-function updateDashboard() {
-  if (!content) return;
-  document.getElementById('d-blog').textContent = (content.membros.blog||[]).length;
-  document.getElementById('d-pig').textContent = (content.membros.pigmentadoras||[]).length;
-  document.getElementById('d-reinos').textContent = (content.membros.reinos||[]).length;
-}
+      function updateDashboard() {
+        if (!content) return;
+        document.getElementById("d-blog").textContent = (
+          content.membros.blog || []
+        ).length;
+        document.getElementById("d-pig").textContent = (
+          content.membros.pigmentadoras || []
+        ).length;
+        document.getElementById("d-reinos").textContent = (
+          content.membros.reinos || []
+        ).length;
+      }
 
-// Fecha modais ao clicar fora
-document.querySelectorAll('.modal-overlay').forEach(overlay => {
-  overlay.addEventListener('click', e => {
-    if (e.target === overlay) overlay.classList.remove('open');
-  });
-});
+      // Fecha modais ao clicar fora
+      document.querySelectorAll(".modal-overlay").forEach((overlay) => {
+        overlay.addEventListener("click", (e) => {
+          if (e.target === overlay) overlay.classList.remove("open");
+        });
+      });
 
-// Aviso ao sair sem salvar
-window.addEventListener('beforeunload', e => {
-  if (dirty) { e.preventDefault(); e.returnValue = ''; }
-});
-</script>
-</body>
+      // Aviso ao sair sem salvar
+      window.addEventListener("beforeunload", (e) => {
+        if (dirty) {
+          e.preventDefault();
+          e.returnValue = "";
+        }
+      });
+    </script>
+  </body>
 </html>

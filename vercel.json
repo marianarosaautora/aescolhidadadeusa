@@ -4,7 +4,6 @@
   "outputDirectory": "public",
   "functions": {
     "api/*.js": {
-      "runtime": "nodejs20.x",
       "maxDuration": 15
     }
   },
@@ -13,14 +12,5 @@
     { "src": "/admin/(.*)", "dest": "/admin/$1" },
     { "src": "/admin", "dest": "/admin/index.html" },
     { "src": "/(.*)", "dest": "/public/$1" }
-  ],
-  "headers": [
-    {
-      "source": "/admin/(.*)",
-      "headers": [
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" }
-      ]
-    }
   ]
 }
