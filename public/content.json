@@ -1,0 +1,306 @@
+{
+  "site": {
+    "title": "A Escolhida da Deusa",
+    "author": "Mariana Rosa",
+    "description": "Romantasia Sáfica — Os Nove Reinos"
+  },
+  "index": {
+    "hero": {
+      "tag": "Uma Romantasia Sáfica",
+      "title": "A Escolhida",
+      "titleHighlight": "da Deusa",
+      "subtitle": "Tainá é uma escritora renomada de romantasias sáficas. Ela retira as palavras de seus sonhos, onde uma mulher de olhos dourados sempre está presente. Tudo muda quando o único legado de sua mãe — um antigo pincel — atrai um ataque sombrio inesperado.",
+      "ctaLabel": "Garantir meu exemplar",
+      "ctaLink": "#comprar",
+      "ctaSecondaryLabel": "Área Exclusiva",
+      "ctaSecondaryLink": "membros.html"
+    },
+    "sinopse": {
+      "eyebrow": "A História",
+      "title": "Sinopse",
+      "text": "Tainá é uma escritora renomada de romantasias sáficas. Ela retira as palavras de seus sonhos, onde uma mulher de olhos dourados sempre está presente.\n\nTudo muda quando o único legado de sua mãe — um antigo pincel — atrai um ataque sombrio inesperado. Em um lampejo de energia roxa, a realidade se rasga em um véu feito pelo seu pincel.\n\nTainá cai em um mundo que apenas sua imaginação conseguiria descrever. Descobre ser uma Pigmentadora, uma guardiã destinada a trazer o equilíbrio nos nove reinos. O choque final, porém, não vem apenas da magia que adquiriu, mas do altar. A divindade a quem ela deve servir é a Deusa Celestria, a mesma mulher que habitou seus sonhos.\n\nEnquanto tenta compreender seu papel e o laço inexplicável que as prendem, duas ameaças primordiais se erguem nas sombras: a Vazio, uma titã ancestral ligada ao passado de Tainá, que anseia consumir toda a vida dos nove mundos, e um Deus traído pela própria filha — Celestria —, preso nas raízes da Árvore Celestial.\n\nO roxo e o dourado estão entrelaçados em filamentos de perigo e atração, onde o amor e o desejo entre elas são tão perigosos quanto os próprios conflitos."
+    },
+    "tropes": [
+      "Romantasia Sáfica",
+      "Found Family",
+      "Diferença de Idade",
+      "Hot +18",
+      "Queimaria o mundo por ela",
+      "Amor Perigoso",
+      "Conflitos + Magia + Guerra"
+    ],
+    "comprar": {
+      "eyebrow": "Adquira sua cópia",
+      "title": "Garanta seu Exemplar",
+      "subtitle": "Edição física exclusiva",
+      "price": "R$ 00,00",
+      "link": "#",
+      "linkLabel": "Comprar agora"
+    },
+    "membros": {
+      "eyebrow": "Área Exclusiva",
+      "title": "Torne-se uma Pigmentadora",
+      "subtitle": "Acesse conteúdo exclusivo, bastidores e o universo expandido dos Nove Reinos.",
+      "link": "membros.html",
+      "linkLabel": "Acessar Área Exclusiva"
+    }
+  },
+  "membros": {
+    "hero": {
+      "tag": "Bem-vinda, Pigmentadora",
+      "title": "Área Exclusiva",
+      "titleHighlight": "das Guardiãs",
+      "subtitle": "Você cruzou o véu. Aqui vivem os segredos dos nove reinos, as histórias que só as guardiãs conhecem."
+    },
+    "blog": [
+      {
+        "id": 1,
+        "eyebrow": "Bastidores · Criação · Exclusivo",
+        "cat": "Bastidores · Criação",
+        "title": "Como nasceu o universo das Pigmentadoras",
+        "excerpt": "Tudo começou com uma imagem recorrente nos meus sonhos: uma mulher segurando um pincel que não desenhava formas, mas rasgava a realidade. Por anos, tentei entender o que aquilo significava.\n\nA magia das Pigmentadoras nasceu da minha própria experiência com a criação literária — a sensação de que quando escrevemos, estamos de alguma forma moldando algo real. Os nove reinos surgiram quase ao mesmo tempo: não como worldbuilding planejado, mas como visões. A Árvore Celestial foi a última peça.",
+        "body": "<p>Tudo começou com uma imagem recorrente nos meus sonhos: uma mulher segurando um pincel que não desenhava formas, mas <em>rasgava a realidade</em>. Por anos, tentei entender o que aquilo significava.</p><p>A magia das Pigmentadoras nasceu da minha própria experiência com a criação literária — a sensação de que quando escrevemos, estamos de alguma forma moldando algo real. Cada vez que entrava em estado de fluxo criativo, parecia que eu tocava em algo maior do que eu mesma.</p><p>Os <strong>nove reinos</strong> surgiram quase ao mesmo tempo: não como worldbuilding planejado, mas como visões. Mentálida veio primeiro, com sua floresta neon que parecia viva. Depois Nevalis, gelada e cruel. Cada reino é um estado emocional que eu mesma já vivi.</p><p>A <strong>Árvore Celestial</strong> foi a última peça. Precisava de um eixo. Algo que conectasse tudo sem forçar a conexão. E então apareceu ela — antiga, enraizada, guardando um segredo que eu mesma demorei para descobrir enquanto escrevia.</p>",
+        "featured": true
+      },
+      {
+        "id": 2,
+        "eyebrow": "Mundo · Lore · A Árvore",
+        "cat": "Mundo · Lore",
+        "title": "A Árvore Celestial e o eixo dos nove mundos",
+        "excerpt": "A Árvore Celestial não é uma metáfora. Dentro do universo de A Escolhida da Deusa, ela é literalmente o eixo que impede os nove reinos de se dissolverem no vazio entre os mundos.",
+        "body": "<p>A <strong>Árvore Celestial</strong> não é uma metáfora. Dentro do universo de A Escolhida da Deusa, ela é literalmente o eixo que impede os nove reinos de se dissolverem no vazio entre os mundos.</p><p>Mas há um detalhe que poucos sabem: a árvore não foi plantada por Celestria. Ela <em>é</em> o resultado de um sacrifício tão antigo que nem mesmo a Deusa conhece todos os seus detalhes.</p><p>O Deus aprisionado em suas raízes — pai de Celestria — foi o arquiteto desse sacrifício. Ele se prendeu voluntariamente para que os reinos existissem. Mas com o tempo, a prisão virou rancor. E o rancor, uma ameaça.</p><p>Escrever sobre ele foi um dos maiores desafios do livro. Como criar empatia por alguém que fez o bem por razões que se tornaram veneno?</p>",
+        "featured": false
+      },
+      {
+        "id": 3,
+        "eyebrow": "Personagens · Romance Sáfico",
+        "cat": "Personagens · Análise",
+        "title": "Tainá e Celestria: o amor como ato de coragem",
+        "excerpt": "Cresci lendo fantasia. Anos de fantasia. E quase nunca via mulheres se amando em mundos de magia e deuses. Quando apareciam, eram subtramas, eram trágicas, eram punidas.",
+        "body": "<p>Cresci lendo fantasia. <em>Anos</em> de fantasia. E quase nunca via mulheres se amando em mundos de magia e deuses. Quando apareciam, eram subtramas, eram trágicas, eram punidas.</p><p>Quando escrevi <strong>Tainá</strong> pela primeira vez, sabia que ela seria escritora de romantasias sáficas dentro do próprio livro. Esse espelhamento foi intencional — ela é a artista que eu queria ter encontrado quando era jovem.</p><p><strong>Celestria</strong> surgiu como contraponto perfeito: poder absoluto, mas incapaz de controlar a única coisa que importa. O amor entre elas não é fácil, não é limpo, não é seguro. Mas é real e é central.</p><p>Para mim, escrever um romance sáfico épico sempre foi necessidade antes de ser ato político. Mas fico feliz que seja os dois.</p>",
+        "featured": false
+      },
+      {
+        "id": 4,
+        "eyebrow": "Processo · Sistema de Magia",
+        "cat": "Processo · Escrita",
+        "title": "O pincel de Tainá e a origem do sistema de magia",
+        "excerpt": "A mãe de Tainá era pintora. O pincel herdado não é uma ferramenta mágica comum — é um legado. A magia de Tainá é inseparável de quem a criou e do amor que ela carrega.",
+        "body": "<p>Por que um pincel? Essa pergunta me acompanhou durante toda a escrita. E a resposta foi chegando aos poucos.</p><p>A mãe de Tainá era pintora. E o pincel que herdou não é uma ferramenta mágica comum — é um <em>legado</em>. A magia de Tainá é inseparável de quem a criou e do amor que ela carrega.</p><p>O sistema das <strong>Pigmentadoras</strong> funciona assim: cada guardiã usa seu dom de forma diferente, mas todas elas criam. Uma modela a mente, outra o gelo, outra o fogo. A tinta de Tainá é única porque não domina um elemento natural — ela <em>domina a narrativa</em> da realidade.</p><p>Isso gerou o conflito central: como lidar com o poder de reescrever o que existe quando você ainda não sabe quem você é?</p>",
+        "featured": false
+      },
+      {
+        "id": 5,
+        "eyebrow": "Bastidores · As Guardiãs",
+        "cat": "Bastidores · As Pigmentadoras",
+        "title": "Como criei cada Pigmentadora e seu reino",
+        "excerpt": "Cada Pigmentadora começou como um arquétipo e se tornou uma pessoa. Taaf surgiu do medo que tenho de não entender minha própria mente. Agnes é a força bruta que eu admirava mas nunca me permiti ser.",
+        "body": "<p>Cada Pigmentadora começou como um arquétipo e se tornou uma pessoa. <strong>Taaf</strong>, a psíquica de Mentálida, surgiu do medo que tenho de não entender minha própria mente. <strong>Agnes</strong> é a força bruta que eu admirava mas nunca me permiti ser.</p><p><strong>Agnes</strong> foi a mais difícil. Como criar simpatia por alguém que vive em um lugar cruel e se tornou cortante também? A resposta foi: dando a ela uma condição pulmonar. A vulnerabilidade que sua própria terra impõe.</p><p>Cada uma tem uma relação específica com Celestria e com Tainá. E cada uma carrega um pedaço do segredo sobre o que realmente é o Equilíbrio.</p>",
+        "featured": false
+      },
+      {
+        "id": 6,
+        "eyebrow": "Reflexões · Primeiro Livro Físico",
+        "cat": "Reflexões · Autoria",
+        "title": "O que significa lançar meu primeiro livro físico",
+        "excerpt": "Tenho mais de dez romances publicados na Amazon. Mas nenhum deles passou pelas minhas mãos como algo físico, palpável, com cheiro de papel. A Escolhida da Deusa é diferente.",
+        "body": "<p>Tenho mais de dez romances publicados na Amazon. Mas nenhum deles passou pelas minhas mãos como algo físico, palpável, com cheiro de papel.</p><p><em>A Escolhida da Deusa</em> é diferente. E não só pela magia — pela materialidade. Pela capa impressa, pela fonte escolhida com obsessão, pelo peso nas mãos.</p><p>Esse livro é o primeiro que sai para o mundo dizendo: <strong>isso aqui é permanente</strong>. Não pode ser deletado. Não pode ser atualizado silenciosamente. Existe.</p><p>E isso, por algum motivo, assusta e liberta ao mesmo tempo.</p>",
+        "featured": false
+      },
+      {
+        "id": 7,
+        "eyebrow": "Universo · A Antagonista",
+        "cat": "Universo · Lore Expandido",
+        "title": "O Vazio: a titã que quase engoliu a história",
+        "excerpt": "Quase abandonei o livro por causa do Vazio. Não porque ela é assustadora demais — mas porque ela tomou conta da narrativa de um jeito que eu não planejei.",
+        "body": "<p>Quase abandonei o livro por causa do Vazio. Não porque ela é assustadora demais — mas porque ela tomou conta da narrativa de um jeito que eu não planejei.</p><p>O Vazio surgiu como ameaça. Uma força abstrata. Mas então descobri o laço dela com Tainá e tudo mudou. Ela não é só uma antagonista — ela é o que Tainá poderia ter se tornado se o pincel tivesse chegado às mãos erradas.</p><p>Escrever o Vazio me obrigou a entender o que significa <em>querer consumir</em>. A fome de ser reconhecida, de ser sentida, de ocupar espaço. Não é maldade. É desespero ancestral.</p><p>É o personagem que mais me assusta porque é o mais humano de todos.</p>",
+        "featured": false
+      }
+    ],
+    "pigmentadoras": [
+      {
+        "num": "01",
+        "name": "Taaf",
+        "realm": "Mentálida",
+        "power": "Magia Psíquica",
+        "color": "#d500f9",
+        "colorBg": "#2d004a",
+        "desc": "Pigmentadora Magenta. Uma guardiã amável que carrega um passado extremamente sofrido. Torna-se um alicerce essencial para a sobrevivência de Tainá nos nove reinos."
+      },
+      {
+        "num": "02",
+        "name": "Agnes",
+        "realm": "Brasas Constantes",
+        "power": "Fogo & Raio",
+        "color": "#ff3333",
+        "colorBg": "#330000",
+        "desc": "Pigmentadora Vermelha. Cortante, impaciente, mas extremamente leal. Atroz quando se trata de acabar com os inimigos. Apaixonada por Nanima."
+      },
+      {
+        "num": "03",
+        "name": "Nanima",
+        "realm": "Aqualina",
+        "power": "Água & Cura",
+        "color": "#00b0ff",
+        "colorBg": "#001833",
+        "desc": "Pigmentadora Azul. Abriu mão da realeza para servir Celestria. Calma e paciente. A maioria das Pigmentadoras acredita que ela é a mais forte dentre todas. Apaixonada por Agnes."
+      },
+      {
+        "num": "04",
+        "name": "Lunara",
+        "realm": "Luxanara",
+        "power": "Tempo & Luz",
+        "color": "#ffd600",
+        "colorBg": "#1a1400",
+        "desc": "Pigmentadora Amarela. Demorou anos para dominar sua cor. Vinda de uma família nobre e conservadora. É leve e afável."
+      },
+      {
+        "num": "05",
+        "name": "Tenebra",
+        "realm": "Caligobris",
+        "power": "Magia da Morte",
+        "color": "#aaaaaa",
+        "colorBg": "#050505",
+        "desc": "Pigmentadora Preta. Após perder o marido e o filho, rogou uma praga em seu reino. Calada e fria, tem como principal amizade Lyra."
+      },
+      {
+        "num": "06",
+        "name": "Vespera",
+        "realm": "Florivena",
+        "power": "Veneno & Sangue",
+        "color": "#00e676",
+        "colorBg": "#001a00",
+        "desc": "Pigmentadora Verde. A mais velha dentre todas. Beira quase a perversidade, embora seja leal à causa e às suas colegas."
+      },
+      {
+        "num": "07",
+        "name": "Calindra",
+        "realm": "Nevalis",
+        "power": "Vento & Gelo",
+        "color": "#b0d4ff",
+        "colorBg": "#001a33",
+        "desc": "Pigmentadora Branca. Doce, com humor ligeiramente ácido. Casada com o braço direito de Celestria, Saino. Ela e Tainá têm uma ligação espiritual muito forte."
+      },
+      {
+        "num": "08",
+        "name": "Lyra",
+        "realm": "Nuvens Exaltadas",
+        "power": "Magia Brutal",
+        "color": "#d7ccc8",
+        "colorBg": "#0a0a0a",
+        "desc": "Pigmentadora Cinza. A mais nova das Pigmentadoras. Extremamente forte e positiva. Tornou-se Pigmentadora após a morte da mãe, que também era uma."
+      },
+      {
+        "num": "09",
+        "name": "Pietra",
+        "realm": "Itaveah",
+        "power": "Pedra & Metal",
+        "color": "#8d6e63",
+        "colorBg": "#1a0f00",
+        "desc": "Pigmentadora Marrom. Mãe de duas meninas, faz poucas missões. Extremamente poderosa em batalhas e resistente a mudanças. Embora reservada, gosta de ter as Pigmentadoras reunidas."
+      }
+    ],
+    "reinos": [
+      {
+        "name": "Mentálida",
+        "sub": "Gema Magenta",
+        "color": "#d500f9",
+        "resident": "Taaf",
+        "text": "Reino dos psíquicos, mediúnicos e manipuladores de mente. Cercado por floresta tropical neon, com estruturas baixas, coloridas e palácios em formato pirâmide. Poucas mulheres nascem com habilidades, mas quando aparecem são as mais fortes do reino."
+      },
+      {
+        "name": "Nevalis",
+        "sub": "Gema Branca",
+        "color": "#e0e0e0",
+        "resident": "Calindra",
+        "text": "Lar do gelo e do vento castigador. Os seres desse local não usam as habilidades diretamente com as mãos — usam armas de fogo encantadas. O excesso de luz e a falta de calor desenham as personalidades."
+      },
+      {
+        "name": "Brasas Constantes",
+        "sub": "Gema Vermelha",
+        "color": "#ff3333",
+        "resident": "Agnes",
+        "text": "Lugar cruel cercado por vulcões. Forjado por guerreiros e guerreiras. Seus habitantes possuem uma condição pulmonar degenerativa. Aqueles que conseguem envelhecer tornam-se figuras sagradas."
+      },
+      {
+        "name": "Luxanara",
+        "sub": "Gema Amarela",
+        "color": "#ffd600",
+        "resident": "Lunara",
+        "text": "Um local próspero, lindo e totalmente organizado. Entre zepelins e autônomos, os moradores buscam pela paz acima de tudo."
+      },
+      {
+        "name": "Florivena",
+        "sub": "Gema Verde",
+        "color": "#00e676",
+        "resident": "Vespera",
+        "text": "Onde escombros de uma cidade esquecida e casas de madeira são construídas como enfeites de árvores de Natal. Os Floriveranos possuem chifres, e neles crescem flores, frutos ou ervas."
+      },
+      {
+        "name": "Itaveah",
+        "sub": "Gema Marrom",
+        "color": "#8d6e63",
+        "resident": "Pietra",
+        "text": "Reino escondido dentro de montanhas e casas feitas por gemas coloridas e cavernas. Lá a noite e o dia não existem — apenas a luz permanente das pedras."
+      },
+      {
+        "name": "Caligobris",
+        "sub": "Gema Preta",
+        "color": "#888888",
+        "resident": "Tenebra",
+        "text": "Um reino medieval onde o sol não é permitido. Castelos, torres e muralhas. Seus habitantes brincam com a morte e os espíritos como quem lida com vizinhos."
+      },
+      {
+        "name": "Nuvens Exaltadas",
+        "sub": "Gema Cinza",
+        "color": "#d7ccc8",
+        "resident": "Lyra",
+        "text": "Reino feito de ilhotas flutuantes conectadas por pontes e cachoeiras. Quase todos se transformam em diferentes animais — exceto Lyra, que guarda um poder diferente."
+      },
+      {
+        "name": "Aqualina",
+        "sub": "Gema Azul",
+        "color": "#00b0ff",
+        "resident": "Nanima",
+        "text": "Reino híbrido entre oceano e terra firme. Lar dos grandes artistas dos nove reinos. Seus habitantes têm a capacidade de criar caudas aquáticas."
+      }
+    ],
+    "gallery": [
+      {
+        "title": "Tainá — A Pigmentadora",
+        "thumb": "src/assets/gallery/Tainá 2.jpg",
+        "download": "src/assets/gallery/Tainá 2.png"
+      },
+      {
+        "title": "Celestria — A Deusa",
+        "thumb": "src/assets/gallery/Celestria 2.jpg",
+        "download": "src/assets/gallery/Celestria 2.png"
+      },
+      {
+        "title": "A Escolhida da Deusa — Capa Completa",
+        "thumb": "src/assets/gallery/capa.jpg",
+        "download": "src/assets/gallery/capa.png"
+      },
+      {
+        "title": "A Escolhida da Deusa — Celestria e Tainá",
+        "thumb": "src/assets/gallery/arte 1.jpg",
+        "download": "src/assets/gallery/arte 1.png"
+      },
+      {
+        "title": "A Escolhida da Deusa — Celestria e Tainá",
+        "thumb": "src/assets/gallery/arte 2.jpg",
+        "download": "src/assets/gallery/arte 2.png"
+      },
+      {
+        "title": "A Escolhida da Deusa — Celestria e Tainá",
+        "thumb": "src/assets/gallery/arte 3.jpg",
+        "download": "src/assets/gallery/arte 3.png"
+      },
+      {
+        "title": "A Escolhida da Deusa — Celestria e Tainá",
+        "thumb": "src/assets/gallery/arte 4.jpg",
+        "download": "src/assets/gallery/arte 4.png"
+      }
+    ]
+  }
+}

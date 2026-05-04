@@ -1,0 +1,16 @@
+{
+  "name": "mariana-rosa-site",
+  "version": "1.0.0",
+  "description": "Site A Escolhida da Deusa — Mariana Rosa",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "devDependencies": {
+    "vercel": "^37.0.0"
+  }
+}
