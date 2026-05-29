@@ -1003,6 +1003,13 @@
             >
               <span class="nav-icon">🏠</span> Página Principal
             </button>
+            <button
+              class="nav-item"
+              data-panel="leads"
+              onclick="switchPanel(this)"
+            >
+              <span class="nav-icon">📧</span> Contatos Capturados
+            </button>
             <div class="nav-group-label">Área de Membros</div>
             <button
               class="nav-item"
@@ -1165,6 +1172,31 @@
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+
+            <!-- ── LEADS / CONTATOS ── -->
+            <div class="panel" id="panel-leads">
+              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px;">
+                <div class="section-label" style="margin: 0">Contatos Capturados</div>
+                <button class="btn-preview" onclick="exportLeadsCSV()">📥 Exportar CSV</button>
+              </div>
+              <div class="helper" style="margin-bottom: 16px;">
+                Esta lista carrega diretamente os e-mails registrados no banco de dados via Magic Link.
+              </div>
+              <div style="overflow-x: auto; background: linear-gradient(135deg, #1a003022, #0d001222); border: 1px solid var(--border);">
+                <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem;">
+                  <thead>
+                    <tr style="border-bottom: 1px solid var(--border); color: var(--gold-dim); background: #1a002888;">
+                      <th style="padding: 12px 16px; font-family: 'Cinzel', serif;">E-mail</th>
+                      <th style="padding: 12px 16px; font-family: 'Cinzel', serif;">Data de Cadastro</th>
+                      <th style="padding: 12px 16px; font-family: 'Cinzel', serif;">Último Acesso</th>
+                    </tr>
+                  </thead>
+                  <tbody id="leadsTableBody">
+                    <tr><td colspan="3" style="padding: 16px; color: var(--text-muted); text-align: center;">Carregando contatos...</td></tr>
+                  </tbody>
+                </table>
               </div>
             </div>
 
@@ -1659,9 +1691,70 @@
           document.getElementById("app").style.display = "block";
           populateAll();
           updateDashboard();
+          fetchLeads();
         } catch (e) {
           showErr("Erro ao carregar conteúdo: " + e.message);
         }
+      }
+
+      // ═══════════════════════════════════════════
+      // LEADS (CONTATOS)
+      // ═══════════════════════════════════════════
+      let leadsData = [];
+      async function fetchLeads() {
+        try {
+          const res = await fetch("/api/get-leads", {
+            headers: {
+              "Authorization": "Bearer " + token
+            }
+          });
+          if (!res.ok) throw new Error("Falha ao buscar leads");
+          const data = await res.json();
+          leadsData = data.leads || [];
+          renderLeads();
+        } catch (e) {
+          console.error(e);
+          const tbody = document.getElementById("leadsTableBody");
+          if (tbody) tbody.innerHTML = `<tr><td colspan="3" style="padding:16px;color:var(--red);text-align:center;">Erro ao carregar contatos. Configure o SUPABASE_SERVICE_ROLE_KEY no Vercel.</td></tr>`;
+        }
+      }
+
+      function renderLeads() {
+        const tbody = document.getElementById("leadsTableBody");
+        if (!tbody) return;
+        if (leadsData.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="3" style="padding:16px;color:var(--text-muted);text-align:center;">Nenhum contato encontrado.</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = leadsData.map(l => `
+          <tr style="border-bottom: 1px solid var(--border); transition: background 0.3s;" onmouseover="this.style.background='#c9a84c0a'" onmouseout="this.style.background='transparent'">
+            <td style="padding: 12px 16px; color: var(--text);">${l.email}</td>
+            <td style="padding: 12px 16px; color: var(--text-muted);">${new Date(l.created_at).toLocaleString('pt-BR')}</td>
+            <td style="padding: 12px 16px; color: var(--text-muted);">${l.last_sign_in_at ? new Date(l.last_sign_in_at).toLocaleString('pt-BR') : '-'}</td>
+          </tr>
+        `).join('');
+      }
+
+      function exportLeadsCSV() {
+        if (!leadsData || leadsData.length === 0) {
+          toast("Não há dados para exportar", "error");
+          return;
+        }
+        const headers = ["E-mail", "Data de Cadastro", "Último Acesso"];
+        const rows = leadsData.map(l => [
+          l.email,
+          new Date(l.created_at).toLocaleString('pt-BR'),
+          l.last_sign_in_at ? new Date(l.last_sign_in_at).toLocaleString('pt-BR') : '-'
+        ]);
+        const csvContent = [headers.join(","), ...rows.map(r => r.join(","))].join("\\n");
+        const blob = new Blob(["\\ufeff" + csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", "contatos_capturados.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
       }
 
       // ═══════════════════════════════════════════
@@ -1670,6 +1763,7 @@
       const PANEL_TITLES = {
         dashboard: "Dashboard",
         index: "Página Principal",
+        leads: "Contatos Capturados",
         blog: "Diário da Autora",
         galeria: "Galeria",
         pigmentadoras: "As Pigmentadoras",
