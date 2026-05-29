@@ -3022,8 +3022,10 @@
         if (subEl) {
           if (data.nome === "Cidade Celestial") {
             subEl.textContent = "Gema Dourada · O Coração dos Nove Reinos";
+            subEl.style.display = "";
           } else {
-            subEl.textContent = `${data.gema} · Guardiã: ${data.pigmentadora}`;
+            subEl.textContent = "";
+            subEl.style.display = "none";
           }
         }
         if (textoEl) {
