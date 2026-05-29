@@ -367,6 +367,17 @@
         padding: 120px 24px 80px;
         text-align: center;
       }
+      .welcome-hero::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 150px;
+        background: linear-gradient(to bottom, transparent, var(--purple-deep));
+        pointer-events: none;
+        z-index: 1;
+      }
       .welcome-bg {
         position: absolute;
         inset: 0;
