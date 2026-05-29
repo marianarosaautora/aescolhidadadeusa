@@ -25,7 +25,7 @@ const newBlog = [
     cat: "Personagens · Análise",
     title: "Tainá e Celestria: o amor como ato de coragem",
     excerpt: "Na minha perspectiva, Tainá amava Celestria antes mesmo de conhecê-la — ou, ao menos, amava a ideia que tinha dela.",
-    body: "<p>Na minha perspectiva, Tainá amava Celestria antes mesmo de conhecê-la — ou, ao menos, amava a ideia que tinha dela. Muitas vezes, como autora, eu me apego às minhas personagens quando começo a desenhá-las in minha mente, e acho que Tainá deu um passo além e se apaixonou pela mulher de seus sonhos. Sua sorte foi que Celestria existia de verdade e, quando ela a encontrou pela primeira vez no salão da Deusa, Tainá apenas confirmou que já sabia, que sempre foi apaixonada por Celestria antes mesmo de conhecê-la.</p><p>Acredito que, para Celestria, foi um processo um pouco mais longo por causa de todas as suas amarras e do seu passado. Mas acho que o fato de ela sentir Tainá, a sua cor roxa e a devoção a ajudou a desatar todos esses nós. Acho que foi estarrecedor para Celestria sentir tudo isso, algo que a pegou totalmente desprevenida e ela gostou disso.</p><p>De certa forma, Tainá a desafia também, de uma maneira diferente de todas as outras Pigmentadoras. Tainá veio para sacudir o marasmo de seu poder como guardiã da Árvore e foi isso o que lhe chamou a atenção.</p><p>Na minha cabeça é assim: Tainá fell first, Celestria fell harder.</p><p>Tainá se apaixonou primeiro, mas Celestria se apaixonou com mais intensidade.</p>",
+    body: "<p>Na minha perspectiva, Tainá amava Celestria antes mesmo de conhecê-la — ou, ao menos, amava a ideia que tinha dela. Muitas vezes, como autora, eu me apego às minhas personagens quando começo a desenhá-las em minha mente, e acho que Tainá deu um passo além e se apaixonou pela mulher de seus sonhos. Sua sorte foi que Celestria existia de verdade e, quando ela a encontrou pela primeira vez no salão da Deusa, Tainá apenas confirmou que já sabia, que sempre foi apaixonada por Celestria antes mesmo de conhecê-la.</p><p>Acredito que, para Celestria, foi um processo um pouco mais longo por causa de todas as suas amarras e do seu passado. Mas acho que o fato de ela sentir Tainá, a sua cor roxa e a devoção a ajudou a desatar todos esses nós. Acho que foi estarrecedor para Celestria sentir tudo isso, algo que a pegou totalmente desprevenida e ela gostou disso.</p><p>De certa forma, Tainá a desafia também, de uma maneira diferente de todas as outras Pigmentadoras. Tainá veio para sacudir o marasmo de seu poder como guardiã da Árvore e foi isso o que lhe chamou a atenção.</p><p>Na minha cabeça é assim: Tainá fell first, Celestria fell harder.</p><p>Tainá se apaixonou primeiro, mas Celestria se apaixonou com mais intensidade.</p>",
     featured: false
   },
   {
@@ -145,7 +145,7 @@ const newPigmentadoras = [
     color: "#d7ccc8",
     colorBg: "#0a0a0a",
     desc: "Engraçada é a mais nova das Pigmentadoras, Lyra é extremamente forte e positiva. Tornou-se Pigmentadora após a morte da mãe, que também era uma.",
-    bio: "Filha de uma das mais respeitadas Pigmentadoras da Deusa — vinda das Nuvens Exaltadas — Lyra herdou o pincel cinza da mãe, forjado em bravura e poder. Embora, durante muitos anos, tivesse dificuldade de controlá-lo, já que o artefato foi moldado especialmente para sua mãe e não para ela.\n\nA mãe de Lyra pereceu em uma missão, morrendo na grande terceira guerra dos Brasas Constante e deixando para a filha um legado tão vasto quanto difícil de carregar. Por anos, sua progenitora foi amante de Celestria, e foi sob as asas dessa divindade que Lyra encontrou refúgio e um lar.\n\nMovida por essa ligação, Celestria moldou o caminho da jovem, através de uma promessa: ao completar vinte e cinco anos, Lyra se tornaria a nova Pigmentadora Cinza. Criada entre os galhos da Árvore Celestial e educada pelos Informantes, Lyra adquiriu um conhecimento sobre os reinos que nenhuma outra de sua casta jamais possuiu.\n\nSua ligação com Tenebra foi extremamente importante para o seu crescimento. Ambas vieram da dor da perda, embora Lyra não se lembrasse de sua mãe. As duas tão diferentes encaixaram-se perfeitamente, formando uma das amizades mais fortes entre Pigmentadoras."
+    bio: "Filha de uma das mais respeitadas Pigmentadoras da Deusa — vinda das Nuvens Exaltadas — Lyra herdou o pincel cinza da mãe, forjado em bravura e poder. Embora, durante muitos anos, tivesse dificuldade de controlá-lo, já que o artefato foi moldado especialmente para sua mãe e não para ela.\n\nA mãe de Lyra pereceu em uma missão, morrendo na grande terceira guerra dos Brasas Constante e deixando para a filha um legado tão vasto quanto difícil de carregar. Por agora, sua progenitora foi amante de Celestria, e foi sob as asas dessa divindade que Lyra encontrou refúgio e um lar.\n\nMovida por essa ligação, Celestria moldou o caminho da jovem, através de uma promessa: ao completar vinte e cinco anos, Lyra se tornaria a nova Pigmentadora Cinza. Criada entre os galhos da Árvore Celestial e educada pelos Informantes, Lyra adquiriu um conhecimento sobre os reinos que nenhuma outra de sua casta jamais possuiu.\n\nSua ligação com Tenebra foi extremamente importante para o seu crescimento. Ambas vieram da dor da perda, embora Lyra não se lembrasse de sua mãe. As duas tão diferentes encaixaram-se perfeitamente, formando uma das amizades mais fortes entre Pigmentadoras."
   },
   {
     num: "09",
@@ -243,7 +243,7 @@ const newReinos = [
       },
       {
         icon: "◈",
-        texto: "O mundo é conhecido por uma condição pulmonar que afeta a maioria de seus habitantes — uma doença térmica degenerativa que compromete a respiração com o tempo. Os habitantes vivem mais do que os humanos, mas poucos chegam à velhice."
+        texto: "O mundo é conhecido por uma condição pulmonar que afeta a maioria de seus habitantes — uma doença térmica degenerativa que compromete a respiracão com o tempo. Os habitantes vivem mais do que os humanos, mas poucos chegam à velhice."
       },
       {
         icon: "◈",
@@ -288,7 +288,7 @@ const newReinos = [
       },
       {
         icon: "◈",
-        texto: "Por meio de um dispositivo, a cor dada por Celestria é inserida in um corpo humanoide e, com o passar dos anos, essa “casca” envelhece. Após esse ciclo, a cor é retirada e transferida para um novo corpo, renovando assim o ser. A cor é renovada a cada novo ciclo, sendo assim, quando ela é inserida na casca humanoide, a cor não carrega lembranças das “vidas” passadas."
+        texto: "Por meio de um dispositivo, a cor dada por Celestria é inserida em um corpo humanoide e, com o passar dos anos, essa “casca” envelhece. Após esse ciclo, a cor é retirada e transferida para um novo corpo, renovando assim o ser. A cor é renovada a cada novo ciclo, sendo assim, quando ela é inserida na casca humanoide, a cor não carrega lembranças das “vidas” passadas."
       },
       {
         icon: "◈",
@@ -296,7 +296,7 @@ const newReinos = [
       },
       {
         icon: "◈",
-        texto: "Os primeiros Felcor organizam-se in famílias respeitadas, cada uma com um símbolo que representa seu poder. É o caso da família de Lunara, cujo símbolo é a ampulheta."
+        texto: "Os primeiros Felcor organizam-se em famílias respeitadas, cada uma com um símbolo que representa seu poder. É o caso da família de Lunara, cujo símbolo é a ampulheta."
       },
       {
         icon: "◈",
@@ -317,7 +317,7 @@ const newReinos = [
     lore: [
       {
         icon: "◈",
-        texto: "Uma vez, a sociedade do reino já foi altamente evoluída e tecnológica, contudo, após uma extinção em massa, a natureza e a vida animal invadiram as grandes cidades. Aqueles que sobreviveram utilizaram o que havia restado dos grandes arranha-céus para construir suas casas."
+        texto: "Uma vez, a sociedade do reino já foi altamente evoluída e tecnológica, contudo, após uma extinção em massa, a natureza e a vida animal invadiram as grandes cidades. Aquele que sobreviveram utilizaram o que havia restado dos grandes arranha-céus para construir suas casas."
       },
       {
         icon: "◈",
@@ -354,7 +354,7 @@ const newReinos = [
       },
       {
         icon: "◈",
-        texto: "As cidades não possuem chão. As casas luminosas se erguem in níveis suspensos, moldadas na rocha e conectadas por pontes naturais que serpenteiam entre os abismos colossais. Como em Florivena, seus habitantes aprenderam a aproveitar cada curva, fenda e parede do ambiente, transformando o próprio relevo em lar."
+        texto: "As cidades não possuem chão. As casas luminosas se erguem em níveis suspensos, moldadas na rocha e conectadas por pontes naturais que serpenteiam entre os abismos colossais. Como em Florivena, seus habitantes aprenderam a aproveitar cada curva, fenda e parede do ambiente, transformando o próprio relevo em lar."
       },
       {
         icon: "◈",
@@ -436,7 +436,7 @@ const newReinos = [
       },
       {
         icon: "◈",
-        texto: "Os habitantes, conhecidos como Exaltantes, vivem conectados à rica natureza do reino. Organizam-se in tribos ou vilas e seguem um sistema de subsistência baseado na codependência, onde cada indivíduo desempenha um papel essencial para o equilíbrio coletivo. Funciona, até certo ponto, já que a individualidade muitas vezes é deturpada."
+        texto: "Os habitantes, conhecidos como Exaltantes, vivem conectados à rica natureza do reino. Organizam-se em tribos ou vilas e seguem um sistema de subsistência baseado na codependência, onde cada indivíduo desempenha um papel essencial para o equilíbrio coletivo. Funciona, até certo ponto, já que a individualidade muitas vezes é deturpada."
       },
       {
         icon: "◈",
@@ -480,35 +480,6 @@ const newReinos = [
         texto: "Os moradores de Aqualina são grandes artistas e intelectuais, onde pintam delicadas ilustrações em grandes conchas abertas e descobrem curas para as doenças que circulam no reino. A paz é tão “excessiva” que os seres vivem em uma ociosidade angustiante. Aqueles que tentam mudar alguma coisa, são presos nas cavernas subaquáticas. Nanima foi um desses seres. Princesa do reino. Antes, porém, que pudesse ser presa, Celestria a chamou para ser Pigmentadora."
       }
     ]
-  },
-  {
-    nome: "Cidade Celestial",
-    sigla: "C",
-    gema: "Gema Dourada",
-    rc: "#ffd700",
-    rcBg: "#1a1400",
-    pigmentadora: "Celestria",
-    num: "10",
-    delay: "0.54s",
-    descricao: "Onde as Pigmentadoras vivem junto à Celestria. Lá a grande Árvore reside, assim como os moradores selecionados dos outros reinos. Um local em que a harmonia da fauna e da flora e da mistura da arquitetura são permitidas.",
-    lore: [
-      {
-        icon: "◈",
-        texto: "A cidade perfeita cresce sob a Grande Árvore Celestial. Embora pequena em extensão e controlada para que tudo aconteça harmoniosamente, ela é um microcosmo, abrigando em si a essência e os biomas dos nove reinos."
-      },
-      {
-        icon: "◈",
-        texto: "Formando nove distritos, cada um deles mantém a natureza, os animais, a arquitetura e a cultura dos reinos. Os distritos se organizam em um gracioso leque a partir do centro, onde a arquitetura reflete o gosto etéreo de Celestria. Apesar de todos os reinos presentes, é a lei da divindade que predomina."
-      },
-      {
-        icon: "◈",
-        texto: "Na cidade Celestial, a vida possui um propósito compartilhado: cada habitante, à sua maneira, dedica-se à manutenção e ao equilíbrio da Grande Árvore. Em troca, recebem a Bênção de Celestria. Este dom não apenas os torna resistentes às variações climáticas de cada bioma, mas lhes dá a oportunidade da compreensão do dialeto de cada reino, fazendo com que todos se compreendam mutuamente."
-      },
-      {
-        icon: "◈",
-        texto: "É, em todos os sentidos, a cidade perfeita."
-      }
-    ]
   }
 ];
 
@@ -518,4 +489,4 @@ data.membros.pigmentadoras = newPigmentadoras;
 data.membros.reinos = newReinos;
 
 fs.writeFileSync('public/content.json', JSON.stringify(data, null, 2), 'utf8');
-console.log('content.json updated successfully with exact author texts for Pigmentadoras and Reinos (including Cidade Celestial).');
+console.log('content.json updated successfully (original 9 reinos in grid, Cidade Celestial removed from array).');
