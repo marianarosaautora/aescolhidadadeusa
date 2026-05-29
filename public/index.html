@@ -1575,6 +1575,30 @@
         .book-section {
           gap: 40px;
         }
+        .book-info {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          margin: 0 auto;
+        }
+        .book-label {
+          justify-content: center;
+        }
+        .book-label::after {
+          content: "";
+          display: block;
+          width: 40px;
+          height: 1px;
+          background: var(--gold-dim);
+        }
+        .book-genre-tags {
+          justify-content: center;
+        }
+        .book-ctas {
+          justify-content: center;
+          width: 100%;
+        }
         .book-cover-frame {
           width: 220px;
         }
@@ -1759,7 +1783,7 @@
           <span class="genre-tag">Sáfico</span>
           <span class="genre-tag">Magia</span>
         </div>
-        <div style="display: flex; gap: 16px; flex-wrap: wrap">
+        <div style="display: flex; gap: 16px; flex-wrap: wrap" class="book-ctas">
           <a href="https://amzn.to/4wVBjIC" target="_blank" class="btn-gold">Comprar</a>
           <a href="#sinopse" class="btn-ghost">Ler sinopse</a>
         </div>
