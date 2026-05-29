@@ -3,13 +3,8 @@ const fs = require('fs');
 let html = fs.readFileSync('public/membros.html', 'utf8');
 
 // 1. Replace hardcoded blog HTML with a dynamic container
-// We find <div class="blog-feat"> until the end of the blog section.
-// Actually, the blog section ends just before:
-//    <section id="personagens" class="membros-section">
-// Or we can just replace <div class="blog-feat">...</div> and <div class="blog-grid">...</div>
-// Let's be safer and replace from <div class="blog-feat"> up to <div class="blog-modal-overlay"
-const blogRegex = /<div class="blog-feat">[\s\S]*?(?=<div class="blog-modal-overlay" id="blogModal">)/;
-const newBlogHtml = `<div id="dynamicBlogContainer"></div>\n          `;
+const blogRegex = /<div class="blog-featured reveal">[\s\S]*?(?=<\/div>\s*<\/section>\s*<!-- BLOG MODAL -->)/;
+const newBlogHtml = `<div id="dynamicBlogContainer"></div>\n        `;
 html = html.replace(blogRegex, newBlogHtml);
 
 // 2. Replace hardcoded JS arrays with fetch logic
@@ -46,22 +41,31 @@ const newDataJs = `// ══ DADOS DO SITE (FETCH) ══
 
       function renderBlog() {
         const container = document.getElementById("dynamicBlogContainer");
-        if (!container) return;
+        if (!container) {
+          console.error("dynamicBlogContainer not found!");
+          return;
+        }
 
         const featured = BLOG_POSTS.find(p => p.featured) || BLOG_POSTS[0];
         const others = BLOG_POSTS.filter(p => p !== featured);
 
-        let htmlStr = '<div class="blog-feat">' +
-          '<div class="blog-feat-content reveal">' +
-            '<div class="blog-feat-tag">' +
-              '<span class="blog-tag featured">Exclusivo</span>' +
-              '<span class="blog-tag">' + featured.cat + '</span>' +
+        let htmlStr = '<div class="blog-featured reveal">' +
+          '<div class="blog-feat-body">' +
+            '<div>' +
+              '<div class="blog-feat-num">01</div>' +
+              '<div class="blog-feat-tag">' +
+                '<span class="blog-tag featured">Exclusivo</span>' +
+                '<span class="blog-tag">' + featured.cat + '</span>' +
+              '</div>' +
+              '<h3 class="blog-feat-title">' + featured.title + '</h3>' +
+              '<p class="blog-feat-excerpt">' + featured.excerpt + '</p>' +
             '</div>' +
-            '<h3 class="blog-feat-title">' + featured.title + '</h3>' +
-            '<p class="blog-feat-excerpt">' + featured.excerpt + '</p>' +
-            '<a href="#" class="btn-gold" onclick="openBlogModal(' + featured.id + '); return false;">Ler Diário</a>' +
+            '<a href="#" class="blog-read-link" onclick="openBlogModal(' + featured.id + '); return false;">Ler o diário completo &rarr;</a>' +
           '</div>' +
-          '<div class="blog-feat-particles" id="featParticles"></div>' +
+          '<div class="blog-feat-visual">' +
+            '<div class="blog-feat-particles" id="featParticles"></div>' +
+            '<img src="src/assets/capasemtexto.png" class="blog-feat-rune feat-img-custom" alt="Runa"/>' +
+          '</div>' +
         '</div>' +
         '<div class="blog-grid">';
 
@@ -93,13 +97,12 @@ const newDataJs = `// ══ DADOS DO SITE (FETCH) ══
         }
       }
 
-      `;
+      // ══ SUPABASE CONFIG E AUTENTICAÇÃO ══`;
 
 html = html.replace(dataRegex, newDataJs);
 
-// 3. Remove the initial render calls inside INICIALIZAÇÃO since loadSiteData handles it
-// We need to remove GALLERY RENDER, PIGMENTADORAS RENDER, REINOS RENDER
-const renderRegex = /\/\/ ══ GALLERY RENDER ══[\s\S]*?(?=\/\/ ══ SMOOTH NAV ══)/;
+// 3. Replace the old render loops with our dynamic functions
+const renderRegex = /\/\/ ── GALLERY RENDER ──[\s\S]*?(?=\/\/ ── SMOOTH NAV ──)/;
 
 const newRenderJs = `// ══ RENDER FUNCTIONS ══
         function renderGallery() {
@@ -123,7 +126,7 @@ const newRenderJs = `// ══ RENDER FUNCTIONS ══
             const card = document.createElement("div");
             card.className = "pigment-card reveal";
             card.style.cssText = '--pc:' + (p.color || p.pc) + ';--pc-bg:' + (p.colorBg || p.pcBg) + ';--pc-stroke:' + (p.color || p.pc) + '55;--pc-glow:' + (p.color || p.pc) + '33;transition-delay:' + (i * 0.06) + 's;';
-            card.innerHTML = '<div class="pigment-card-top"><div class="pigment-card-bg"></div><div class="pigment-card-rune">' + p.name.charAt(0) + '</div><div class="pigment-card-number">' + p.num + '</div><div class="pigment-card-gem"><svg viewBox="0 0 24 24"><use href="#gem"/></svg></div></div><div class="pigment-card-body"><div class="pigment-card-realm">' + p.realm + '</div><div class="pigment-card-name">' + p.name + '</div><div class="pigment-card-power">' + p.power + '</div><p class="pigment-card-desc">' + p.desc + '</p></div>';
+            card.innerHTML = '<div class="pigment-card-top"><div class="pigment-card-bg"></div><div class="pigment-card-rune">' + (p.rune || p.name.charAt(0)) + '</div><div class="pigment-card-number">' + p.num + '</div><div class="pigment-card-gem"><svg viewBox="0 0 24 24"><use href="#gem"/></svg></div></div><div class="pigment-card-body"><div class="pigment-card-realm">' + p.realm + '</div><div class="pigment-card-name">' + p.name + '</div><div class="pigment-card-power">' + p.power + '</div><p class="pigment-card-desc">' + p.desc + '</p></div>';
             carousel.appendChild(card);
           });
         }
@@ -133,19 +136,19 @@ const newRenderJs = `// ══ RENDER FUNCTIONS ══
           if(!reinosGrid) return;
           reinosGrid.innerHTML = "";
           REINOS_DATA.forEach((r, i) => {
-            const delay = i * 0.1 + 's';
+            const delay = (r.delay || (i * 0.1)) + (typeof r.delay === 'string' ? '' : 's');
             const div = document.createElement("div");
             div.className = "reino-card-exclusivo reveal";
             div.style.cssText = '--rc:' + r.rc + ';--rc-bg:' + r.rcBg + ';--rc-border:' + r.rc + '22;--card-delay:' + delay + ';transition-delay:' + delay + ';';
-            let loreHtml = r.lore.map((l) => '<div class="reino-lore-item"><span class="lore-icon">' + l.icon + '</span><p class="lore-texto">' + l.texto + '</p></div>').join("");
-            div.innerHTML = '<div class="reino-visual"><div class="reino-visual-bg"></div><div class="reino-visual-pattern"></div><div class="reino-sigla">' + r.sigla + '</div><div class="reino-numero">' + r.num + '</div><div class="reino-gem-icon"><svg viewBox="0 0 24 24"><use href="#gem"/></svg></div></div><div class="reino-corpo"><div class="reino-nome">' + r.nome + '</div><div class="reino-gema">' + r.gema + '</div><div class="reino-pigmentadora">✦ ' + r.pigmentadora + '</div><p class="reino-descricao">' + r.descricao + '</p><div class="reino-lore"><div class="reino-lore-titulo">Lore exclusivo</div>' + loreHtml + '</div></div>';
+            let loreHtml = r.lore ? r.lore.map((l) => '<div class="reino-lore-item"><span class="lore-icon">' + l.icon + '</span><p class="lore-texto">' + l.texto + '</p></div>').join("") : "";
+            div.innerHTML = '<div class="reino-visual"><div class="reino-visual-bg"></div><div class="reino-visual-pattern"></div><div class="reino-sigla">' + (r.sigla || r.num) + '</div><div class="reino-numero">' + r.num + '</div><div class="reino-gem-icon"><svg viewBox="0 0 24 24"><use href="#gem"/></svg></div></div><div class="reino-corpo"><div class="reino-nome">' + r.nome + '</div><div class="reino-gema">' + r.gema + '</div><div class="reino-pigmentadora">✦ ' + r.pigmentadora + '</div><p class="reino-descricao">' + r.descricao + '</p><div class="reino-lore"><div class="reino-lore-titulo">Lore exclusivo</div>' + loreHtml + '</div></div>';
             reinosGrid.appendChild(div);
           });
         }
 
         loadSiteData();
-        
-        `;
+
+        // ── SMOOTH NAV ──`;
 
 html = html.replace(renderRegex, newRenderJs);
 

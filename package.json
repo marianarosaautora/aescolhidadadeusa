@@ -8,5 +8,8 @@
   },
   "scripts": {
     "dev": "vercel dev"
+  },
+  "dependencies": {
+    "jsdom": "^29.1.1"
   }
 }
