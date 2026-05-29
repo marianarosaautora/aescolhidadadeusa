@@ -1483,6 +1483,36 @@
       .nav-cta:hover {
         filter: brightness(1.15);
       }
+      .nav-hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 24px;
+        height: 16px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        z-index: 110;
+        margin-left: 16px;
+      }
+      .nav-hamburger span {
+        display: block;
+        width: 100%;
+        height: 2px;
+        background-color: var(--gold);
+        transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
+        border-radius: 2px;
+      }
+      .nav-hamburger.open span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+      .nav-hamburger.open span:nth-child(2) {
+        opacity: 0;
+      }
+      .nav-hamburger.open span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+      }
 
       /* ── ANIMATIONS ── */
       @keyframes fadeUp {
@@ -1555,8 +1585,33 @@
         .scroll-hint {
           display: none;
         }
+        .nav-hamburger {
+          display: flex;
+        }
         .nav-links {
-          display: none;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100vh;
+          background: rgba(13, 0, 16, 0.98);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          z-index: 105;
+          gap: 32px;
+          transform: translateY(-100%);
+          transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .nav-links.open {
+          transform: translateY(0);
+        }
+        .nav-links a {
+          font-size: 1.1rem;
+          letter-spacing: 0.3em;
         }
         .char-duo {
           grid-template-columns: 1fr;
@@ -1697,7 +1752,14 @@
           <li><a href="#autora">Autora</a></li>
         </ul>
       </nav>
-      <a href="https://amzn.to/4wVBjIC" target="_blank" class="nav-cta">Comprar</a>
+      <div style="display: flex; align-items: center; z-index: 110;">
+        <a href="https://amzn.to/4wVBjIC" target="_blank" class="nav-cta">Comprar</a>
+        <button class="nav-hamburger" aria-label="Abrir menu" onclick="toggleMobileMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
     </header>
 
     <!-- HERO -->
@@ -2294,6 +2356,41 @@
           const id = a.getAttribute("href").replace("#", "");
           const el = id === "top" ? document.body : document.getElementById(id);
           if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      });
+
+      // ── HAMBURGER MENU ──
+      function toggleMobileMenu() {
+        const menu = document.querySelector('.nav-links');
+        const burger = document.querySelector('.nav-hamburger');
+        if (!menu || !burger) return;
+        menu.classList.toggle('open');
+        burger.classList.toggle('open');
+        
+        if (menu.classList.contains('open')) {
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.body.style.overflow = '';
+        }
+      }
+
+      // Export to window so inline onclick works
+      window.toggleMobileMenu = toggleMobileMenu;
+
+      function closeMobileMenu() {
+        const menu = document.querySelector('.nav-links');
+        const burger = document.querySelector('.nav-hamburger');
+        if (menu) menu.classList.remove('open');
+        if (burger) burger.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      window.closeMobileMenu = closeMobileMenu;
+
+      // Close mobile menu when clicking any nav link
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+          closeMobileMenu();
         });
       });
     </script>
