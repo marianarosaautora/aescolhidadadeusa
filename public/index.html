@@ -1433,6 +1433,9 @@
         text-decoration: none;
         letter-spacing: 0.04em;
       }
+      .nav-mobile-only {
+        display: none;
+      }
       .nav-links {
         display: flex;
         gap: 36px;
@@ -1577,6 +1580,12 @@
       @media (max-width: 768px) {
         header {
           padding: 16px 20px;
+        }
+        .nav-logo {
+          font-size: 0.85rem;
+        }
+        .nav-mobile-only {
+          display: block;
         }
         .hero {
           min-height: auto;
@@ -1750,6 +1759,7 @@
           <li><a href="#personagens">Personagens</a></li>
           <li><a href="#blog">Blog</a></li>
           <li><a href="#autora">Autora</a></li>
+          <li class="nav-mobile-only"><a href="https://amzn.to/4wVBjIC" target="_blank" class="btn-gold" style="font-size: 0.75rem; padding: 10px 24px; margin-top: 16px; display: inline-block;">Comprar</a></li>
         </ul>
       </nav>
       <div style="display: flex; align-items: center; z-index: 110;">
