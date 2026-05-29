@@ -2769,6 +2769,141 @@
                 e.target.classList.add("visible");
                 observer.unobserve(e.target);
               }
+      // ══ SUPABASE CONFIG E AUTENTICAÇÃO ══// ══ SUPABASE CONFIG E AUTENTICAÇÃO ══
+      const SUPABASE_URL = "https://rdvocdklisynkmhawxnv.supabase.co";
+      const SUPABASE_ANON_KEY =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkdm9jZGtsaXN5bmttaGF3eG52Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwNjA2MDUsImV4cCI6MjA5NTYzNjYwNX0.pnLj86o---KFrHZzVz5M6aS_CkQZpFbNmIBYbHdaZ_8";
+      const _sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+      async function checkAuth() {
+        buildGateStars();
+        // Aguarda o Supabase processar o magic link da URL
+        await new Promise((r) => setTimeout(r, 500));
+        const {
+          data: { session },
+        } = await _sb.auth.getSession();
+        if (session?.user) {
+          grantAccess(session.user);
+        } else {
+          denyAccess();
+        }
+      }
+
+      function grantAccess(user) {
+        const emailEl = document.getElementById("navUserEmail");
+        if (emailEl) emailEl.textContent = user.email;
+        const gate = document.getElementById("authGate");
+        gate.classList.add("fade-out");
+        setTimeout(() => {
+          gate.style.display = "none";
+        }, 650);
+        document.getElementById("mainContent").classList.add("visible");
+
+        // Inicia o carregamento das lógicas apenas após liberar o acesso
+        initPage();
+      }
+
+      function denyAccess() {
+        document.getElementById("gateSpinner").style.display = "none";
+        document.getElementById("gateMsg").innerHTML =
+          "Acesso não encontrado.<br><strong>Cadastre seu email</strong> na página principal para receber o link exclusivo.";
+        const err = document.getElementById("gateErr");
+        err.textContent =
+          "Já se cadastrou? Verifique sua caixa de entrada (e spam) e clique no link enviado.";
+        err.classList.add("visible");
+        document.getElementById("gateBack").style.display = "inline-block";
+      }
+
+      async function doLogout() {
+        await _sb.auth.signOut();
+        window.location.href = "index.html";
+      }
+
+      function buildGateStars() {
+        const el = document.getElementById("gateStars");
+        for (let i = 0; i < 120; i++) {
+          const s = document.createElement("div");
+          s.className = "star";
+          const sz = Math.random() * 2 + 0.3;
+          s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random() * 100}%;top:${Math.random() * 100}%;--dur:${2 + Math.random() * 4}s;--delay:${Math.random() * 6}s;--min-op:${0.1 + Math.random() * 0.2};--max-op:${0.4 + Math.random() * 0.4};`;
+          el.appendChild(s);
+        }
+      }
+
+      // ══ INICIALIZAÇÃO DA PÁGINA PÓS-LOGIN ══
+      function initPage() {
+        // ── CURSOR ──
+        const brush = document.getElementById("cursorBrush");
+        document.addEventListener("mousemove", (e) => {
+          mx = e.clientX;
+          my = e.clientY;
+          brush.style.left = mx + "px";
+          brush.style.top = my + "px";
+        });
+        document.addEventListener("mousedown", () =>
+          brush.classList.add("clicking"),
+        );
+        document.addEventListener("mouseup", () =>
+          brush.classList.remove("clicking"),
+        );
+
+        // ── MAGIC DUST & RUNES ──
+        document.addEventListener("click", (e) => {
+          for (let i = 0; i < 6; i++) {
+            const d = document.createElement("div");
+            d.className = "magic-dust";
+            const angle = ((Math.PI * 2) / 6) * i,
+              dist = 35 + Math.random() * 35;
+            d.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;--dx:${Math.cos(angle) * dist}px;--dy:${Math.sin(angle) * dist}px;background:${Math.random() > 0.5 ? "var(--gold)" : "#9d4edd"};`;
+            document.body.appendChild(d);
+            setTimeout(() => d.remove(), 2500);
+          }
+          if (Math.random() > 0.5) {
+            const r = document.createElement("div");
+            r.className = "rune-particle";
+            const rr = Math.random() * 160 - 80 + "deg";
+            r.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;--rx:${(Math.random() - 0.5) * 80}px;--ry:${-40 - Math.random() * 60}px;--rr:${rr};`;
+            r.textContent =
+              RUNE_CHARS[Math.floor(Math.random() * RUNE_CHARS.length)];
+            document.body.appendChild(r);
+            setTimeout(() => r.remove(), 3000);
+          }
+        });
+
+        // ── FECHAR MODAL CLICANDO FORA ──
+        document.getElementById("blogModal").addEventListener("click", (e) => {
+          if (e.target === document.getElementById("blogModal"))
+            closeBlogModal();
+        });
+
+        // ── STARS (hero) ──
+        const starsEl = document.getElementById("stars");
+        for (let i = 0; i < 180; i++) {
+          const s = document.createElement("div");
+          s.className = "star";
+          const sz = Math.random() * 2.5 + 0.4;
+          s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random() * 100}%;top:${Math.random() * 100}%;--dur:${2 + Math.random() * 4}s;--delay:${Math.random() * 6}s;--min-op:${0.1 + Math.random() * 0.3};--max-op:${0.5 + Math.random() * 0.5};`;
+          starsEl.appendChild(s);
+        }
+
+        // ── STARS (reinos) ──
+        const smEl = document.getElementById("smStars");
+        for (let i = 0; i < 100; i++) {
+          const s = document.createElement("div");
+          s.className = "reinos-starmap-star";
+          const sz = Math.random() * 2 + 0.4;
+          s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random() * 100}%;top:${Math.random() * 100}%;--d:${2 + Math.random() * 4}s;--dl:${Math.random() * 6}s;--oa:${0.05 + Math.random() * 0.2};--ob:${0.3 + Math.random() * 0.5};`;
+          smEl.appendChild(s);
+        }
+
+        // ── REVEAL OBSERVER ──
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add("visible");
+                observer.unobserve(e.target);
+              }
             });
           },
           { threshold: 0.08 },
@@ -2781,13 +2916,15 @@
 
         // ── PARTICULAS DO BLOG FEATURED ──
         const fp = document.getElementById("featParticles");
-        for (let i = 0; i < 20; i++) {
-          const p = document.createElement("div");
-          p.className = "fp";
-          const fx = (Math.random() - 0.5) * 60,
-            fy = -(20 + Math.random() * 60);
-          p.style.cssText = `left:${Math.random() * 100}%;top:${Math.random() * 100}%;--d:${4 + Math.random() * 6}s;--dl:${Math.random() * 4}s;--fx:${fx}px;--fy:${fy}px;--oa:${0.1 + Math.random() * 0.3};--ob:${0.5 + Math.random() * 0.5};`;
-          fp.appendChild(p);
+        if (fp) {
+          for (let i = 0; i < 20; i++) {
+            const p = document.createElement("div");
+            p.className = "fp";
+            const fx = (Math.random() - 0.5) * 60,
+              fy = -(20 + Math.random() * 60);
+            p.style.cssText = `left:${Math.random() * 100}%;top:${Math.random() * 100}%;--d:${4 + Math.random() * 6}s;--dl:${Math.random() * 4}s;--fx:${fx}px;--fy:${fy}px;--oa:${0.1 + Math.random() * 0.3};--ob:${0.5 + Math.random() * 0.5};`;
+            fp.appendChild(p);
+          }
         }
 
         // ══ RENDER FUNCTIONS ══
