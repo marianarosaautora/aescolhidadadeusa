@@ -57,7 +57,7 @@
         top: 0;
         left: 0;
         pointer-events: none;
-        z-index: 9999;
+        z-index: 99999;
         transform: translate(-4px, -38px) rotate(-35deg);
         width: 36px;
         height: 36px;
@@ -755,6 +755,11 @@
         color: var(--text-muted);
         margin-bottom: 32px;
         flex: 1;
+        display: -webkit-box;
+        -webkit-line-clamp: 6;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .blog-read-link {
         font-family: "Cinzel", serif;
@@ -916,6 +921,11 @@
         line-height: 1.7;
         color: var(--text-muted);
         margin-bottom: 22px;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       .blog-card-link {
         font-family: "Cinzel", serif;
@@ -1018,6 +1028,115 @@
       .blog-modal-body em {
         color: var(--gold);
         font-style: normal;
+      }
+
+      /* Pigmentadora Modal */
+      .pigment-modal-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 10000;
+        background: #0d0010dd;
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+      .pigment-modal-overlay.open {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .pigment-modal {
+        max-width: 600px;
+        width: 100%;
+        background: linear-gradient(160deg, #160028dd, #0b0010dd);
+        border: 1px solid var(--modal-color, #c9a84c33);
+        box-shadow: 0 0 40px var(--modal-glow, #c9a84c11);
+        padding: 48px;
+        position: relative;
+        transform: scale(0.9) rotate(-1deg);
+        transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+      .pigment-modal-overlay.open .pigment-modal {
+        transform: scale(1) rotate(0deg);
+      }
+      .pigment-modal-close {
+        position: absolute;
+        top: 20px;
+        right: 24px;
+        font-family: "Cinzel", serif;
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        color: var(--modal-color, var(--gold-dim));
+        background: none;
+        border: none;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: color 0.3s, text-shadow 0.3s;
+      }
+      .pigment-modal-close:hover {
+        color: #fff;
+        text-shadow: 0 0 8px var(--modal-color);
+      }
+      .pigment-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 24px;
+      }
+      .pigment-modal-num {
+        font-family: "Cinzel Decorative", serif;
+        font-size: 4rem;
+        line-height: 1;
+        color: var(--modal-color);
+        opacity: 0.15;
+        font-weight: 900;
+      }
+      .pigment-modal-title {
+        font-family: "Cinzel Decorative", serif;
+        font-size: 2rem;
+        color: #fff;
+        margin-bottom: 4px;
+        text-shadow: 0 0 15px var(--modal-glow);
+      }
+      .pigment-modal-subtitle {
+        font-family: "Cinzel", serif;
+        font-size: 0.75rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--modal-color);
+        margin-bottom: 12px;
+      }
+      .pigment-modal-meta {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 24px;
+        font-size: 0.85rem;
+        border-bottom: 1px solid #ffffff11;
+        padding-bottom: 16px;
+      }
+      .pigment-modal-meta-item {
+        color: var(--text-muted);
+      }
+      .pigment-modal-meta-item strong {
+        color: #fff;
+        font-family: "Cinzel", serif;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+      }
+      .pigment-modal-body {
+        font-size: 1.05rem;
+        line-height: 1.8;
+        color: var(--text-light);
+      }
+      .pigment-modal-body p {
+        margin-bottom: 16px;
       }
 
       /* ── GALERIA ── */
@@ -1204,6 +1323,7 @@
         transition:
           border-color 0.4s,
           transform 0.4s;
+        cursor: pointer;
       }
       .pigment-card:hover {
         border-color: var(--pc, #c9a84c);
@@ -2110,6 +2230,29 @@
         </div>
       </div>
 
+      <!-- PIGMENTADORA MODAL -->
+      <div class="pigment-modal-overlay" id="pigmentModal">
+        <div class="pigment-modal">
+          <button class="pigment-modal-close" onclick="closePigmentadoraModal()">
+            ✕ Fechar
+          </button>
+          <div class="pigment-modal-header">
+            <div>
+              <span class="pigment-modal-subtitle" id="pigmentModalRealm"></span>
+              <h3 class="pigment-modal-title" id="pigmentModalTitle"></h3>
+              <div class="pigment-modal-subtitle" style="margin-top: 4px; font-size: 0.7rem; letter-spacing: 0.15em;">Poder: <span id="pigmentModalPower" style="color: #fff;"></span></div>
+            </div>
+            <div class="pigment-modal-num" id="pigmentModalNum"></div>
+          </div>
+          <div class="pigment-modal-meta">
+            <div class="pigment-modal-meta-item">
+              <span id="pigmentModalDesc"></span>
+            </div>
+          </div>
+          <div class="pigment-modal-body" id="pigmentModalBio"></div>
+        </div>
+      </div>
+
       <!-- GALERIA -->
       <section class="gallery-section" id="galeria">
         <div class="section-wrap">
@@ -2579,6 +2722,33 @@
         document.body.style.overflow = '';
       }
 
+      // ── PIGMENTADORA MODAL ──
+      function openPigmentadoraModal(index) {
+        const p = PIGMENTADORAS[index];
+        if (!p) return;
+        
+        const modal = document.getElementById('pigmentModal');
+        const color = p.color || '#c9a84c';
+        modal.style.setProperty('--modal-color', color);
+        modal.style.setProperty('--modal-glow', color + '44');
+        
+        document.getElementById('pigmentModalNum').textContent = p.num || '';
+        document.getElementById('pigmentModalTitle').textContent = p.name || '';
+        document.getElementById('pigmentModalRealm').textContent = 'Reino: ' + (p.realm || '');
+        document.getElementById('pigmentModalPower').textContent = p.power || '';
+        document.getElementById('pigmentModalDesc').textContent = p.desc || '';
+        document.getElementById('pigmentModalBio').innerHTML = p.bio ? '<p>' + p.bio.replace(/\n\n/g, '</p><p>') + '</p>' : '<p>Biografia em breve...</p>';
+        
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closePigmentadoraModal() {
+        const modal = document.getElementById('pigmentModal');
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
       // ── CAROUSEL DE PIGMENTADORAS ──
       function scrollCarousel(dir) {
         const carousel = document.getElementById('pigmentCarousel');
@@ -2648,6 +2818,7 @@
           const card = document.createElement("div");
           card.className = "pigment-card reveal";
           card.style.cssText = `--pc:${pc};--pc-bg:${pcBg};--pc-stroke:${pcStroke};--pc-glow:${pcGlow};transition-delay:${i * 0.06}s;`;
+          card.setAttribute("onclick", `openPigmentadoraModal(${i})`);
           card.innerHTML = `<div class="pigment-card-top"><div class="pigment-card-bg"></div><div class="pigment-card-rune">${rune}</div><div class="pigment-card-number">${p.num}</div><div class="pigment-card-gem"><svg viewBox="0 0 24 24"><use href="#gem"/></svg></div></div><div class="pigment-card-body"><div class="pigment-card-realm">${p.realm}</div><div class="pigment-card-name">${p.name}</div><div class="pigment-card-power">${p.power}</div><p class="pigment-card-desc">${p.desc}</p></div>`;
           carousel.appendChild(card);
           if (_pageObserver) setTimeout(() => _pageObserver.observe(card), 10);
@@ -2668,6 +2839,7 @@
           const pigmentadora = r.pigmentadora || r.resident || '';
           const descricao = r.descricao || r.text || '';
           const delay = r.delay || (i * 0.1) + 's';
+          let loreHtml = r.lore ? r.lore.map((l) => `<div class="reino-lore-item"><span class="lore-icon">${l.icon}</span><p class="lore-texto">${l.texto}</p></div>`).join("") : "";
           const div = document.createElement("div");
           div.className = "reino-card-exclusivo reveal";
           div.style.cssText = `--rc:${rc};--rc-bg:${rcBg};--rc-border:${rc}22;--card-delay:${delay};transition-delay:${delay};`;
@@ -2684,6 +2856,10 @@
               <div class="reino-gema">${gema}</div>
               <div class="reino-pigmentadora">✦ ${pigmentadora}</div>
               <p class="reino-descricao">${descricao}</p>
+              <div class="reino-lore">
+                <div class="reino-lore-titulo">Lore exclusivo</div>
+                ${loreHtml}
+              </div>
             </div>`;
           reinosGrid.appendChild(div);
           if (_pageObserver) setTimeout(() => _pageObserver.observe(div), 10);
@@ -2855,6 +3031,11 @@
         document.getElementById("blogModal").addEventListener("click", (e) => {
           if (e.target === document.getElementById("blogModal"))
             closeBlogModal();
+        });
+
+        document.getElementById("pigmentModal").addEventListener("click", (e) => {
+          if (e.target === document.getElementById("pigmentModal"))
+            closePigmentadoraModal();
         });
 
         // ── STARS (hero) ──
