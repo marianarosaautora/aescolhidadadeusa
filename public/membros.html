@@ -1669,11 +1669,31 @@
         display: flex;
         align-items: flex-start;
         gap: 12px;
-        padding: 12px 0;
+        padding: 12px 10px;
         border-bottom: 1px solid #ffffff06;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        border-radius: 6px;
       }
       .cidade-sidebar-item:last-child {
         border-bottom: none;
+      }
+      .cidade-sidebar-item:hover,
+      .cidade-sidebar-item.active,
+      .cidade-sidebar-item.active-hover {
+        background: rgba(255, 255, 255, 0.03);
+        border-bottom-color: rgba(201, 168, 76, 0.2);
+        box-shadow: inset 0 0 10px rgba(201, 168, 76, 0.05);
+      }
+      .cidade-left .cidade-sidebar-item:hover,
+      .cidade-left .cidade-sidebar-item.active,
+      .cidade-left .cidade-sidebar-item.active-hover {
+        transform: translateX(6px);
+      }
+      .cidade-right .cidade-sidebar-item:hover,
+      .cidade-right .cidade-sidebar-item.active,
+      .cidade-right .cidade-sidebar-item.active-hover {
+        transform: translateX(-6px);
       }
       .cidade-sidebar-gem {
         width: 22px;
@@ -1692,10 +1712,54 @@
         font-size: 0.75rem;
         color: var(--text-light);
         margin-bottom: 2px;
+        transition: color 0.3s ease, text-shadow 0.3s ease;
+      }
+      .cidade-sidebar-item:hover .cidade-sidebar-name,
+      .cidade-sidebar-item.active .cidade-sidebar-name,
+      .cidade-sidebar-item.active-hover .cidade-sidebar-name {
+        color: var(--gold);
+        text-shadow: 0 0 8px rgba(201, 168, 76, 0.4);
       }
       .cidade-sidebar-sub {
         font-size: 0.8rem;
         color: var(--text-muted);
+      }
+
+      /* Reset button and SVG dots styling */
+      .cidade-reset-btn {
+        background: transparent;
+        border: 1px solid rgba(201, 168, 76, 0.4);
+        color: var(--gold);
+        font-family: "Cinzel", serif;
+        font-size: 0.7rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        position: relative;
+        z-index: 10;
+        margin-top: 10px;
+      }
+      .cidade-reset-btn:hover {
+        background: rgba(201, 168, 76, 0.1);
+        border-color: var(--gold);
+        box-shadow: 0 0 12px rgba(201, 168, 76, 0.2);
+        transform: translateY(-2px);
+      }
+      .cidade-reset-btn:active {
+        transform: translateY(0);
+      }
+
+      .arvore-dot {
+        cursor: pointer;
+        transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), fill-opacity 0.3s ease, filter 0.3s ease;
+      }
+      .arvore-dot:hover, .arvore-dot.glow {
+        fill-opacity: 1 !important;
+        transform: scale(1.6);
+        filter: drop-shadow(0 0 8px var(--dot-glow));
       }
 
       .reinos-separador {
@@ -2297,17 +2361,11 @@
         <div class="section-wrap">
           <div class="section-header reveal">
             <span class="section-eyebrow">Lore Exclusivo · Os Nove Mundos</span>
-            <h2 class="section-title">
-              A <em>Árvore Celestial</em> e seus Reinos
-            </h2>
-            <div class="section-divider"></div>
-          </div>
-
-          <!-- CIDADE CELESTIAL DESTAQUE -->
+                    <!-- CIDADE CELESTIAL DESTAQUE -->
           <div class="cidade-celestial reveal">
             <div class="cidade-left">
               <div class="cidade-sidebar-label">✦ Residentes da Cidade</div>
-              <div class="cidade-sidebar-item">
+              <div class="cidade-sidebar-item" data-resident="Taaf">
                 <div class="cidade-sidebar-gem" style="--gc: #d500f9">
                   <svg viewBox="0 0 24 24"><use href="#gem" /></svg>
                 </div>
@@ -2318,7 +2376,7 @@
                   </div>
                 </div>
               </div>
-              <div class="cidade-sidebar-item">
+              <div class="cidade-sidebar-item" data-resident="Calindra">
                 <div class="cidade-sidebar-gem" style="--gc: #b0d4ff">
                   <svg viewBox="0 0 24 24"><use href="#gem" /></svg>
                 </div>
@@ -2329,7 +2387,7 @@
                   </div>
                 </div>
               </div>
-              <div class="cidade-sidebar-item">
+              <div class="cidade-sidebar-item" data-resident="Agnes">
                 <div class="cidade-sidebar-gem" style="--gc: #ff3333">
                   <svg viewBox="0 0 24 24"><use href="#gem" /></svg>
                 </div>
@@ -2340,7 +2398,7 @@
                   </div>
                 </div>
               </div>
-              <div class="cidade-sidebar-item">
+              <div class="cidade-sidebar-item" data-resident="Lunara">
                 <div class="cidade-sidebar-gem" style="--gc: #ffd600">
                   <svg viewBox="0 0 24 24"><use href="#gem" /></svg>
                 </div>
@@ -2351,7 +2409,7 @@
                   </div>
                 </div>
               </div>
-              <div class="cidade-sidebar-item">
+              <div class="cidade-sidebar-item" data-resident="Tenebra">
                 <div class="cidade-sidebar-gem" style="--gc: #aaaaaa">
                   <svg viewBox="0 0 24 24"><use href="#gem" /></svg>
                 </div>
@@ -2478,6 +2536,9 @@
                   r="5"
                   fill="#d500f9"
                   fill-opacity="0.8"
+                  class="arvore-dot"
+                  style="--dot-glow: #d500f9; transform-origin: 22px 86px;"
+                  data-resident="Taaf"
                 />
                 <circle
                   cx="34"
@@ -2485,6 +2546,9 @@
                   r="4.5"
                   fill="#b0d4ff"
                   fill-opacity="0.8"
+                  class="arvore-dot"
+                  style="--dot-glow: #b0d4ff; transform-origin: 34px 60px;"
+                  data-resident="Calindra"
                 />
                 <circle
                   cx="158"
@@ -2492,6 +2556,9 @@
                   r="5"
                   fill="#ff3333"
                   fill-opacity="0.8"
+                  class="arvore-dot"
+                  style="--dot-glow: #ff3333; transform-origin: 158px 86px;"
+                  data-resident="Agnes"
                 />
                 <circle
                   cx="148"
@@ -2499,6 +2566,9 @@
                   r="4.5"
                   fill="#00b0ff"
                   fill-opacity="0.8"
+                  class="arvore-dot"
+                  style="--dot-glow: #00b0ff; transform-origin: 148px 60px;"
+                  data-resident="Nanima"
                 />
                 <circle
                   cx="30"
@@ -2506,6 +2576,9 @@
                   r="4"
                   fill="#00e676"
                   fill-opacity="0.8"
+                  class="arvore-dot"
+                  style="--dot-glow: #00e676; transform-origin: 30px 99px;"
+                  data-resident="Vespera"
                 />
                 <circle
                   cx="150"
@@ -2513,6 +2586,9 @@
                   r="4"
                   fill="#ffd600"
                   fill-opacity="0.8"
+                  class="arvore-dot"
+                  style="--dot-glow: #ffd600; transform-origin: 150px 99px;"
+                  data-resident="Lunara"
                 />
                 <circle
                   cx="75"
@@ -2520,6 +2596,9 @@
                   r="4"
                   fill="#d7ccc8"
                   fill-opacity="0.8"
+                  class="arvore-dot"
+                  style="--dot-glow: #d7ccc8; transform-origin: 75px 42px;"
+                  data-resident="Lyra"
                 />
                 <circle
                   cx="105"
@@ -2527,6 +2606,9 @@
                   r="4"
                   fill="#8d6e63"
                   fill-opacity="0.8"
+                  class="arvore-dot"
+                  style="--dot-glow: #8d6e63; transform-origin: 105px 42px;"
+                  data-resident="Pietra"
                 />
                 <circle
                   cx="90"
@@ -2534,6 +2616,9 @@
                   r="4"
                   fill="#888888"
                   fill-opacity="0.8"
+                  class="arvore-dot"
+                  style="--dot-glow: #888888; transform-origin: 90px 30px;"
+                  data-resident="Tenebra"
                 />
                 <circle
                   cx="90"
@@ -2541,6 +2626,9 @@
                   r="7"
                   fill="#c9a84c"
                   fill-opacity="0.9"
+                  class="arvore-dot"
+                  style="--dot-glow: #c9a84c; transform-origin: 90px 15px;"
+                  data-resident="Celestria"
                 />
                 <circle
                   cx="90"
@@ -2581,6 +2669,7 @@
                 permitidas.
               </p>
               <div
+                id="cidadeDetalhes"
                 style="
                   margin: 28px 0;
                   display: flex;
@@ -2600,7 +2689,7 @@
               </div>
 
               <!-- LORE EXCLUSIVO CIDADE CELESTIAL -->
-              <div class="reino-lore" style="text-align: left; margin-top: 24px; border-top: 1px solid #ffffff11; padding-top: 20px; width: 100%;">
+              <div id="cidadeLore" class="reino-lore" style="text-align: left; margin-top: 24px; border-top: 1px solid #ffffff11; padding-top: 20px; width: 100%;">
                 <div class="reino-lore-titulo">Lore exclusivo</div>
                 <div class="reino-lore-item">
                   <span class="lore-icon">◈</span>
@@ -2623,7 +2712,7 @@
 
             <div class="cidade-right">
               <div class="cidade-sidebar-label">✦ Também residentes</div>
-              <div class="cidade-sidebar-item">
+              <div class="cidade-sidebar-item" data-resident="Vespera">
                 <div class="cidade-sidebar-gem" style="--gc: #00e676">
                   <svg viewBox="0 0 24 24"><use href="#gem" /></svg>
                 </div>
@@ -2634,7 +2723,7 @@
                   </div>
                 </div>
               </div>
-              <div class="cidade-sidebar-item">
+              <div class="cidade-sidebar-item" data-resident="Pietra">
                 <div class="cidade-sidebar-gem" style="--gc: #8d6e63">
                   <svg viewBox="0 0 24 24"><use href="#gem" /></svg>
                 </div>
@@ -2645,7 +2734,7 @@
                   </div>
                 </div>
               </div>
-              <div class="cidade-sidebar-item">
+              <div class="cidade-sidebar-item" data-resident="Lyra">
                 <div class="cidade-sidebar-gem" style="--gc: #d7ccc8">
                   <svg viewBox="0 0 24 24"><use href="#gem" /></svg>
                 </div>
@@ -2656,7 +2745,7 @@
                   </div>
                 </div>
               </div>
-              <div class="cidade-sidebar-item">
+              <div class="cidade-sidebar-item" data-resident="Nanima">
                 <div class="cidade-sidebar-gem" style="--gc: #00b0ff">
                   <svg viewBox="0 0 24 24"><use href="#gem" /></svg>
                 </div>
@@ -2667,7 +2756,7 @@
                   </div>
                 </div>
               </div>
-              <div class="cidade-sidebar-item">
+              <div class="cidade-sidebar-item" data-resident="Celestria">
                 <div class="cidade-sidebar-gem" style="--gc: var(--gold)">
                   <svg viewBox="0 0 24 24"><use href="#gem" /></svg>
                 </div>
@@ -2803,6 +2892,8 @@
           renderPigmentadoras();
           renderReinos();
 
+          initCidadeInteractions();
+
           // Re-observe dynamically added elements
           if (_pageObserver) {
             document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => _pageObserver.observe(el));
@@ -2884,6 +2975,189 @@
             </div>`;
           reinosGrid.appendChild(div);
           if (_pageObserver) setTimeout(() => _pageObserver.observe(div), 10);
+        });
+      }
+
+      // ══ INTERATIVIDADE DA CIDADE CELESTIAL ══
+      const CIDADE_CELESTIAL_DEFAULT = {
+        nome: "Cidade Celestial",
+        gema: "Gema Dourada",
+        pigmentadora: "Celestria",
+        descricao: "Onde as <strong>Pigmentadoras</strong> vivem junto à Celestria. Lá a <strong>grande Árvore</strong> reside, assim como os moradores selecionados dos outros reinos. Um local em que a harmonia da fauna e da flora e da mistura da arquitetura são permitidas.",
+        detalhes: [
+          "Regida por <span>Celestria, a Deusa</span>",
+          "Lar da <span>grande Árvore</span>"
+        ],
+        lore: [
+          { icon: "◈", texto: "A cidade perfeita cresce sob a Grande Árvore Celestial. Embora pequena em extensão e controlada para que tudo aconteça harmoniosamente, ela é um microcosmo, abrigando em si a essência e os biomas dos nove reinos." },
+          { icon: "◈", texto: "Formando nove distritos, cada um deles mantém a natureza, os animais, a arquitetura e a cultura dos reinos. Os distritos se organizam em um gracioso leque a partir do centro, onde a arquitetura reflete o gosto etéreo de Celestria. Apesar de todos os reinos presentes, é a lei da divindade que predomina." },
+          { icon: "◈", texto: "Na cidade Celestial, a vida possui um propósito compartilhado: cada habitante, à sua maneira, dedica-se à manutenção e ao equilíbrio da Grande Árvore. Em troca, recebem a Bênção de Celestria. Este dom não apenas os torna resistentes às variações climáticas de cada bioma, mas lhes dá a oportunidade da compreensão do dialeto de cada reino, fazendo com que todos se compreendam mutuamente." },
+          { icon: "◈", texto: "É, em todos os sentidos, a cidade perfeita." }
+        ]
+      };
+
+      const RESIDENT_TO_REINO = {
+        "Taaf": "Mentálida",
+        "Calindra": "Nevalis",
+        "Agnes": "Brasas Constantes",
+        "Lunara": "Luxanara",
+        "Tenebra": "Caligobris",
+        "Vespera": "Florivena",
+        "Pietra": "Itaveah",
+        "Lyra": "Nuvens Exaltadas",
+        "Nanima": "Aqualina",
+        "Celestria": "Cidade Celestial"
+      };
+
+      let CURRENT_ACTIVE_RESIDENT = null;
+
+      function updateCidadeCenter(data) {
+        const nomeEl = document.querySelector('.cidade-nome');
+        const subEl = document.querySelector('.cidade-sub');
+        const textoEl = document.querySelector('.cidade-texto');
+        const detalhesEl = document.getElementById('cidadeDetalhes');
+        const loreEl = document.getElementById('cidadeLore');
+        
+        if (nomeEl) nomeEl.textContent = data.nome || data.name;
+        if (subEl) {
+          if (data.nome === "Cidade Celestial") {
+            subEl.textContent = "Gema Dourada · O Coração dos Nove Reinos";
+          } else {
+            subEl.textContent = `${data.gema} · Guardiã: ${data.pigmentadora}`;
+          }
+        }
+        if (textoEl) {
+          textoEl.innerHTML = data.descricao || data.text || '';
+        }
+        
+        if (detalhesEl) {
+          detalhesEl.innerHTML = '';
+          const detalhes = data.detalhes || [
+            `Gema: <span>${data.gema}</span>`,
+            `Guardiã: <span>${data.pigmentadora}</span>`
+          ];
+          detalhes.forEach(det => {
+            const div = document.createElement('div');
+            div.className = 'cidade-detalhe';
+            div.innerHTML = det;
+            detalhesEl.appendChild(div);
+          });
+        }
+        
+        if (loreEl) {
+          let html = '<div class="reino-lore-titulo">Lore exclusivo</div>';
+          if (data.lore && data.lore.length > 0) {
+            data.lore.forEach(item => {
+              html += `
+                <div class="reino-lore-item">
+                  <span class="lore-icon">${item.icon || '◈'}</span>
+                  <p class="lore-texto">${item.texto || item.text || ''}</p>
+                </div>`;
+            });
+          } else {
+            html += `
+              <div class="reino-lore-item">
+                <span class="lore-icon">◈</span>
+                <p class="lore-texto">Em breve...</p>
+              </div>`;
+          }
+          
+          if (data.nome !== "Cidade Celestial") {
+            html += `
+              <div style="text-align: center; margin-top: 24px;">
+                <button class="cidade-reset-btn" onclick="resetCidadeCenter()">
+                  ← Voltar para Cidade Celestial
+                </button>
+              </div>`;
+          }
+          
+          loreEl.innerHTML = html;
+        }
+      }
+
+      function selectResidentKingdom(resident) {
+        CURRENT_ACTIVE_RESIDENT = resident;
+        
+        // 1. Update sidebar items active state
+        document.querySelectorAll('.cidade-sidebar-item').forEach(item => {
+          if (item.getAttribute('data-resident') === resident) {
+            item.classList.add('active');
+          } else {
+            item.classList.remove('active');
+          }
+        });
+        
+        // 2. Update tree dots active state
+        document.querySelectorAll('.arvore-dot').forEach(dot => {
+          if (dot.getAttribute('data-resident') === resident) {
+            dot.classList.add('glow');
+            dot.classList.add('active-selection');
+          } else {
+            dot.classList.remove('glow');
+            dot.classList.remove('active-selection');
+          }
+        });
+        
+        // 3. Find kingdom data
+        const reinoName = RESIDENT_TO_REINO[resident];
+        if (reinoName === "Cidade Celestial") {
+          updateCidadeCenter(CIDADE_CELESTIAL_DEFAULT);
+        } else {
+          const kingdom = REINOS_DATA.find(r => r.nome === reinoName);
+          if (kingdom) {
+            updateCidadeCenter(kingdom);
+          } else {
+            console.warn(`Kingdom not found: ${reinoName}`);
+          }
+        }
+      }
+
+      function resetCidadeCenter() {
+        selectResidentKingdom("Celestria");
+      }
+
+      function initCidadeInteractions() {
+        const sidebarItems = document.querySelectorAll('.cidade-sidebar-item');
+        const treeDots = document.querySelectorAll('.arvore-dot');
+        
+        sidebarItems.forEach(item => {
+          const resident = item.getAttribute('data-resident');
+          if (!resident) return;
+          
+          item.addEventListener('click', () => {
+            selectResidentKingdom(resident);
+          });
+          
+          item.addEventListener('mouseenter', () => {
+            const dot = document.querySelector(`.arvore-dot[data-resident="${resident}"]`);
+            if (dot) dot.classList.add('glow');
+          });
+          
+          item.addEventListener('mouseleave', () => {
+            const dot = document.querySelector(`.arvore-dot[data-resident="${resident}"]`);
+            if (dot && !dot.classList.contains('active-selection')) {
+              dot.classList.remove('glow');
+            }
+          });
+        });
+        
+        treeDots.forEach(dot => {
+          const resident = dot.getAttribute('data-resident');
+          if (!resident) return;
+          
+          dot.addEventListener('click', () => {
+            selectResidentKingdom(resident);
+          });
+          
+          dot.addEventListener('mouseenter', () => {
+            const item = document.querySelector(`.cidade-sidebar-item[data-resident="${resident}"]`);
+            if (item) item.classList.add('active-hover');
+          });
+          
+          dot.addEventListener('mouseleave', () => {
+            const item = document.querySelector(`.cidade-sidebar-item[data-resident="${resident}"]`);
+            if (item) item.classList.remove('active-hover');
+          });
         });
       }
 
