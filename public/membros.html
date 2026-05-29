@@ -1543,6 +1543,9 @@
         align-items: center;
         justify-content: center;
         text-align: center;
+        min-width: 0;
+        width: 100%;
+        box-sizing: border-box;
       }
       .cidade-center::before {
         content: "";
@@ -1847,6 +1850,48 @@
         margin-left: 6px;
         color: var(--gold);
         vertical-align: middle;
+      }
+      .footer-user-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        margin: 24px auto 12px;
+        border: 1px solid rgba(201, 168, 76, 0.15);
+        background: rgba(255, 255, 255, 0.02);
+        padding: 16px;
+        border-radius: 8px;
+        max-width: 320px;
+        position: relative;
+        z-index: 10;
+      }
+      .footer-user-email {
+        font-family: "Cinzel", serif;
+        font-size: 0.75rem;
+        letter-spacing: 0.1em;
+        color: var(--text-muted);
+        text-transform: uppercase;
+      }
+      .footer-btn-logout {
+        font-family: "Cinzel", serif;
+        font-size: 0.65rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--gold);
+        background: none;
+        border: 1px solid rgba(201, 168, 76, 0.4);
+        padding: 6px 18px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      .footer-btn-logout:hover {
+        background: rgba(201, 168, 76, 0.1);
+        border-color: var(--gold);
+        box-shadow: 0 0 10px rgba(201, 168, 76, 0.2);
+      }
+      .footer-mobile-block {
+        display: inline;
       }
 
       .reinos-grid-exclusivo {
@@ -2190,53 +2235,24 @@
       }
       @media (max-width: 768px) {
         header {
-          display: grid;
-          grid-template-columns: 1fr auto;
+          display: flex;
+          justify-content: space-between;
           align-items: center;
-          grid-gap: 12px;
           padding: 12px 16px;
-          transition: padding 0.3s ease;
         }
         .nav-logo {
-          grid-column: 1;
-          grid-row: 1;
-          font-size: 0.75rem; /* Reduzido de 0.85rem */
-        }
-        .nav-right {
-          display: contents;
+          font-size: 0.75rem;
         }
         .nav-member-badge {
-          grid-column: 2;
-          grid-row: 1;
-          justify-self: end;
           padding: 5px 12px;
           font-size: 0.5rem;
-          cursor: pointer !important;
         }
         .nav-arrow-indicator {
-          display: inline-block; /* Mostrar seta no mobile */
+          display: none !important;
         }
-        /* Por padrão, esconde a segunda linha (email e logout) */
         .nav-user,
         .btn-logout {
-          display: none;
-        }
-        /* Quando aberto, exibe email e logout na segunda linha */
-        header.nav-mobile-open .nav-user {
-          display: block;
-          grid-column: 1;
-          grid-row: 2;
-          font-size: 0.55rem;
-          color: var(--text-muted);
-          padding-top: 4px;
-        }
-        header.nav-mobile-open .btn-logout {
-          display: block;
-          grid-column: 2;
-          grid-row: 2;
-          justify-self: end;
-          padding: 4px 10px;
-          font-size: 0.5rem;
+          display: none !important; /* Esconder completamente no cabeçalho mobile */
         }
         .nav-links {
           display: none;
@@ -2255,6 +2271,12 @@
         }
         .cidade-center {
           padding: 40px 24px;
+          min-width: 0;
+          width: 100%;
+        }
+        .footer-mobile-block {
+          display: block;
+          margin-top: 6px;
         }
       }
     </style>
@@ -2348,8 +2370,8 @@
         </nav>
         <div class="nav-right">
           <span class="nav-user" id="navUserEmail"></span>
-          <div class="nav-member-badge" onclick="toggleUserNav()">
-            ✦ Área Exclusiva <span class="nav-arrow-indicator">▼</span>
+          <div class="nav-member-badge">
+            ✦ Área Exclusiva
           </div>
           <button class="btn-logout" onclick="doLogout()">Sair</button>
         </div>
@@ -2673,48 +2695,88 @@
                   rx="5"
                   fill="url(#trunkGrad)"
                 />
+                <!-- Lower Left Branches to Vespera (30,99) & Taaf (22,86) -->
                 <path
-                  d="M90 120 Q65 105 40 100"
+                  d="M90 140 Q60 120 30 99"
                   fill="none"
                   stroke="#c9a84c"
-                  stroke-width="2"
+                  stroke-width="2.2"
+                  stroke-opacity="0.75"
+                />
+                <path
+                  d="M60 120 Q35 105 22 86"
+                  fill="none"
+                  stroke="#c9a84c"
+                  stroke-width="1.6"
                   stroke-opacity="0.7"
                 />
+                <!-- Lower Right Branches to Lunara (150,99) & Agnes (158,86) -->
                 <path
-                  d="M90 120 Q115 105 140 100"
+                  d="M90 140 Q120 120 150 99"
                   fill="none"
                   stroke="#c9a84c"
-                  stroke-width="2"
+                  stroke-width="2.2"
+                  stroke-opacity="0.75"
+                />
+                <path
+                  d="M120 120 Q145 105 158 86"
+                  fill="none"
+                  stroke="#c9a84c"
+                  stroke-width="1.6"
                   stroke-opacity="0.7"
                 />
+                <!-- Mid Left Branches to Calindra (34,60) & Lyra (75,42) -->
                 <path
-                  d="M90 100 Q70 80 50 75"
+                  d="M90 110 Q50 90 34 60"
                   fill="none"
                   stroke="#c9a84c"
-                  stroke-width="1.5"
-                  stroke-opacity="0.6"
+                  stroke-width="1.8"
+                  stroke-opacity="0.75"
                 />
                 <path
-                  d="M90 100 Q110 80 130 75"
+                  d="M62 96 Q70 70 75 42"
                   fill="none"
                   stroke="#c9a84c"
-                  stroke-width="1.5"
-                  stroke-opacity="0.6"
+                  stroke-width="1.3"
+                  stroke-opacity="0.7"
+                />
+                <!-- Mid Right Branches to Nanima (148,60) & Pietra (105,42) -->
+                <path
+                  d="M90 110 Q130 90 148 60"
+                  fill="none"
+                  stroke="#c9a84c"
+                  stroke-width="1.8"
+                  stroke-opacity="0.75"
                 />
                 <path
-                  d="M90 90 Q80 60 75 45"
+                  d="M118 96 Q110 70 105 42"
                   fill="none"
                   stroke="#c9a84c"
-                  stroke-width="1.5"
-                  stroke-opacity="0.6"
+                  stroke-width="1.3"
+                  stroke-opacity="0.7"
+                />
+                <!-- Center Trunk to Tenebra (90,30) & Celestria (90,15) -->
+                <path
+                  d="M90 90 L90 30"
+                  fill="none"
+                  stroke="#c9a84c"
+                  stroke-width="2.5"
+                  stroke-opacity="0.8"
                 />
                 <path
-                  d="M90 90 Q100 60 105 45"
+                  d="M90 30 L90 15"
                   fill="none"
                   stroke="#c9a84c"
-                  stroke-width="1.5"
-                  stroke-opacity="0.6"
+                  stroke-width="2.0"
+                  stroke-opacity="0.8"
                 />
+                <!-- Decorative Twigs for Realism -->
+                <path d="M40 105 Q35 115 25 112" fill="none" stroke="#c9a84c" stroke-width="1" stroke-opacity="0.4" />
+                <path d="M60 85 Q45 75 42 68" fill="none" stroke="#c9a84c" stroke-width="1" stroke-opacity="0.4" />
+                <path d="M140 105 Q145 115 155 112" fill="none" stroke="#c9a84c" stroke-width="1" stroke-opacity="0.4" />
+                <path d="M120 85 Q135 75 138 68" fill="none" stroke="#c9a84c" stroke-width="1" stroke-opacity="0.4" />
+                <path d="M90 60 Q80 50 82 45" fill="none" stroke="#c9a84c" stroke-width="0.8" stroke-opacity="0.5" />
+                <path d="M90 60 Q100 50 98 45" fill="none" stroke="#c9a84c" stroke-width="0.8" stroke-opacity="0.5" />
                 <circle
                   cx="22"
                   cy="86"
@@ -2965,6 +3027,13 @@
         <p class="footer-sub">
           Mariana Rosa · Área Exclusiva das Pigmentadoras
         </p>
+
+        <!-- SESSÃO DO USUÁRIO NO FOOTER -->
+        <div class="footer-user-info">
+          <span class="footer-user-email" id="footerUserEmail"></span>
+          <button class="footer-btn-logout" onclick="doLogout()">Sair da Área Exclusiva</button>
+        </div>
+
         <div class="footer-sep"></div>
         <p class="footer-copy">
           © 2026 desenvolvido por
@@ -2973,8 +3042,7 @@
             target="_blank"
             class="footer-link"
             >CarolGonzaga</a
-          >
-          · Conteúdo exclusivo para membros.
+          ><span class="footer-mobile-block"> · Conteúdo exclusivo para membros.</span>
         </p>
       </footer>
     </div>
@@ -3443,6 +3511,8 @@
       function grantAccess(user) {
         const emailEl = document.getElementById("navUserEmail");
         if (emailEl) emailEl.textContent = user.email;
+        const footerEmailEl = document.getElementById("footerUserEmail");
+        if (footerEmailEl) footerEmailEl.textContent = user.email;
         const gate = document.getElementById("authGate");
         gate.classList.add("fade-out");
         setTimeout(() => {
