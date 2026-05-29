@@ -2091,7 +2091,9 @@
             <h2 class="section-title">Diário da <em>Autora</em></h2>
             <div class="section-divider"></div>
           </div>
-          <div id="dynamicBlogContainer"></div>
+          <div id="dynamicBlogContainer">
+            <!-- Blog posts carregados dinamicamente via content.json -->
+          </div>
         </div>
       </section>
 
@@ -2553,6 +2555,49 @@
       let PIGMENTADORAS = [];
       let REINOS_DATA = [];
 
+      let _pageObserver = null; // shared observer instance
+
+      // ── VARIÁVEIS DE ESTADO ──
+      let mx = 0, my = 0;
+      const RUNE_CHARS = ['ᚠ','ᚢ','ᚦ','ᚨ','ᚱ','ᚲ','ᚷ','ᚹ','ᚺ','ᚾ','ᛁ','ᛃ','ᛇ','ᛈ','ᛉ','ᛊ','ᛏ','ᛒ','ᛖ','ᛗ','ᛚ','ᛜ','ᛞ','ᛟ'];
+
+      // ── BLOG MODAL ──
+      function openBlogModal(id) {
+        const post = BLOG_POSTS.find(p => p.id === id) || BLOG_POSTS[id];
+        if (!post) return;
+        document.getElementById('modalEyebrow').textContent = post.eyebrow || post.cat || '';
+        document.getElementById('modalTitle').textContent = post.title || '';
+        document.getElementById('modalBody').innerHTML = post.body || '<p>' + (post.excerpt || '') + '</p>';
+        const modal = document.getElementById('blogModal');
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeBlogModal() {
+        const modal = document.getElementById('blogModal');
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      // ── CAROUSEL DE PIGMENTADORAS ──
+      function scrollCarousel(dir) {
+        const carousel = document.getElementById('pigmentCarousel');
+        if (!carousel) return;
+        carousel.scrollBy({ left: dir * 300, behavior: 'smooth' });
+      }
+
+      // ── DOWNLOAD DE GALERIA ──
+      function triggerDownload(url, filename) {
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename || 'arte';
+        a.target = '_blank';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => a.remove(), 100);
+      }
+
+
       async function loadSiteData() {
         try {
           const res = await fetch('/content.json');
@@ -2566,42 +2611,108 @@
           renderGallery();
           renderPigmentadoras();
           renderReinos();
-          
-          // Re-observe elements for animations
-          if(typeof observer !== 'undefined') {
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+          // Re-observe dynamically added elements
+          if (_pageObserver) {
+            document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => _pageObserver.observe(el));
           }
         } catch (err) {
           console.error("Failed to load content.json", err);
         }
       }
 
+      function renderGallery() {
+        const grid = document.getElementById("galleryGrid");
+        if (!grid) return;
+        grid.innerHTML = "";
+        GALLERY_ITEMS.forEach((it, i) => {
+          const div = document.createElement("div");
+          div.className = "gallery-item reveal";
+          div.style.transitionDelay = i * 0.1 + "s";
+          div.innerHTML = `<img src="${it.thumb}" alt="${it.title}"><div class="gallery-overlay"><div class="gallery-item-title">${it.title}</div><button class="gallery-download-btn" onclick="triggerDownload('${it.download}','${it.title}')"><span>⬇</span> Download</button></div>`;
+          grid.appendChild(div);
+          if (_pageObserver) setTimeout(() => _pageObserver.observe(div), 10);
+        });
+      }
+
+      function renderPigmentadoras() {
+        const carousel = document.getElementById("pigmentCarousel");
+        if (!carousel) return;
+        carousel.innerHTML = "";
+        PIGMENTADORAS.forEach((p, i) => {
+          const pc = p.color || p.pc || '#c9a84c';
+          const pcBg = p.colorBg || p.pcBg || '#1a0030';
+          const pcStroke = pc + '44';
+          const pcGlow = pc + '33';
+          const rune = p.rune || p.name.charAt(0);
+          const card = document.createElement("div");
+          card.className = "pigment-card reveal";
+          card.style.cssText = `--pc:${pc};--pc-bg:${pcBg};--pc-stroke:${pcStroke};--pc-glow:${pcGlow};transition-delay:${i * 0.06}s;`;
+          card.innerHTML = `<div class="pigment-card-top"><div class="pigment-card-bg"></div><div class="pigment-card-rune">${rune}</div><div class="pigment-card-number">${p.num}</div><div class="pigment-card-gem"><svg viewBox="0 0 24 24"><use href="#gem"/></svg></div></div><div class="pigment-card-body"><div class="pigment-card-realm">${p.realm}</div><div class="pigment-card-name">${p.name}</div><div class="pigment-card-power">${p.power}</div><p class="pigment-card-desc">${p.desc}</p></div>`;
+          carousel.appendChild(card);
+          if (_pageObserver) setTimeout(() => _pageObserver.observe(card), 10);
+        });
+      }
+
+      function renderReinos() {
+        const reinosGrid = document.getElementById("reinosGridExclusivo");
+        if (!reinosGrid) return;
+        reinosGrid.innerHTML = "";
+        REINOS_DATA.forEach((r, i) => {
+          const rc = r.rc || r.color || '#c9a84c';
+          const rcBg = r.rcBg || (r.colorBg || '#0a000f');
+          const sigla = r.sigla || r.name.charAt(0);
+          const num = r.num || String(i + 1).padStart(2, '0');
+          const nome = r.nome || r.name;
+          const gema = r.gema || r.sub || '';
+          const pigmentadora = r.pigmentadora || r.resident || '';
+          const descricao = r.descricao || r.text || '';
+          const delay = r.delay || (i * 0.1) + 's';
+          const div = document.createElement("div");
+          div.className = "reino-card-exclusivo reveal";
+          div.style.cssText = `--rc:${rc};--rc-bg:${rcBg};--rc-border:${rc}22;--card-delay:${delay};transition-delay:${delay};`;
+          div.innerHTML = `
+            <div class="reino-visual">
+              <div class="reino-visual-bg"></div>
+              <div class="reino-visual-pattern"></div>
+              <div class="reino-sigla">${sigla}</div>
+              <div class="reino-numero">${num}</div>
+              <div class="reino-gem-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><use href="#gem"/></svg></div>
+            </div>
+            <div class="reino-corpo">
+              <div class="reino-nome">${nome}</div>
+              <div class="reino-gema">${gema}</div>
+              <div class="reino-pigmentadora">✦ ${pigmentadora}</div>
+              <p class="reino-descricao">${descricao}</p>
+            </div>`;
+          reinosGrid.appendChild(div);
+          if (_pageObserver) setTimeout(() => _pageObserver.observe(div), 10);
+        });
+      }
+
       function renderBlog() {
         const container = document.getElementById("dynamicBlogContainer");
-        if (!container) {
-          console.error("dynamicBlogContainer not found!");
-          return;
-        }
+        if (!container) return;
 
         const featured = BLOG_POSTS.find(p => p.featured) || BLOG_POSTS[0];
         const others = BLOG_POSTS.filter(p => p !== featured);
 
-        let htmlStr = '<div class="blog-featured reveal">' +
-          '<div class="blog-feat-body">' +
+        let htmlStr = '<div class="blog-featured">' +
+          '<div class="blog-feat-body reveal">' +
             '<div>' +
               '<div class="blog-feat-num">01</div>' +
               '<div class="blog-feat-tag">' +
                 '<span class="blog-tag featured">Exclusivo</span>' +
-                '<span class="blog-tag">' + featured.cat + '</span>' +
+                '<span class="blog-tag">' + (featured.cat || featured.eyebrow || '') + '</span>' +
               '</div>' +
               '<h3 class="blog-feat-title">' + featured.title + '</h3>' +
-              '<p class="blog-feat-excerpt">' + featured.excerpt + '</p>' +
+              '<p class="blog-feat-excerpt">' + (featured.excerpt || '') + '</p>' +
             '</div>' +
             '<a href="#" class="blog-read-link" onclick="openBlogModal(' + featured.id + '); return false;">Ler o diário completo &rarr;</a>' +
           '</div>' +
           '<div class="blog-feat-visual">' +
             '<div class="blog-feat-particles" id="featParticles"></div>' +
-            '<img src="src/assets/capasemtexto.png" class="blog-feat-rune feat-img-custom" alt="Runa"/>' +
+            '<img src="src/assets/capasemtexto.png" class="blog-feat-rune feat-img-custom" alt="Runa" />' +
           '</div>' +
         '</div>' +
         '<div class="blog-grid">';
@@ -2611,9 +2722,9 @@
           const numStr = (i + 2).toString().padStart(2, '0');
           htmlStr += '<div class="blog-card reveal" style="transition-delay: ' + delay + 's">' +
             '<div class="blog-card-num">' + numStr + '</div>' +
-            '<div class="blog-card-cat">' + p.cat + '</div>' +
+            '<div class="blog-card-cat">' + (p.cat || '') + '</div>' +
             '<h3 class="blog-card-title">' + p.title + '</h3>' +
-            '<p class="blog-card-excerpt">' + p.excerpt + '</p>' +
+            '<p class="blog-card-excerpt">' + (p.excerpt || '') + '</p>' +
             '<a href="#" class="blog-card-link" onclick="openBlogModal(' + p.id + '); return false;">Ler mais &rarr;</a>' +
           '</div>';
         });
@@ -2621,7 +2732,7 @@
         htmlStr += '</div>';
         container.innerHTML = htmlStr;
 
-        // Re-init particles
+        // Re-init particles for the featured post visual
         const fp = document.getElementById("featParticles");
         if(fp) {
           for (let i = 0; i < 20; i++) {
@@ -2632,9 +2743,14 @@
             fp.appendChild(pEl);
           }
         }
+
+        // Observe newly added blog elements
+        if (_pageObserver) {
+          container.querySelectorAll('.reveal').forEach(el => _pageObserver.observe(el));
+        }
       }
 
-      // ══ SUPABASE CONFIG E AUTENTICAÇÃO ══// ══ SUPABASE CONFIG E AUTENTICAÇÃO ══
+      // ══ SUPABASE CONFIG E AUTENTICAÇÃO ══
       const SUPABASE_URL = "https://rdvocdklisynkmhawxnv.supabase.co";
       const SUPABASE_ANON_KEY =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkdm9jZGtsaXN5bmttaGF3eG52Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwNjA2MDUsImV4cCI6MjA5NTYzNjYwNX0.pnLj86o---KFrHZzVz5M6aS_CkQZpFbNmIBYbHdaZ_8";
@@ -2762,216 +2878,27 @@
         }
 
         // ── REVEAL OBSERVER ──
-        const observer = new IntersectionObserver(
+        _pageObserver = new IntersectionObserver(
           (entries) => {
             entries.forEach((e) => {
               if (e.isIntersecting) {
                 e.target.classList.add("visible");
-                observer.unobserve(e.target);
-              }
-      // ══ SUPABASE CONFIG E AUTENTICAÇÃO ══// ══ SUPABASE CONFIG E AUTENTICAÇÃO ══
-      const SUPABASE_URL = "https://rdvocdklisynkmhawxnv.supabase.co";
-      const SUPABASE_ANON_KEY =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkdm9jZGtsaXN5bmttaGF3eG52Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwNjA2MDUsImV4cCI6MjA5NTYzNjYwNX0.pnLj86o---KFrHZzVz5M6aS_CkQZpFbNmIBYbHdaZ_8";
-      const _sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-      async function checkAuth() {
-        buildGateStars();
-        // Aguarda o Supabase processar o magic link da URL
-        await new Promise((r) => setTimeout(r, 500));
-        const {
-          data: { session },
-        } = await _sb.auth.getSession();
-        if (session?.user) {
-          grantAccess(session.user);
-        } else {
-          denyAccess();
-        }
-      }
-
-      function grantAccess(user) {
-        const emailEl = document.getElementById("navUserEmail");
-        if (emailEl) emailEl.textContent = user.email;
-        const gate = document.getElementById("authGate");
-        gate.classList.add("fade-out");
-        setTimeout(() => {
-          gate.style.display = "none";
-        }, 650);
-        document.getElementById("mainContent").classList.add("visible");
-
-        // Inicia o carregamento das lógicas apenas após liberar o acesso
-        initPage();
-      }
-
-      function denyAccess() {
-        document.getElementById("gateSpinner").style.display = "none";
-        document.getElementById("gateMsg").innerHTML =
-          "Acesso não encontrado.<br><strong>Cadastre seu email</strong> na página principal para receber o link exclusivo.";
-        const err = document.getElementById("gateErr");
-        err.textContent =
-          "Já se cadastrou? Verifique sua caixa de entrada (e spam) e clique no link enviado.";
-        err.classList.add("visible");
-        document.getElementById("gateBack").style.display = "inline-block";
-      }
-
-      async function doLogout() {
-        await _sb.auth.signOut();
-        window.location.href = "index.html";
-      }
-
-      function buildGateStars() {
-        const el = document.getElementById("gateStars");
-        for (let i = 0; i < 120; i++) {
-          const s = document.createElement("div");
-          s.className = "star";
-          const sz = Math.random() * 2 + 0.3;
-          s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random() * 100}%;top:${Math.random() * 100}%;--dur:${2 + Math.random() * 4}s;--delay:${Math.random() * 6}s;--min-op:${0.1 + Math.random() * 0.2};--max-op:${0.4 + Math.random() * 0.4};`;
-          el.appendChild(s);
-        }
-      }
-
-      // ══ INICIALIZAÇÃO DA PÁGINA PÓS-LOGIN ══
-      function initPage() {
-        // ── CURSOR ──
-        const brush = document.getElementById("cursorBrush");
-        document.addEventListener("mousemove", (e) => {
-          mx = e.clientX;
-          my = e.clientY;
-          brush.style.left = mx + "px";
-          brush.style.top = my + "px";
-        });
-        document.addEventListener("mousedown", () =>
-          brush.classList.add("clicking"),
-        );
-        document.addEventListener("mouseup", () =>
-          brush.classList.remove("clicking"),
-        );
-
-        // ── MAGIC DUST & RUNES ──
-        document.addEventListener("click", (e) => {
-          for (let i = 0; i < 6; i++) {
-            const d = document.createElement("div");
-            d.className = "magic-dust";
-            const angle = ((Math.PI * 2) / 6) * i,
-              dist = 35 + Math.random() * 35;
-            d.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;--dx:${Math.cos(angle) * dist}px;--dy:${Math.sin(angle) * dist}px;background:${Math.random() > 0.5 ? "var(--gold)" : "#9d4edd"};`;
-            document.body.appendChild(d);
-            setTimeout(() => d.remove(), 2500);
-          }
-          if (Math.random() > 0.5) {
-            const r = document.createElement("div");
-            r.className = "rune-particle";
-            const rr = Math.random() * 160 - 80 + "deg";
-            r.style.cssText = `left:${e.clientX}px;top:${e.clientY}px;--rx:${(Math.random() - 0.5) * 80}px;--ry:${-40 - Math.random() * 60}px;--rr:${rr};`;
-            r.textContent =
-              RUNE_CHARS[Math.floor(Math.random() * RUNE_CHARS.length)];
-            document.body.appendChild(r);
-            setTimeout(() => r.remove(), 3000);
-          }
-        });
-
-        // ── FECHAR MODAL CLICANDO FORA ──
-        document.getElementById("blogModal").addEventListener("click", (e) => {
-          if (e.target === document.getElementById("blogModal"))
-            closeBlogModal();
-        });
-
-        // ── STARS (hero) ──
-        const starsEl = document.getElementById("stars");
-        for (let i = 0; i < 180; i++) {
-          const s = document.createElement("div");
-          s.className = "star";
-          const sz = Math.random() * 2.5 + 0.4;
-          s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random() * 100}%;top:${Math.random() * 100}%;--dur:${2 + Math.random() * 4}s;--delay:${Math.random() * 6}s;--min-op:${0.1 + Math.random() * 0.3};--max-op:${0.5 + Math.random() * 0.5};`;
-          starsEl.appendChild(s);
-        }
-
-        // ── STARS (reinos) ──
-        const smEl = document.getElementById("smStars");
-        for (let i = 0; i < 100; i++) {
-          const s = document.createElement("div");
-          s.className = "reinos-starmap-star";
-          const sz = Math.random() * 2 + 0.4;
-          s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random() * 100}%;top:${Math.random() * 100}%;--d:${2 + Math.random() * 4}s;--dl:${Math.random() * 6}s;--oa:${0.05 + Math.random() * 0.2};--ob:${0.3 + Math.random() * 0.5};`;
-          smEl.appendChild(s);
-        }
-
-        // ── REVEAL OBSERVER ──
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((e) => {
-              if (e.isIntersecting) {
-                e.target.classList.add("visible");
-                observer.unobserve(e.target);
+                _pageObserver.unobserve(e.target);
               }
             });
           },
           { threshold: 0.08 },
         );
 
-        // Seleciona os reveals hardcoded do HTML
+        // Observe static elements already in the DOM
         document
           .querySelectorAll(".reveal, .reveal-left, .reveal-right")
-          .forEach((el) => observer.observe(el));
+          .forEach((el) => _pageObserver.observe(el));
 
-        // ── PARTICULAS DO BLOG FEATURED ──
-        const fp = document.getElementById("featParticles");
-        if (fp) {
-          for (let i = 0; i < 20; i++) {
-            const p = document.createElement("div");
-            p.className = "fp";
-            const fx = (Math.random() - 0.5) * 60,
-              fy = -(20 + Math.random() * 60);
-            p.style.cssText = `left:${Math.random() * 100}%;top:${Math.random() * 100}%;--d:${4 + Math.random() * 6}s;--dl:${Math.random() * 4}s;--fx:${fx}px;--fy:${fy}px;--oa:${0.1 + Math.random() * 0.3};--ob:${0.5 + Math.random() * 0.5};`;
-            fp.appendChild(p);
-          }
-        }
-
-        // ══ RENDER FUNCTIONS ══
-        function renderGallery() {
-          const grid = document.getElementById("galleryGrid");
-          if(!grid) return;
-          grid.innerHTML = "";
-          GALLERY_ITEMS.forEach((it, i) => {
-            const div = document.createElement("div");
-            div.className = "gallery-item reveal";
-            div.style.transitionDelay = (i * 0.1) + "s";
-            div.innerHTML = '<img src="' + it.thumb + '" alt="' + it.title + '"><div class="gallery-overlay"><div class="gallery-item-title">' + it.title + '</div><button class="gallery-download-btn" onclick="triggerDownload(\'' + it.download + '\',\'' + it.title + '\')"><span>⬇</span> Download</button></div>';
-            grid.appendChild(div);
-          });
-        }
-
-        function renderPigmentadoras() {
-          const carousel = document.getElementById("pigmentCarousel");
-          if(!carousel) return;
-          carousel.innerHTML = "";
-          PIGMENTADORAS.forEach((p, i) => {
-            const card = document.createElement("div");
-            card.className = "pigment-card reveal";
-            card.style.cssText = '--pc:' + (p.color || p.pc) + ';--pc-bg:' + (p.colorBg || p.pcBg) + ';--pc-stroke:' + (p.color || p.pc) + '55;--pc-glow:' + (p.color || p.pc) + '33;transition-delay:' + (i * 0.06) + 's;';
-            card.innerHTML = '<div class="pigment-card-top"><div class="pigment-card-bg"></div><div class="pigment-card-rune">' + (p.rune || p.name.charAt(0)) + '</div><div class="pigment-card-number">' + p.num + '</div><div class="pigment-card-gem"><svg viewBox="0 0 24 24"><use href="#gem"/></svg></div></div><div class="pigment-card-body"><div class="pigment-card-realm">' + p.realm + '</div><div class="pigment-card-name">' + p.name + '</div><div class="pigment-card-power">' + p.power + '</div><p class="pigment-card-desc">' + p.desc + '</p></div>';
-            carousel.appendChild(card);
-          });
-        }
-
-        function renderReinos() {
-          const reinosGrid = document.getElementById("reinosGridExclusivo");
-          if(!reinosGrid) return;
-          reinosGrid.innerHTML = "";
-          REINOS_DATA.forEach((r, i) => {
-            const delay = (r.delay || (i * 0.1)) + (typeof r.delay === 'string' ? '' : 's');
-            const div = document.createElement("div");
-            div.className = "reino-card-exclusivo reveal";
-            div.style.cssText = '--rc:' + r.rc + ';--rc-bg:' + r.rcBg + ';--rc-border:' + r.rc + '22;--card-delay:' + delay + ';transition-delay:' + delay + ';';
-            let loreHtml = r.lore ? r.lore.map((l) => '<div class="reino-lore-item"><span class="lore-icon">' + l.icon + '</span><p class="lore-texto">' + l.texto + '</p></div>').join("") : "";
-            div.innerHTML = '<div class="reino-visual"><div class="reino-visual-bg"></div><div class="reino-visual-pattern"></div><div class="reino-sigla">' + (r.sigla || r.num) + '</div><div class="reino-numero">' + r.num + '</div><div class="reino-gem-icon"><svg viewBox="0 0 24 24"><use href="#gem"/></svg></div></div><div class="reino-corpo"><div class="reino-nome">' + r.nome + '</div><div class="reino-gema">' + r.gema + '</div><div class="reino-pigmentadora">✦ ' + r.pigmentadora + '</div><p class="reino-descricao">' + r.descricao + '</p><div class="reino-lore"><div class="reino-lore-titulo">Lore exclusivo</div>' + loreHtml + '</div></div>';
-            reinosGrid.appendChild(div);
-          });
-        }
-
+        // Load dynamic content from content.json
         loadSiteData();
 
-        // ── SMOOTH NAV ──// ── SMOOTH NAV ──
+        // ── SMOOTH NAV ──
         document.querySelectorAll('a[href^="#"]').forEach((a) => {
           a.addEventListener("click", (e) => {
             const id = a.getAttribute("href").replace("#", "");
