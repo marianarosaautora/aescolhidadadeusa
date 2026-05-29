@@ -2715,465 +2715,82 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <script>
-      // ══ DADOS DO SITE ══
-      const BLOG_POSTS = [
-        {
-          eyebrow: "Bastidores · Criação · Exclusivo",
-          title: "Como nasceu o universo das Pigmentadoras",
-          body: `<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry <em>since the 1500s</em>. It has survived not only five centuries, but also the leap into electronic typesetting.</p><p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.</p><p>Lorem <strong>Ipsum</strong> is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p>`,
-        },
-        {
-          eyebrow: "Mundo · Lore · A Árvore",
-          title: "A Árvore Celestial e o eixo dos nove mundos",
-          body: `<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry <em>since the 1500s</em>.</p><p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.</p><p>Lorem <strong>Ipsum</strong> is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.</p>`,
-        },
-        {
-          eyebrow: "Personagens · Romance Sáfico",
-          title: "Tainá e Celestria: o amor como ato de coragem",
-          body: `<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry <em>since the 1500s</em>.</p><p>There are many variations of passages of Lorem Ipsum available.</p><p><strong>Lorem Ipsum</strong> is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.</p>`,
-        },
-        {
-          eyebrow: "Processo · Sistema de Magia",
-          title: "O pincel de Tainá e a origem do sistema de magia",
-          body: `<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry <em>since the 1500s</em>.</p><p>There are many variations of passages of Lorem Ipsum available.</p><p>Lorem <strong>Ipsum</strong> is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.</p>`,
-        },
-        {
-          eyebrow: "Bastidores · As Guardiãs",
-          title: "Como criei cada Pigmentadora e seu reino",
-          body: `<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry <em>since the 1500s</em>.</p><p>There are many variations of passages of Lorem Ipsum available.</p><p>Lorem <strong>Ipsum</strong> is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.</p>`,
-        },
-        {
-          eyebrow: "Reflexões · Primeiro Livro Físico",
-          title: "O que significa lançar meu primeiro livro físico",
-          body: `<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry <em>since the 1500s</em>.</p><p>There are many variations of passages of Lorem Ipsum available.</p><p>Lorem <strong>Ipsum</strong> is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.</p>`,
-        },
-        {
-          eyebrow: "Universo · A Antagonista",
-          title: "O Vazio: a titã que quase engoliu a história",
-          body: `<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry <em>since the 1500s</em>.</p><p>There are many variations of passages of Lorem Ipsum available.</p><p>Lorem <strong>Ipsum</strong> is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.</p>`,
-        },
-      ];
+      // ══ DADOS DO SITE (FETCH) ══
+      let BLOG_POSTS = [];
+      let GALLERY_ITEMS = [];
+      let PIGMENTADORAS = [];
+      let REINOS_DATA = [];
 
-      const GALLERY_ITEMS = [
-        {
-          title: "Tainá — A Pigmentadora",
-          thumb: "/src/assets/gallery/Tainá 2.jpg",
-          download: "/src/assets/gallery/Tainá 2.png",
-        },
-        {
-          title: "Celestria — A Deusa",
-          thumb: "/src/assets/gallery/Celestria 2.jpg",
-          download: "/src/assets/gallery/Celestria 2.png",
-        },
-        {
-          title: "A Escolhida da Deusa — Capa Completa",
-          thumb: "/src/assets/gallery/capa.jpg",
-          download: "/src/assets/gallery/capa.png",
-        },
-        {
-          title: "A Escolhida da Deusa — Celestria e Tainá",
-          thumb: "/src/assets/gallery/arte 1.jpg",
-          download: "/src/assets/gallery/arte 1.png",
-        },
-        {
-          title: "A Escolhida da Deusa — Celestria e Tainá",
-          thumb: "/src/assets/gallery/arte 2.jpg",
-          download: "/src/assets/gallery/arte 2.png",
-        },
-        {
-          title: "A Escolhida da Deusa — Celestria e Tainá",
-          thumb: "/src/assets/gallery/arte 3.jpg",
-          download: "/src/assets/gallery/arte 3.png",
-        },
-        {
-          title: "A Escolhida da Deusa — Celestria e Tainá",
-          thumb: "/src/assets/gallery/arte 4.jpg",
-          download: "/src/assets/gallery/arte 4.png",
-        },
-      ];
+      async function loadSiteData() {
+        try {
+          const res = await fetch('/content.json');
+          const data = await res.json();
+          BLOG_POSTS = data.membros.blog;
+          GALLERY_ITEMS = data.membros.gallery;
+          PIGMENTADORAS = data.membros.pigmentadoras;
+          REINOS_DATA = data.membros.reinos;
 
-      const PIGMENTADORAS = [
-        {
-          name: "Taaf",
-          realm: "Mentálida",
-          power: "Telepatia & Controle Mental",
-          rune: "T",
-          pc: "#d500f9",
-          pcBg: "#2d004a",
-          pcStroke: "#d500f955",
-          pcGlow: "#d500f933",
-          desc: "Líder silenciosa das psíquicas de Mentálida. Capaz de tocar mentes sem ser sentida, ela enxerga intenções antes que se tornem ações. Poucas mulheres de seu reino nascem com poder — ela é a mais forte de todas.",
-          num: "01",
-        },
-        {
-          name: "Calindra",
-          realm: "Nevalis",
-          power: "Vento & Gelo via Armas",
-          rune: "C",
-          pc: "#b0d4ff",
-          pcBg: "#001a33",
-          pcStroke: "#b0d4ff44",
-          pcGlow: "#b0d4ff22",
-          desc: "Forjada pelo frio implacável de Nevalis, onde o excesso de luz e a falta de calor moldam as almas. Canaliza seu poder através de armas de fogo encantadas com gelo. Tão bela quanto brutal.",
-          num: "02",
-        },
-        {
-          name: "Agnes",
-          realm: "Brasas Constantes",
-          power: "Fogo & Lava",
-          rune: "A",
-          pc: "#ff3333",
-          pcBg: "#330000",
-          pcStroke: "#ff333344",
-          pcGlow: "#ff333322",
-          desc: "Guerreira de um lugar cruel, rodeado de vulcões. Sua raça são as mais poderosas em combate — mas pagam um preço alto. Agnes carrega nos pulmões o peso de seu próprio reino.",
-          num: "03",
-        },
-        {
-          name: "Lunara",
-          realm: "Luxanara",
-          power: "Luz & Energia Solar",
-          rune: "L",
-          pc: "#ffd600",
-          pcBg: "#1a1400",
-          pcStroke: "#ffd60044",
-          pcGlow: "#ffd60022",
-          desc: "Vinda do reino mais próspero e organizado dos nove. Entre zepelins e autônomos, Lunara aprendeu que a paz é uma conquista diária. Sua luz ilumina — mas também enceguece.",
-          num: "04",
-        },
-        {
-          name: "Vespera",
-          realm: "Florivena",
-          power: "Natureza & Crescimento",
-          rune: "V",
-          pc: "#00e676",
-          pcBg: "#001a00",
-          pcStroke: "#00e67644",
-          pcGlow: "#00e67622",
-          desc: "De Florivena, onde escombros e simplicidade coexistem como ornamentos de uma cidade esquecida. Vespera faz crescer onde só havia ruína — em plantas e em pessoas.",
-          num: "05",
-        },
-        {
-          name: "Pietra",
-          realm: "Itaveah",
-          power: "Pedra & Cristais",
-          rune: "P",
-          pc: "#8d6e63",
-          pcBg: "#1a0f00",
-          pcStroke: "#8d6e6344",
-          pcGlow: "#8d6e6322",
-          desc: "Nascida em montanhas onde noite e dia não existem, apenas a luz permanente das gemas coloridas. Pietra molda pedras como outros moldam argila — com instinto e amor.",
-          num: "06",
-        },
-        {
-          name: "Tenebra",
-          realm: "Caligobris",
-          power: "Sombra & Espíritos",
-          rune: "T",
-          pc: "#aaaaaa",
-          pcBg: "#050505",
-          pcStroke: "#aaaaaa33",
-          pcGlow: "#aaaaaa18",
-          desc: "Do reino medieval onde o sol é proibido. Entre castelos e muralhas, Tenebra aprendeu a conversar com os mortos antes de aprender a falar com os vivos.",
-          num: "07",
-        },
-        {
-          name: "Lyra",
-          realm: "Nuvens Exaltadas",
-          power: "Transformação Bloqueada",
-          rune: "L",
-          pc: "#d7ccc8",
-          pcBg: "#0a0a0a",
-          pcStroke: "#d7ccc833",
-          pcGlow: "#d7ccc818",
-          desc: "Do reino de ilhotas flutuantes onde todos se transformam em animais — exceto ela. O poder bloqueado de Lyra esconde algo que nem Celestria ainda compreende completamente.",
-          num: "08",
-        },
-        {
-          name: "Nanima",
-          realm: "Aqualina",
-          power: "Água & Cauda Aquática",
-          rune: "N",
-          pc: "#00b0ff",
-          pcBg: "#001833",
-          pcStroke: "#00b0ff44",
-          pcGlow: "#00b0ff22",
-          desc: "Do reino híbrido de oceanos e terra firme, lar dos grandes artistas. Nanima une dois mundos com a mesma facilidade com que cria a cauda que a leva pelas profundezas.",
-          num: "09",
-        },
-      ];
-
-      const REINOS_DATA = [
-        {
-          nome: "Mentálida",
-          sigla: "M",
-          gema: "Gema Magenta",
-          rc: "#d500f9",
-          rcBg: "#2d0040",
-          pigmentadora: "Taaf",
-          num: "01",
-          delay: "0s",
-          descricao: `Reino dos psíquicos, mediúnicos e manipuladores de mente. Um lugar rodeado de floresta tropical neon. <strong>Lar de Taaf</strong>. Poucas mulheres nascem com habilidades, mas quando elas aparecem são as mais fortes do reino.`,
-          lore: [
-            {
-              icon: "◈",
-              texto: `Com um céu de duas luas e cor magenta, Mentálida é cercada por uma floresta tropical neon. De estruturas baixas, coloridas e palácios em formato pirâmide, o Reino Magenta é regido quase que inteiramente por homens. São eles os que mais têm cores em seus receptáculos, embora, a cada punhado de anos, mulheres nasçam com grandes habilidades.`,
-            },
-            {
-              icon: "◈",
-              texto: `Em seu nascimento, as meninas já são predestinadas, e casam-se ainda meninas para serem usadas na política de manipulação de acordo com a política de interesse dos homens.`,
-            },
-            {
-              icon: "◈",
-              texto: `Para a sociedade, ser escolhida é uma honra, mas a realidade é bem diferente. Além de abusos, os homens podem manipular as cores das jovens, colocando colares de ferro com espinhos para evitar que elas usem a habilidade.`,
-            },
-            {
-              icon: "◈",
-              texto: `Taaf foi uma dessas meninas, até que Celestria interveio em seu favor, algo extremamente proibido. Ao invés de cultivar o ódio e a amargura, a Pigmentadora Magenta optou por ir pelo caminho oposto, ainda que a cicatriz doa.`,
-            },
-            {
-              icon: "◈",
-              texto: `Todos os Mentálidas têm runas espalhadas pelo corpo. Elas servem para aumentar o poder receptáculo e assim, abrir ou ajudar a fomentar uma habilidade já existente ou nova. Quanto mais runas o ser tem no corpo, mais poderoso é.`,
-            },
-          ],
-        },
-        {
-          nome: "Nevalis",
-          sigla: "N",
-          gema: "Gema Branca",
-          rc: "#b0d4ff",
-          rcBg: "#001a33",
-          pigmentadora: "Calindra",
-          num: "02",
-          delay: "0.06s",
-          descricao: `Lar do gelo e do vento castigador. Os seres desse local não usam as habilidades diretamente com as mãos e sim, através de arma de fogo. Um local caótico e belo, onde o excesso de luz e a falta de calor desenham as personalidades. <strong>Lugar onde Calindra nasceu.</strong>`,
-          lore: [
-            {
-              icon: "◈",
-              texto: `O mundo é congelado, pois o ar traz consigo a neve. Há lugares melhores do que outros, mas, em geral, todas as cidades estão contornadas por uma nevasca. Os prédios e as casas são ligados por túneis e corredores. Mas, mesmo no lugar inóspito, os Nevarianos puderam transformar a paisagem gelada e branca num local cheio de outdoors coloridos de néon e interativos.`,
-            },
-            {
-              icon: "◈",
-              texto: `De aspecto etéreo e de cores azuis, os Nevareanos utilizam placas cibernéticas, fios condutores e próteses tecnológicas que misturam suas dermes azuladas com a tecnologia do reino branco.`,
-            },
-            {
-              icon: "◈",
-              texto: `Os Nevareanos têm muitas vezes dificuldade de canalizar suas cores, com isso, usam a tecnologia para lhes auxiliar. Por isso, as armas de fogo são amplamente usadas para que as habilidades guardadas no âmago dos seres possam ser externalizadas.`,
-            },
-            {
-              icon: "◈",
-              texto: `As minas espalhadas por Novalis são altamente exploradas, pois é através dos metais retirados de lá que são feitos a maioria dos apetrechos tecnológicos. Um trabalho extremamente perigoso, mas monetariamente favorável.`,
-            },
-          ],
-        },
-        {
-          nome: "Brasas Constantes",
-          sigla: "B",
-          gema: "Gema Vermelha",
-          rc: "#ff3333",
-          rcBg: "#330000",
-          pigmentadora: "Agnes",
-          num: "03",
-          delay: "0.12s",
-          descricao: `Lugar cruel, <strong>lar de Agnes</strong>. Cercado por vulcões, Embora sejam uma raça de guerreiros, seus moradores têm problemas pulmonares que acabam não sobrevivendo por muito tempo.`,
-          lore: [
-            {
-              icon: "◈",
-              texto: `Brasas Constantes é um reino forjado por guerreiros e guerreiras. Quase chegaram à extinção por duas vezes, devido às guerras que clãs, com interesses distintos, provocaram. Em um desses conflitos, uma das Pigmentadoras mais fortes de Celestria morreu. `,
-            },
-            {
-              icon: "◈",
-              texto: `Durante séculos a paz (quase) reinou, até a chegada dos panteões, forjando um culto fanático para cultuar o Deus do Primordial.`,
-            },
-            {
-              icon: "◈",
-              texto: `O mundo é conhecido por uma condição pulmonar que afeta a maioria de seus habitantes — uma doença térmica degenerativa que compromete a respiração com o tempo. Os habitantes vivem mais do que os humanos, mas poucos chegam à velhice.`,
-            },
-            {
-              icon: "◈",
-              texto: `Aqueles que conseguem envelhecer se tornam figuras sagradas e resguardadas, selecionados para reger os destinos do povo.`,
-            },
-            {
-              icon: "◈",
-              texto: `Sua culinária é conhecida por peixes magmas, pimentas e pepinos ultra apimentados. `,
-            },
-            {
-              icon: "◈",
-              texto: `Boêmios e barulhentos, os Braseiros são impacientes, mas leais.`,
-            },
-          ],
-        },
-        {
-          nome: "Luxanara",
-          sigla: "L",
-          gema: "Gema Amarela",
-          rc: "#ffd600",
-          rcBg: "#1a1400",
-          pigmentadora: "Lunara",
-          num: "04",
-          delay: "0.18s",
-          descricao: `Um local próspero, lindo e totalmente organizado. Entre zepelins e autônomos, os moradores tendem a buscar pela paz. <strong>Lar de Lunara</strong>.`,
-          lore: [
-            {
-              icon: "◈",
-              texto: `Em breve...`,
-            },
-          ],
-        },
-        {
-          nome: "Florivena",
-          sigla: "F",
-          gema: "Gema Verde",
-          rc: "#00e676",
-          rcBg: "#001a00",
-          pigmentadora: "Vespera",
-          num: "05",
-          delay: "0.24s",
-          descricao: `Um lugar onde os escombros de uma cidade esquecida, lotadas de arranha-céus e a simplicidade de casas de madeira são construídas como enfeites de árvores de Natal. <strong>Lar de Vespera</strong>.`,
-          lore: [
-            {
-              icon: "◈",
-              texto: `Uma vez, a sociedade do reino já foi altamente evoluída, contudo, após uma extinção em massa, a natureza e a vida animal invadiram as grandes cidades. Aqueles que sobreviveram utilizaram o que havia restado dos grandes arranha-céus para construir suas casas.`,
-            },
-            {
-              icon: "◈",
-              texto: `O tecnológico e o rudimentar se encontram. Agora, os escombros verticais, que alcançavam os céus, tornaram-se árvores de concreto com casas de madeira. Formando uma floresta pitoresca com frutos iluminados pelos Floriveranos.`,
-            },
-            {
-              icon: "◈",
-              texto: `Sua flora é complexa e usada para todos os fins. Desde o encontro de curas até a execução de uma vida.`,
-            },
-            {
-              icon: "◈",
-              texto: `Floriveranos são criaturas com chifres e neles flores, frutos ou ervas crescem. Quanto mais o ser tem, mais poderoso ele é. Curiosamente, Vespera tem os chifres nus, parte pela sua idade avançada. É a Pigmentadora mais velha de sua geração.`,
-            },
-            {
-              icon: "◈",
-              texto: `Florivena é conhecida por sua culinária e as Rosetara, bolinhas feitas com flores murchas, são os doces preferidos de Tainá.`,
-            },
-          ],
-        },
-        {
-          nome: "Itaveah",
-          sigla: "I",
-          gema: "Gema Marrom",
-          rc: "#8d6e63",
-          rcBg: "#1a0f00",
-          pigmentadora: "Pietra",
-          num: "06",
-          delay: "0.30s",
-          descricao: `Um Reino escondido dentro de montanhas e casas feitas por gemas coloridas e cavernas. Lá a noite e o dia não existem. <strong>Lar de Pietra</strong>.`,
-          lore: [
-            {
-              icon: "◈",
-              texto: `Em breve...`,
-            },
-          ],
-        },
-        {
-          nome: "Caligobris",
-          sigla: "C",
-          gema: "Gema Preta",
-          rc: "#aaaaaa",
-          rcBg: "#050505",
-          pigmentadora: "Tenebra",
-          num: "07",
-          delay: "0.36s",
-          descricao: `Um reino medieval, onde o sol não é permitido. Lugares de castelos, torres e muralhas. Onde seus habitantes brincam com a morte e os espíritos. <strong>Lar de Tenebra</strong>.`,
-          lore: [
-            {
-              icon: "◈",
-              texto: `Em breve...`,
-            },
-          ],
-        },
-        {
-          nome: "Nuvens Exaltadas",
-          sigla: "N",
-          gema: "Gema Bege",
-          rc: "#d7ccc8",
-          rcBg: "#0a0a0a",
-          pigmentadora: "Lyra",
-          num: "08",
-          delay: "0.42s",
-          descricao: `Um reino feito por ilhotas que flutuam no céu. Conectadas por pontes e cachoeiras. Lá, muitos conseguem se transformar em diferentes animais, exceto por <strong>Lyra, seu lugar de morada</strong>.`,
-          lore: [
-            {
-              icon: "◈",
-              texto: `Em breve...`,
-            },
-          ],
-        },
-        {
-          nome: "Aqualina",
-          sigla: "A",
-          gema: "Gema Azul",
-          rc: "#00b0ff",
-          rcBg: "#001833",
-          pigmentadora: "Nanima",
-          num: "09",
-          delay: "0.48s",
-          descricao: `Um reino híbrido, onde parte dos moradores moram debaixo dos oceanos e outros na terra firme. Lugares de grandes artistas. <strong>Nanima vem de lá</strong>. Eles têm a capacidade de criar caldas aquáticas.`,
-          lore: [
-            {
-              icon: "◈",
-              texto: `Em breve...`,
-            },
-          ],
-        },
-      ];
-
-      // Variáveis globais
-      let mx = 0,
-        my = 0;
-      const RUNE_CHARS = ["✦", "◈", "⊕", "✧", "◆", "⬡"];
-
-      // Funções Globais HTML (onclick)
-      function openBlogModal(idx) {
-        const p = BLOG_POSTS[idx];
-        if (!p) return;
-        document.getElementById("modalEyebrow").textContent = p.eyebrow;
-        document.getElementById("modalTitle").textContent = p.title;
-        document.getElementById("modalBody").innerHTML = p.body;
-        document.getElementById("blogModal").classList.add("open");
-        document.body.style.overflow = "hidden";
-      }
-      function closeBlogModal() {
-        document.getElementById("blogModal").classList.remove("open");
-        document.body.style.overflow = "";
-      }
-      function triggerDownload(filePath, title) {
-        const flash = document.createElement("div");
-        flash.className = "download-flash";
-        document.body.appendChild(flash);
-        setTimeout(() => flash.remove(), 700);
-        const link = document.createElement("a");
-        link.href = filePath;
-        link.download = title + ".png";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        for (let i = 0; i < 14; i++) {
-          const d = document.createElement("div");
-          d.className = "magic-dust";
-          const angle = ((Math.PI * 2) / 14) * i,
-            dist = 60 + Math.random() * 60;
-          d.style.cssText = `left:${mx}px;top:${my}px;--dx:${Math.cos(angle) * dist}px;--dy:${Math.sin(angle) * dist}px;background:var(--gold);width:5px;height:5px;`;
-          document.body.appendChild(d);
-          setTimeout(() => d.remove(), 2500);
+          renderBlog();
+          renderGallery();
+          renderPigmentadoras();
+          renderReinos();
+          
+          // Re-observe elements for animations
+          if(typeof observer !== 'undefined') {
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+          }
+        } catch (err) {
+          console.error("Failed to load content.json", err);
         }
       }
-      function scrollCarousel(dir) {
-        document
-          .getElementById("pigmentCarousel")
-          .scrollBy({ left: dir * 296, behavior: "smooth" });
-      }
-      function esc(s) {
-        return String(s || "")
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;");
+
+      function renderBlog() {
+        const container = document.getElementById("dynamicBlogContainer");
+        if (!container) return;
+
+        const featured = BLOG_POSTS.find(p => p.featured) || BLOG_POSTS[0];
+        const others = BLOG_POSTS.filter(p => p !== featured);
+
+        let htmlStr = '<div class="blog-feat">' +
+          '<div class="blog-feat-content reveal">' +
+            '<div class="blog-feat-tag">' +
+              '<span class="blog-tag featured">Exclusivo</span>' +
+              '<span class="blog-tag">' + featured.cat + '</span>' +
+            '</div>' +
+            '<h3 class="blog-feat-title">' + featured.title + '</h3>' +
+            '<p class="blog-feat-excerpt">' + featured.excerpt + '</p>' +
+            '<a href="#" class="btn-gold" onclick="openBlogModal(' + featured.id + '); return false;">Ler Diário</a>' +
+          '</div>' +
+          '<div class="blog-feat-particles" id="featParticles"></div>' +
+        '</div>' +
+        '<div class="blog-grid">';
+
+        others.forEach((p, i) => {
+          const delay = (i + 1) * 0.1;
+          const numStr = (i + 2).toString().padStart(2, '0');
+          htmlStr += '<div class="blog-card reveal" style="transition-delay: ' + delay + 's">' +
+            '<div class="blog-card-num">' + numStr + '</div>' +
+            '<div class="blog-card-cat">' + p.cat + '</div>' +
+            '<h3 class="blog-card-title">' + p.title + '</h3>' +
+            '<p class="blog-card-excerpt">' + p.excerpt + '</p>' +
+            '<a href="#" class="blog-card-link" onclick="openBlogModal(' + p.id + '); return false;">Ler mais &rarr;</a>' +
+          '</div>';
+        });
+
+        htmlStr += '</div>';
+        container.innerHTML = htmlStr;
+
+        // Re-init particles
+        const fp = document.getElementById("featParticles");
+        if(fp) {
+          for (let i = 0; i < 20; i++) {
+            const pEl = document.createElement("div");
+            pEl.className = "fp";
+            const fx = (Math.random() - 0.5) * 60, fy = -(20 + Math.random() * 60);
+            pEl.style.cssText = 'left:' + (Math.random() * 100) + '%;top:' + (Math.random() * 100) + '%;--d:' + (4 + Math.random() * 6) + 's;--dl:' + (Math.random() * 4) + 's;--fx:' + fx + 'px;--fy:' + fy + 'px;--oa:' + (0.1 + Math.random() * 0.3) + ';--ob:' + (0.5 + Math.random() * 0.5) + ';';
+            fp.appendChild(pEl);
+          }
+        }
       }
 
       // ══ SUPABASE CONFIG E AUTENTICAÇÃO ══
