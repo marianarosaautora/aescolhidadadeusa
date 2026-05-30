@@ -1863,8 +1863,9 @@
           <span class="genre-tag">Sáfico</span>
           <span class="genre-tag">Magia</span>
         </div>
-        <div style="display: flex; gap: 16px; flex-wrap: wrap" class="book-ctas">
-          <a href="https://amzn.to/4wVBjIC" target="_blank" class="btn-gold">Comprar</a>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: center;" class="book-ctas">
+          <a href="#" target="_blank" class="btn-gold" id="btnComprar">Comprar</a>
+          <span class="book-price" id="lblPreco" style="font-family: 'Cinzel', serif; color: var(--gold); font-size: 1rem; font-weight: bold; display: none;">R$ 00,00</span>
           <a href="#sinopse" class="btn-ghost">Ler sinopse</a>
         </div>
       </div>
@@ -2487,6 +2488,26 @@
             if (tagsCont) {
               tagsCont.innerHTML = index.tropes.map(t => `<span class="genre-tag">${t}</span>`).join('');
             }
+          }
+
+          // Seção Comprar
+          if (index.comprar) {
+            const btnComprar = document.getElementById('btnComprar');
+            const lblPreco = document.getElementById('lblPreco');
+            const navCtas = document.querySelectorAll('.nav-cta, .nav-mobile-only .btn-gold');
+            
+            if (btnComprar) {
+              btnComprar.textContent = index.comprar.linkLabel || 'Comprar';
+              btnComprar.href = index.comprar.link || '#';
+            }
+            if (lblPreco && index.comprar.price) {
+              lblPreco.textContent = index.comprar.price;
+              lblPreco.style.display = 'inline-block';
+            }
+            navCtas.forEach(cta => {
+              cta.href = index.comprar.link || '#';
+              cta.textContent = index.comprar.linkLabel || 'Comprar';
+            });
           }
 
         } catch (err) {

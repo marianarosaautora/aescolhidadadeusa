@@ -530,6 +530,35 @@
             "texto": "Os moradores de Aqualina são grandes artistas e intelectuais, onde pintam delicadas ilustrações em grandes conchas abertas e descobrem curas para as doenças que circulam no reino. A paz é tão “excessiva” que os seres vivem em uma ociosidade angustiante. Aqueles que tentam mudar alguma coisa, são presos nas cavernas subaquáticas. Nanima foi um desses seres. Princesa do reino. Antes, porém, que pudesse ser presa, Celestria a chamou para ser Pigmentadora."
           }
         ]
+      },
+      {
+        "nome": "Cidade Celestial",
+        "sigla": "C",
+        "gema": "Gema Dourada",
+        "rc": "#c9a84c",
+        "rcBg": "#1a1600",
+        "pigmentadora": "Celestria",
+        "num": "10",
+        "delay": "0.54s",
+        "descricao": "Onde as <strong>Pigmentadoras</strong> vivem junto à Celestria. Lá a <strong>grande Árvore</strong> reside, assim como os moradores selecionados dos outros reinos. Um local em que a harmonia da fauna e da flora e da mistura da arquitetura são permitidas.",
+        "lore": [
+          {
+            "icon": "◈",
+            "texto": "A cidade perfeita cresce sob a Grande Árvore Celestial. Embora pequena em extensão e controlada para que tudo aconteça harmoniosamente, ela é um microcosmo, abrigando em si a essência e os biomas dos nove reinos."
+          },
+          {
+            "icon": "◈",
+            "texto": "Formando nove distritos, cada um deles mantém a natureza, os animais, a arquitetura e a cultura dos reinos. Os distritos se organizam em um gracioso leque a partir do centro, onde a arquitetura reflete o gosto etéreo de Celestria. Apesar de todos os reinos presentes, é a lei da divindade que predomina."
+          },
+          {
+            "icon": "◈",
+            "texto": "Na cidade Celestial, a vida possui um propósito compartilhado: cada habitante, à sua maneira, dedica-se à manutenção e ao equilíbrio da Grande Árvore. Em troca, recebem a Bênção de Celestria. Este dom não apenas os torna resistentes às variações climáticas de cada bioma, mas lhes dá a oportunidade da compreensão do dialeto de cada reino, fazendo com que todos se compreendam mutuamente."
+          },
+          {
+            "icon": "◈",
+            "texto": "É, em todos os sentidos, a cidade perfeita."
+          }
+        ]
       }
     ],
     "gallery": [
