@@ -13,7 +13,6 @@
         --purple-deep: #0d0010;
         --purple-mid: #1a0028;
         --purple-card: #130020;
-        --purple-bright: #7b2ff7;
         --text-light: #f0e6ff;
         --text-muted: #a89bc0;
         --border: rgba(201, 168, 76, 0.15);
@@ -30,8 +29,6 @@
         color: var(--text-light);
         font-family: "Inter", sans-serif;
         min-height: 100vh;
-        display: flex;
-        flex-direction: column;
       }
 
       /* ── LOGIN ── */
@@ -50,6 +47,7 @@
         width: 100%;
         max-width: 400px;
         text-align: center;
+        border-radius: 8px;
       }
 
       .login-logo {
@@ -65,12 +63,11 @@
         font-size: 0.75rem;
         color: var(--text-muted);
         margin-bottom: 36px;
-        letter-spacing: 0.05em;
       }
 
       .login-input {
         width: 100%;
-        background: rgba(255, 255, 255, 0.04);
+        background: rgba(255,255,255,0.04);
         border: 1px solid var(--border);
         color: var(--text-light);
         font-family: "Inter", sans-serif;
@@ -81,7 +78,6 @@
         transition: border-color 0.3s;
         margin-bottom: 16px;
       }
-
       .login-input:focus { border-color: var(--gold); }
 
       .login-btn {
@@ -99,25 +95,17 @@
         transition: opacity 0.3s, transform 0.2s;
         border-radius: 4px;
       }
-
       .login-btn:hover { opacity: 0.9; transform: translateY(-1px); }
-
-      .login-error {
-        color: var(--error);
-        font-size: 0.8rem;
-        margin-top: 12px;
-        min-height: 20px;
-      }
+      .login-error { color: var(--error); font-size: 0.8rem; margin-top: 12px; min-height: 20px; }
 
       /* ── DASHBOARD ── */
       #dashboard { display: none; min-height: 100vh; }
 
-      /* TOP BAR */
       .topbar {
         position: fixed;
         top: 0; left: 0; right: 0;
         height: 56px;
-        background: rgba(13, 0, 16, 0.95);
+        background: rgba(13,0,16,0.96);
         border-bottom: 1px solid var(--border);
         display: flex;
         align-items: center;
@@ -134,25 +122,7 @@
         color: var(--gold);
         text-transform: uppercase;
       }
-
-      .topbar-brand span {
-        color: var(--text-muted);
-        font-size: 0.65rem;
-        letter-spacing: 0.1em;
-        margin-left: 12px;
-      }
-
-      .topbar-right {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-      }
-
-      .topbar-user {
-        font-size: 0.75rem;
-        color: var(--text-muted);
-        letter-spacing: 0.05em;
-      }
+      .topbar-brand span { color: var(--text-muted); font-size: 0.65rem; margin-left: 12px; }
 
       .topbar-logout {
         font-family: "Cinzel", serif;
@@ -167,74 +137,48 @@
         border-radius: 4px;
         transition: all 0.3s;
       }
+      .topbar-logout:hover { border-color: var(--gold); background: rgba(201,168,76,0.08); }
 
-      .topbar-logout:hover { border-color: var(--gold); background: rgba(201, 168, 76, 0.08); }
+      .layout { display: flex; padding-top: 56px; min-height: 100vh; }
 
-      /* LAYOUT */
-      .layout {
-        display: flex;
-        padding-top: 56px;
-        min-height: 100vh;
-      }
-
-      /* SIDEBAR */
       .sidebar {
         width: var(--sidebar-w);
         min-height: calc(100vh - 56px);
         background: var(--purple-card);
         border-right: 1px solid var(--border);
-        padding: 32px 0;
+        padding: 28px 0;
         position: fixed;
-        top: 56px;
-        left: 0;
-        bottom: 0;
+        top: 56px; left: 0; bottom: 0;
         overflow-y: auto;
       }
 
-      .sidebar-section-label {
+      .sidebar-label {
         font-family: "Cinzel", serif;
         font-size: 0.55rem;
         letter-spacing: 0.3em;
         text-transform: uppercase;
         color: var(--gold-dim);
         padding: 0 20px;
-        margin-bottom: 8px;
-        margin-top: 24px;
+        margin: 20px 0 8px;
       }
-
-      .sidebar-section-label:first-child { margin-top: 0; }
+      .sidebar-label:first-child { margin-top: 0; }
 
       .sidebar-link {
         display: flex;
         align-items: center;
         gap: 12px;
         padding: 10px 20px;
-        font-size: 0.82rem;
+        font-size: 0.83rem;
         color: var(--text-muted);
         cursor: pointer;
         transition: all 0.2s;
         border-left: 2px solid transparent;
-        text-decoration: none;
       }
-
-      .sidebar-link:hover { color: var(--text-light); background: rgba(255, 255, 255, 0.03); }
-
-      .sidebar-link.active {
-        color: var(--gold);
-        border-left-color: var(--gold);
-        background: rgba(201, 168, 76, 0.06);
-      }
-
-      .sidebar-icon {
-        width: 18px;
-        height: 18px;
-        opacity: 0.7;
-        flex-shrink: 0;
-      }
-
+      .sidebar-link:hover { color: var(--text-light); background: rgba(255,255,255,0.03); }
+      .sidebar-link.active { color: var(--gold); border-left-color: var(--gold); background: rgba(201,168,76,0.06); }
+      .sidebar-icon { width: 16px; height: 16px; opacity: 0.7; flex-shrink: 0; }
       .sidebar-link.active .sidebar-icon { opacity: 1; }
 
-      /* MAIN CONTENT */
       .main {
         margin-left: var(--sidebar-w);
         flex: 1;
@@ -242,7 +186,6 @@
         max-width: calc(100% - var(--sidebar-w));
       }
 
-      /* PAGE */
       .page { display: none; }
       .page.active { display: block; }
 
@@ -251,7 +194,6 @@
         padding-bottom: 20px;
         border-bottom: 1px solid var(--border);
       }
-
       .page-eyebrow {
         font-family: "Cinzel", serif;
         font-size: 0.6rem;
@@ -261,7 +203,6 @@
         margin-bottom: 8px;
         display: block;
       }
-
       .page-title {
         font-family: "Cinzel", serif;
         font-size: 1.4rem;
@@ -269,7 +210,6 @@
         color: var(--text-light);
         letter-spacing: 0.05em;
       }
-
       .page-desc {
         font-size: 0.85rem;
         color: var(--text-muted);
@@ -285,7 +225,6 @@
         padding: 28px;
         margin-bottom: 20px;
       }
-
       .card-title {
         font-family: "Cinzel", serif;
         font-size: 0.75rem;
@@ -297,30 +236,22 @@
         align-items: center;
         gap: 10px;
       }
-
-      .card-title::after {
-        content: "";
-        flex: 1;
-        height: 1px;
-        background: var(--border);
-      }
+      .card-title::after { content: ""; flex: 1; height: 1px; background: var(--border); }
 
       /* FORM */
       .form-group { margin-bottom: 20px; }
-
       .form-label {
         display: block;
-        font-size: 0.75rem;
+        font-size: 0.72rem;
         font-weight: 500;
         color: var(--text-muted);
         letter-spacing: 0.05em;
         margin-bottom: 8px;
         text-transform: uppercase;
       }
-
-      .form-input, .form-textarea {
+      .form-input {
         width: 100%;
-        background: rgba(255, 255, 255, 0.04);
+        background: rgba(255,255,255,0.04);
         border: 1px solid var(--border);
         color: var(--text-light);
         font-family: "Inter", sans-serif;
@@ -330,17 +261,8 @@
         outline: none;
         transition: border-color 0.3s;
       }
-
-      .form-input:focus, .form-textarea:focus { border-color: var(--gold); }
-
-      .form-textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
-
-      .form-hint {
-        font-size: 0.72rem;
-        color: var(--text-muted);
-        margin-top: 6px;
-        opacity: 0.7;
-      }
+      .form-input:focus { border-color: var(--gold); }
+      .form-hint { font-size: 0.72rem; color: var(--text-muted); margin-top: 6px; opacity: 0.7; }
 
       /* BUTTONS */
       .btn {
@@ -358,35 +280,18 @@
         align-items: center;
         gap: 8px;
       }
-
       .btn-primary {
         background: linear-gradient(135deg, var(--gold-dim), var(--gold));
         color: #0d0010;
       }
-
-      .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 20px rgba(201, 168, 76, 0.3); }
-
-      .btn-outline {
-        background: transparent;
-        color: var(--gold);
-        border: 1px solid var(--border-hover);
-      }
-
-      .btn-outline:hover { background: rgba(201, 168, 76, 0.08); border-color: var(--gold); }
-
-      .btn-danger {
-        background: transparent;
-        color: var(--error);
-        border: 1px solid rgba(255, 51, 51, 0.4);
-      }
-
-      .btn-danger:hover { background: rgba(255, 51, 51, 0.08); }
+      .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 20px rgba(201,168,76,0.3); }
+      .btn-outline { background: transparent; color: var(--gold); border: 1px solid var(--border-hover); }
+      .btn-outline:hover { background: rgba(201,168,76,0.08); border-color: var(--gold); }
 
       /* TOAST */
       #toast {
         position: fixed;
-        bottom: 32px;
-        right: 32px;
+        bottom: 32px; right: 32px;
         padding: 14px 24px;
         border-radius: 6px;
         font-size: 0.85rem;
@@ -398,114 +303,31 @@
         pointer-events: none;
         max-width: 360px;
       }
-
       #toast.show { transform: translateY(0); opacity: 1; }
-      #toast.success { background: rgba(0, 200, 83, 0.15); border: 1px solid rgba(0, 200, 83, 0.4); color: #00c853; }
-      #toast.error { background: rgba(255, 51, 51, 0.15); border: 1px solid rgba(255, 51, 51, 0.4); color: #ff5555; }
+      #toast.success { background: rgba(0,200,83,0.15); border: 1px solid rgba(0,200,83,0.4); color: #00c853; }
+      #toast.error { background: rgba(255,51,51,0.15); border: 1px solid rgba(255,51,51,0.4); color: #ff5555; }
 
-      /* SOCIAL GRID */
-      .social-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
-      }
-
-      /* MEMBERS TABLE */
+      /* STATS */
       .members-stats {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 16px;
         margin-bottom: 24px;
       }
-
       .stat-card {
-        background: rgba(201, 168, 76, 0.06);
+        background: rgba(201,168,76,0.06);
         border: 1px solid var(--border);
         border-radius: 6px;
         padding: 20px;
         text-align: center;
       }
+      .stat-num { font-family: "Cinzel", serif; font-size: 2rem; font-weight: 700; color: var(--gold); line-height: 1; margin-bottom: 6px; }
+      .stat-label { font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
 
-      .stat-num {
-        font-family: "Cinzel", serif;
-        font-size: 2rem;
-        font-weight: 700;
-        color: var(--gold);
-        line-height: 1;
-        margin-bottom: 6px;
-      }
-
-      .stat-label {
-        font-size: 0.72rem;
-        color: var(--text-muted);
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-      }
-
-      .table-wrap {
-        overflow-x: auto;
-        border-radius: 6px;
-        border: 1px solid var(--border);
-      }
-
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 0.85rem;
-      }
-
-      thead th {
-        background: rgba(201, 168, 76, 0.06);
-        padding: 12px 16px;
-        text-align: left;
-        font-family: "Cinzel", serif;
-        font-size: 0.6rem;
-        letter-spacing: 0.2em;
-        text-transform: uppercase;
-        color: var(--gold-dim);
-        white-space: nowrap;
-        border-bottom: 1px solid var(--border);
-      }
-
-      tbody tr {
-        border-bottom: 1px solid rgba(201, 168, 76, 0.06);
-        transition: background 0.2s;
-      }
-
-      tbody tr:last-child { border-bottom: none; }
-      tbody tr:hover { background: rgba(255, 255, 255, 0.02); }
-
-      tbody td {
-        padding: 12px 16px;
-        color: var(--text-muted);
-        white-space: nowrap;
-      }
-
-      tbody td:first-child { color: var(--text-light); }
-
-      .badge {
-        display: inline-block;
-        padding: 3px 10px;
-        border-radius: 12px;
-        font-size: 0.65rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        background: rgba(201, 168, 76, 0.12);
-        color: var(--gold);
-        border: 1px solid var(--border);
-      }
-
-      .table-actions {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 16px;
-        flex-wrap: wrap;
-        gap: 12px;
-      }
-
+      /* TABLE */
+      .table-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
       .table-search {
-        background: rgba(255, 255, 255, 0.04);
+        background: rgba(255,255,255,0.04);
         border: 1px solid var(--border);
         color: var(--text-light);
         font-family: "Inter", sans-serif;
@@ -516,10 +338,41 @@
         width: 260px;
         transition: border-color 0.3s;
       }
-
       .table-search:focus { border-color: var(--gold); }
 
-      /* UPLOAD AREA */
+      .table-wrap { overflow-x: auto; border-radius: 6px; border: 1px solid var(--border); }
+      table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+      thead th {
+        background: rgba(201,168,76,0.06);
+        padding: 12px 16px;
+        text-align: left;
+        font-family: "Cinzel", serif;
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--gold-dim);
+        white-space: nowrap;
+        border-bottom: 1px solid var(--border);
+      }
+      tbody tr { border-bottom: 1px solid rgba(201,168,76,0.06); transition: background 0.2s; }
+      tbody tr:last-child { border-bottom: none; }
+      tbody tr:hover { background: rgba(255,255,255,0.02); }
+      tbody td { padding: 12px 16px; color: var(--text-muted); white-space: nowrap; }
+      tbody td:first-child { color: var(--text-light); }
+
+      .badge {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 12px;
+        font-size: 0.65rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        background: rgba(201,168,76,0.12);
+        color: var(--gold);
+        border: 1px solid var(--border);
+      }
+
+      /* UPLOAD */
       .upload-zone {
         border: 2px dashed var(--border-hover);
         border-radius: 8px;
@@ -527,188 +380,57 @@
         text-align: center;
         cursor: pointer;
         transition: all 0.3s;
-        background: rgba(201, 168, 76, 0.02);
+        background: rgba(201,168,76,0.02);
         position: relative;
       }
-
-      .upload-zone:hover, .upload-zone.drag-over {
-        border-color: var(--gold);
-        background: rgba(201, 168, 76, 0.06);
-      }
-
-      .upload-zone input[type="file"] {
-        position: absolute;
-        inset: 0;
-        opacity: 0;
-        cursor: pointer;
-        width: 100%;
-        height: 100%;
-      }
-
-      .upload-icon {
-        font-size: 2.5rem;
-        margin-bottom: 12px;
-        display: block;
-      }
-
-      .upload-text {
-        font-family: "Cinzel", serif;
-        font-size: 0.8rem;
-        letter-spacing: 0.1em;
-        color: var(--text-muted);
-        margin-bottom: 4px;
-      }
-
+      .upload-zone:hover, .upload-zone.drag-over { border-color: var(--gold); background: rgba(201,168,76,0.06); }
+      .upload-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+      .upload-icon { font-size: 2.5rem; margin-bottom: 12px; display: block; }
+      .upload-text { font-family: "Cinzel", serif; font-size: 0.8rem; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 4px; }
       .upload-hint { font-size: 0.72rem; color: var(--text-muted); opacity: 0.6; }
-
-      .upload-preview {
-        margin-top: 20px;
-        display: none;
-      }
-
-      .upload-preview img {
-        max-height: 200px;
-        max-width: 100%;
-        border-radius: 4px;
-        border: 1px solid var(--border);
-        object-fit: contain;
-      }
+      .upload-preview { margin-top: 20px; display: none; }
+      .upload-preview img { max-height: 200px; max-width: 100%; border-radius: 4px; border: 1px solid var(--border); object-fit: contain; }
+      .upload-progress { height: 3px; background: var(--border); border-radius: 2px; margin-top: 16px; display: none; overflow: hidden; }
+      .upload-progress-bar { height: 100%; background: var(--gold); width: 0%; transition: width 0.3s; }
 
       /* GALLERY */
-      .gallery-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-        gap: 12px;
-        margin-top: 20px;
-      }
-
-      .gallery-item {
-        position: relative;
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        overflow: hidden;
-        aspect-ratio: 1;
-        background: var(--purple-mid);
-        cursor: pointer;
-        transition: border-color 0.2s;
-      }
-
+      .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; margin-top: 20px; }
+      .gallery-item { position: relative; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; aspect-ratio: 1; background: var(--purple-mid); transition: border-color 0.2s; }
       .gallery-item:hover { border-color: var(--gold); }
-
-      .gallery-item img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      .gallery-item-overlay {
-        position: absolute;
-        inset: 0;
-        background: rgba(13, 0, 16, 0.85);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        opacity: 0;
-        transition: opacity 0.2s;
-        padding: 8px;
-      }
-
+      .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+      .gallery-item-overlay { position: absolute; inset: 0; background: rgba(13,0,16,0.85); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; opacity: 0; transition: opacity 0.2s; padding: 8px; }
       .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+      .gallery-item-name { font-size: 0.65rem; color: var(--text-muted); text-align: center; word-break: break-all; }
+      .copy-url-btn { font-family: "Cinzel", serif; font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 12px; background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid var(--border-hover); border-radius: 4px; cursor: pointer; transition: all 0.2s; }
+      .copy-url-btn:hover { background: rgba(201,168,76,0.3); }
 
-      .gallery-item-name {
-        font-size: 0.65rem;
-        color: var(--text-muted);
-        text-align: center;
-        word-break: break-all;
-        max-width: 100%;
-      }
-
-      .copy-url-btn {
-        font-family: "Cinzel", serif;
-        font-size: 0.55rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        padding: 5px 12px;
-        background: rgba(201, 168, 76, 0.15);
-        color: var(--gold);
-        border: 1px solid var(--border-hover);
-        border-radius: 4px;
-        cursor: pointer;
-        transition: all 0.2s;
-      }
-
-      .copy-url-btn:hover { background: rgba(201, 168, 76, 0.3); }
-
-      /* LOADING SPINNER */
-      .spinner {
-        display: inline-block;
-        width: 16px;
-        height: 16px;
-        border: 2px solid rgba(201, 168, 76, 0.3);
-        border-top-color: var(--gold);
-        border-radius: 50%;
-        animation: spin 0.7s linear infinite;
-        flex-shrink: 0;
-      }
-
+      /* SPINNER */
+      .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(201,168,76,0.3); border-top-color: var(--gold); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
       @keyframes spin { to { transform: rotate(360deg); } }
+      .loading-state { display: flex; align-items: center; gap: 12px; color: var(--text-muted); font-size: 0.85rem; padding: 24px 0; }
 
-      .loading-state {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        color: var(--text-muted);
-        font-size: 0.85rem;
-        padding: 24px 0;
-      }
-
-      /* EMPTY STATE */
-      .empty-state {
-        text-align: center;
-        padding: 48px 24px;
-        color: var(--text-muted);
-      }
-
+      .empty-state { text-align: center; padding: 48px 24px; color: var(--text-muted); }
       .empty-icon { font-size: 2.5rem; margin-bottom: 12px; display: block; opacity: 0.4; }
       .empty-text { font-size: 0.85rem; }
 
-      /* SEPARATOR */
-      .form-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
+      /* Link preview box */
+      .link-preview {
+        background: rgba(201,168,76,0.04);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 12px 16px;
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin-top: 8px;
+        word-break: break-all;
       }
-
-      /* PROGRESS */
-      .upload-progress {
-        height: 3px;
-        background: var(--border);
-        border-radius: 2px;
-        margin-top: 16px;
-        display: none;
-        overflow: hidden;
-      }
-
-      .upload-progress-bar {
-        height: 100%;
-        background: var(--gold);
-        width: 0%;
-        transition: width 0.3s;
-        animation: progressPulse 1.5s ease-in-out infinite;
-      }
-
-      @keyframes progressPulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.7; }
-      }
+      .link-preview strong { color: var(--gold); }
 
       @media (max-width: 768px) {
         .sidebar { display: none; }
         .main { margin-left: 0; max-width: 100%; padding: 24px 16px; }
-        .social-grid, .form-row, .members-stats { grid-template-columns: 1fr; }
         .members-stats { grid-template-columns: 1fr 1fr; }
+        .table-search { width: 100%; }
       }
     </style>
   </head>
@@ -730,115 +452,126 @@
 
     <!-- DASHBOARD -->
     <div id="dashboard">
-      <!-- TOPBAR -->
       <div class="topbar">
         <div class="topbar-brand">✦ Mariana Rosa <span>· Painel Admin</span></div>
-        <div class="topbar-right">
-          <span class="topbar-user">Administradora</span>
-          <button class="topbar-logout" onclick="doLogout()">Sair</button>
-        </div>
+        <button class="topbar-logout" onclick="doLogout()">Sair</button>
       </div>
 
       <div class="layout">
-        <!-- SIDEBAR -->
         <aside class="sidebar">
-          <div class="sidebar-section-label">Site</div>
-          <div class="sidebar-link active" onclick="goTo('links')" id="nav-links">
-            <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
-            Links de Venda
-          </div>
-          <div class="sidebar-link" onclick="goTo('redes')" id="nav-redes">
-            <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-            Redes Sociais
+          <div class="sidebar-label">Visão Geral</div>
+          <div class="sidebar-link active" onclick="goTo('membros')" id="nav-membros">
+            <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            Membros
           </div>
 
-          <div class="sidebar-section-label">Conteúdo</div>
+          <div class="sidebar-label">Site</div>
+          <div class="sidebar-link" onclick="goTo('links')" id="nav-links">
+            <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+            Links
+          </div>
           <div class="sidebar-link" onclick="goTo('imagens')" id="nav-imagens">
             <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
             Imagens
           </div>
-
-          <div class="sidebar-section-label">Membros</div>
-          <div class="sidebar-link" onclick="goTo('membros')" id="nav-membros">
-            <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-            Lista de Membros
-          </div>
         </aside>
 
-        <!-- MAIN -->
         <main class="main">
 
-          <!-- ── LINKS DE VENDA ── -->
-          <div class="page active" id="page-links">
+          <!-- ── MEMBROS (página inicial) ── -->
+          <div class="page active" id="page-membros">
             <div class="page-header">
-              <span class="page-eyebrow">Site Público</span>
-              <h1 class="page-title">Links de Venda</h1>
-              <p class="page-desc">Atualize os links de compra do livro que aparecem no site principal.</p>
+              <span class="page-eyebrow">Área Exclusiva</span>
+              <h1 class="page-title">Membros Cadastrados</h1>
+              <p class="page-desc">Pigmentadoras com acesso à área exclusiva.</p>
+            </div>
+
+            <div class="members-stats">
+              <div class="stat-card">
+                <div class="stat-num" id="statTotal">—</div>
+                <div class="stat-label">Total</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-num" id="statMonth">—</div>
+                <div class="stat-label">Este Mês</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-num" id="statWeek">—</div>
+                <div class="stat-label">Esta Semana</div>
+              </div>
             </div>
 
             <div class="card">
-              <div class="card-title">Link Principal de Compra</div>
+              <div class="table-actions">
+                <input type="text" class="table-search" id="memberSearch" placeholder="🔍  Buscar por e-mail..." oninput="filterMembers()" />
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                  <button class="btn btn-outline" onclick="loadMembers()">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+                    Atualizar
+                  </button>
+                  <button class="btn btn-primary" onclick="downloadCSV()">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Baixar E-mails (.csv)
+                  </button>
+                </div>
+              </div>
+
+              <div id="membersLoading" class="loading-state">
+                <div class="spinner"></div> Carregando membros...
+              </div>
+              <div class="table-wrap" id="membersTable" style="display:none;">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>E-mail</th>
+                      <th>Cadastro</th>
+                      <th>Último acesso</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="membersTbody"></tbody>
+                </table>
+              </div>
+              <div class="empty-state" id="membersEmpty" style="display:none;">
+                <span class="empty-icon">👤</span>
+                <div class="empty-text">Nenhum membro encontrado.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── LINKS ── -->
+          <div class="page" id="page-links">
+            <div class="page-header">
+              <span class="page-eyebrow">Site Público</span>
+              <h1 class="page-title">Links do Site</h1>
+              <p class="page-desc">Atualize os links que aparecem no site. As alterações entram em vigor após salvar.</p>
+            </div>
+
+            <div class="card">
+              <div class="card-title">🛒 Link de Compra</div>
               <div class="form-group">
                 <label class="form-label">URL do botão "Comprar" (Amazon, etc.)</label>
                 <input type="url" class="form-input" id="buyLink" placeholder="https://amzn.to/..." />
-                <div class="form-hint">Este link aparece no cabeçalho, no hero e na seção do livro.</div>
+                <div class="form-hint">Aparece no cabeçalho, no hero e na seção do livro.</div>
               </div>
-              <div class="form-group">
-                <label class="form-label">Texto exibido no botão</label>
-                <input type="text" class="form-input" id="buyLabel" placeholder="Comprar agora" />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Preço exibido</label>
-                <input type="text" class="form-input" id="buyPrice" placeholder="R$ 49,90" />
-              </div>
-              <button class="btn btn-primary" onclick="saveLinks()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-                Salvar Links
-              </button>
-            </div>
-          </div>
-
-          <!-- ── REDES SOCIAIS ── -->
-          <div class="page" id="page-redes">
-            <div class="page-header">
-              <span class="page-eyebrow">Presença Digital</span>
-              <h1 class="page-title">Redes Sociais</h1>
-              <p class="page-desc">Links das redes sociais da autora, exibidos no rodapé e na seção "Sobre a Autora".</p>
+              <div id="buyLinkPreview" class="link-preview" style="display:none;">Link atual: <strong id="buyLinkCurrent"></strong></div>
             </div>
 
             <div class="card">
-              <div class="card-title">Links das Redes</div>
-              <div class="social-grid">
-                <div class="form-group">
-                  <label class="form-label">📸 Instagram</label>
-                  <input type="url" class="form-input" id="socialInstagram" placeholder="https://instagram.com/..." />
-                </div>
-                <div class="form-group">
-                  <label class="form-label">🎵 TikTok</label>
-                  <input type="url" class="form-input" id="socialTiktok" placeholder="https://tiktok.com/@..." />
-                </div>
-                <div class="form-group">
-                  <label class="form-label">📚 Goodreads</label>
-                  <input type="url" class="form-input" id="socialGoodreads" placeholder="https://goodreads.com/..." />
-                </div>
-                <div class="form-group">
-                  <label class="form-label">▶️ YouTube</label>
-                  <input type="url" class="form-input" id="socialYoutube" placeholder="https://youtube.com/..." />
-                </div>
-                <div class="form-group">
-                  <label class="form-label">🐦 Twitter / X</label>
-                  <input type="url" class="form-input" id="socialTwitter" placeholder="https://x.com/..." />
-                </div>
-                <div class="form-group">
-                  <label class="form-label">📘 Amazon (página da autora)</label>
-                  <input type="url" class="form-input" id="socialAmazon" placeholder="https://amazon.com.br/..." />
-                </div>
+              <div class="card-title">📸 Instagram da Autora</div>
+              <div class="form-group">
+                <label class="form-label">URL do perfil do Instagram</label>
+                <input type="url" class="form-input" id="socialInstagram" placeholder="https://instagram.com/mari_mrosa" />
+                <div class="form-hint">Aparece na seção "Sobre a Autora" no site.</div>
               </div>
-              <button class="btn btn-primary" onclick="saveSocial()">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-                Salvar Redes Sociais
-              </button>
+              <div id="igPreview" class="link-preview" style="display:none;">Link atual: <strong id="igCurrent"></strong></div>
             </div>
+
+            <button class="btn btn-primary" onclick="saveLinks()">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Salvar Links
+            </button>
           </div>
 
           <!-- ── IMAGENS ── -->
@@ -846,7 +579,7 @@
             <div class="page-header">
               <span class="page-eyebrow">Área de Membros</span>
               <h1 class="page-title">Galeria de Imagens</h1>
-              <p class="page-desc">Faça upload de novas imagens para a galeria da área exclusiva das Pigmentadoras.</p>
+              <p class="page-desc">Faça upload de novas imagens para a galeria da área exclusiva.</p>
             </div>
 
             <div class="card">
@@ -885,76 +618,11 @@
             </div>
           </div>
 
-          <!-- ── MEMBROS ── -->
-          <div class="page" id="page-membros">
-            <div class="page-header">
-              <span class="page-eyebrow">Área Exclusiva</span>
-              <h1 class="page-title">Lista de Membros</h1>
-              <p class="page-desc">Pigmentadoras cadastradas na área exclusiva.</p>
-            </div>
-
-            <div class="members-stats">
-              <div class="stat-card">
-                <div class="stat-num" id="statTotal">—</div>
-                <div class="stat-label">Total de Membros</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-num" id="statMonth">—</div>
-                <div class="stat-label">Este Mês</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-num" id="statWeek">—</div>
-                <div class="stat-label">Esta Semana</div>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="table-actions">
-                <input type="text" class="table-search" id="memberSearch" placeholder="🔍  Buscar por e-mail..." oninput="filterMembers()" />
-                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                  <button class="btn btn-outline" onclick="loadMembers()">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
-                    Atualizar
-                  </button>
-                  <button class="btn btn-primary" onclick="downloadCSV()">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    Baixar E-mails (CSV)
-                  </button>
-                </div>
-              </div>
-
-              <div id="membersLoading" class="loading-state">
-                <div class="spinner"></div> Carregando membros...
-              </div>
-
-              <div class="table-wrap" id="membersTable" style="display:none;">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>E-mail</th>
-                      <th>Cadastro</th>
-                      <th>Último acesso</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody id="membersTbody"></tbody>
-                </table>
-              </div>
-
-              <div class="empty-state" id="membersEmpty" style="display:none;">
-                <span class="empty-icon">👤</span>
-                <div class="empty-text">Nenhum membro encontrado.</div>
-              </div>
-            </div>
-          </div>
-
         </main>
       </div>
     </div>
 
     <script>
-      /* ── ESTADO ── */
       const API_BASE = window.location.origin;
       let TOKEN = '';
       let allMembers = [];
@@ -966,18 +634,22 @@
         const pw = document.getElementById('pwInput').value.trim();
         if (!pw) { showLoginError('Digite a senha.'); return; }
         TOKEN = pw;
-        document.getElementById('loginError').textContent = '';
-        // Try loading content to validate token
-        fetchContent().then(() => {
-          document.getElementById('loginScreen').style.display = 'none';
-          document.getElementById('dashboard').style.display = 'block';
-          goTo('links');
-          loadMembers();
-          loadGallery();
-        }).catch(() => {
-          TOKEN = '';
-          showLoginError('Senha incorreta ou erro de conexão.');
-        });
+        // Validate token by calling a protected endpoint
+        fetch('/api/get-leads', { headers: { 'Authorization': 'Bearer ' + TOKEN } })
+          .then(r => {
+            if (!r.ok) throw new Error();
+            return fetchContent();
+          })
+          .then(() => {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            loadMembers();
+            loadGallery();
+          })
+          .catch(() => {
+            TOKEN = '';
+            showLoginError('Senha incorreta.');
+          });
       }
 
       function doLogout() {
@@ -987,11 +659,10 @@
         document.getElementById('loginScreen').style.display = 'flex';
         document.getElementById('dashboard').style.display = 'none';
         document.getElementById('pwInput').value = '';
+        document.getElementById('loginError').textContent = '';
       }
 
-      function showLoginError(msg) {
-        document.getElementById('loginError').textContent = msg;
-      }
+      function showLoginError(msg) { document.getElementById('loginError').textContent = msg; }
 
       /* ── NAVIGATION ── */
       function goTo(page) {
@@ -1012,40 +683,38 @@
 
       /* ── CONTENT.JSON ── */
       async function fetchContent() {
-        const res = await fetch('/content.json');
-        if (!res.ok) throw new Error('Erro ao carregar content.json');
+        const res = await fetch('/content.json?t=' + Date.now());
+        if (!res.ok) throw new Error();
         siteContent = await res.json();
-        fillFormFields();
+        fillLinkFields();
       }
 
-      function fillFormFields() {
+      function fillLinkFields() {
         if (!siteContent) return;
-        // Buy links
-        const comprar = siteContent?.index?.comprar || {};
-        document.getElementById('buyLink').value = comprar.link || '';
-        document.getElementById('buyLabel').value = comprar.linkLabel || '';
-        document.getElementById('buyPrice').value = comprar.price || '';
-        // Social
-        const social = siteContent?.social || {};
-        document.getElementById('socialInstagram').value = social.instagram || '';
-        document.getElementById('socialTiktok').value = social.tiktok || '';
-        document.getElementById('socialGoodreads').value = social.goodreads || '';
-        document.getElementById('socialYoutube').value = social.youtube || '';
-        document.getElementById('socialTwitter').value = social.twitter || '';
-        document.getElementById('socialAmazon').value = social.amazon || '';
+        const buyLink = siteContent?.index?.comprar?.link || '';
+        const ig = siteContent?.social?.instagram || '';
+
+        document.getElementById('buyLink').value = buyLink;
+        if (buyLink && buyLink !== '#') {
+          document.getElementById('buyLinkPreview').style.display = 'block';
+          document.getElementById('buyLinkCurrent').textContent = buyLink;
+        }
+
+        document.getElementById('socialInstagram').value = ig;
+        if (ig) {
+          document.getElementById('igPreview').style.display = 'block';
+          document.getElementById('igCurrent').textContent = ig;
+        }
       }
 
-      async function saveContent() {
+      async function saveToGitHub() {
         const res = await fetch('/api/save-content', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + TOKEN
-          },
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
           body: JSON.stringify({ content: siteContent })
         });
         if (!res.ok) {
-          const err = await res.json();
+          const err = await res.json().catch(() => ({}));
           throw new Error(err.error || 'Erro ao salvar');
         }
         return res.json();
@@ -1053,36 +722,28 @@
 
       /* ── SAVE LINKS ── */
       async function saveLinks() {
-        if (!siteContent) return;
+        if (!siteContent) { toast('Conteúdo não carregado ainda.', 'error'); return; }
+
+        const newBuyLink = document.getElementById('buyLink').value.trim();
+        const newIg = document.getElementById('socialInstagram').value.trim();
+
+        if (!newBuyLink) { toast('Insira a URL de compra.', 'error'); return; }
+
+        // Update in memory
         siteContent.index = siteContent.index || {};
         siteContent.index.comprar = siteContent.index.comprar || {};
-        siteContent.index.comprar.link = document.getElementById('buyLink').value.trim();
-        siteContent.index.comprar.linkLabel = document.getElementById('buyLabel').value.trim();
-        siteContent.index.comprar.price = document.getElementById('buyPrice').value.trim();
+        siteContent.index.comprar.link = newBuyLink;
+        siteContent.social = siteContent.social || {};
+        siteContent.social.instagram = newIg;
 
         try {
-          await saveContent();
-          toast('✦ Links de venda salvos! O site será atualizado em instantes.');
-        } catch(e) {
-          toast('Erro: ' + e.message, 'error');
-        }
-      }
-
-      /* ── SAVE SOCIAL ── */
-      async function saveSocial() {
-        if (!siteContent) return;
-        siteContent.social = {
-          instagram: document.getElementById('socialInstagram').value.trim(),
-          tiktok: document.getElementById('socialTiktok').value.trim(),
-          goodreads: document.getElementById('socialGoodreads').value.trim(),
-          youtube: document.getElementById('socialYoutube').value.trim(),
-          twitter: document.getElementById('socialTwitter').value.trim(),
-          amazon: document.getElementById('socialAmazon').value.trim(),
-        };
-
-        try {
-          await saveContent();
-          toast('✦ Redes sociais salvas! O site será atualizado em instantes.');
+          await saveToGitHub();
+          // Update preview
+          document.getElementById('buyLinkPreview').style.display = 'block';
+          document.getElementById('buyLinkCurrent').textContent = newBuyLink;
+          document.getElementById('igPreview').style.display = newIg ? 'block' : 'none';
+          document.getElementById('igCurrent').textContent = newIg;
+          toast('✦ Links salvos! O site será atualizado em instantes.');
         } catch(e) {
           toast('Erro: ' + e.message, 'error');
         }
@@ -1095,34 +756,29 @@
         document.getElementById('membersEmpty').style.display = 'none';
 
         try {
-          const res = await fetch('/api/get-leads', {
-            headers: { 'Authorization': 'Bearer ' + TOKEN }
-          });
+          const res = await fetch('/api/get-leads', { headers: { 'Authorization': 'Bearer ' + TOKEN } });
           const data = await res.json();
-          if (!res.ok) throw new Error(data.error || 'Erro ao carregar');
+          if (!res.ok) throw new Error(data.error || 'Erro');
           allMembers = data.leads || [];
-          renderMembers(allMembers);
           updateStats(allMembers);
+          renderMembers(allMembers);
         } catch(e) {
-          toast('Erro ao carregar membros: ' + e.message, 'error');
           document.getElementById('membersLoading').style.display = 'none';
           document.getElementById('membersEmpty').style.display = 'block';
+          toast('Erro ao carregar membros: ' + e.message, 'error');
         }
       }
 
       function updateStats(members) {
-        document.getElementById('statTotal').textContent = members.length;
         const now = new Date();
-        const thisMonth = members.filter(m => {
+        document.getElementById('statTotal').textContent = members.length;
+        document.getElementById('statMonth').textContent = members.filter(m => {
           const d = new Date(m.created_at);
           return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
-        });
-        const thisWeek = members.filter(m => {
-          const d = new Date(m.created_at);
-          return (now - d) < 7 * 24 * 60 * 60 * 1000;
-        });
-        document.getElementById('statMonth').textContent = thisMonth.length;
-        document.getElementById('statWeek').textContent = thisWeek.length;
+        }).length;
+        document.getElementById('statWeek').textContent = members.filter(m => {
+          return (now - new Date(m.created_at)) < 7 * 86400000;
+        }).length;
       }
 
       function renderMembers(members) {
@@ -1130,18 +786,21 @@
         const tbody = document.getElementById('membersTbody');
         tbody.innerHTML = '';
 
-        if (members.length === 0) {
+        if (!members.length) {
           document.getElementById('membersEmpty').style.display = 'block';
+          document.getElementById('membersTable').style.display = 'none';
           return;
         }
 
         document.getElementById('membersTable').style.display = 'block';
+        document.getElementById('membersEmpty').style.display = 'none';
+
         members.forEach((m, i) => {
           const row = document.createElement('tr');
           const created = m.created_at ? new Date(m.created_at).toLocaleDateString('pt-BR') : '—';
           const lastLogin = m.last_sign_in_at ? new Date(m.last_sign_in_at).toLocaleDateString('pt-BR') : '—';
           row.innerHTML = `
-            <td style="color: var(--text-muted); font-size: 0.75rem;">${String(i+1).padStart(2,'0')}</td>
+            <td style="color:var(--text-muted);font-size:0.75rem;">${String(i+1).padStart(2,'0')}</td>
             <td><strong>${m.email || '—'}</strong></td>
             <td>${created}</td>
             <td>${lastLogin}</td>
@@ -1153,8 +812,7 @@
 
       function filterMembers() {
         const q = document.getElementById('memberSearch').value.toLowerCase();
-        const filtered = allMembers.filter(m => (m.email || '').toLowerCase().includes(q));
-        renderMembers(filtered);
+        renderMembers(allMembers.filter(m => (m.email || '').toLowerCase().includes(q)));
       }
 
       function downloadCSV() {
@@ -1167,42 +825,27 @@
         a.download = `pigmentadoras-${new Date().toISOString().slice(0,10)}.csv`;
         a.click();
         URL.revokeObjectURL(url);
-        toast('✦ CSV baixado com sucesso!');
+        toast('✦ CSV baixado!');
       }
 
       /* ── GALLERY ── */
       async function loadGallery() {
-        const GITHUB_OWNER = 'marianarosaautora';
-        const GITHUB_REPO = 'aescolhidadadeusa';
-        const PATH = 'public/images';
-
         try {
-          const res = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${PATH}`);
+          const res = await fetch('https://api.github.com/repos/marianarosaautora/aescolhidadadeusa/contents/public/images');
           const files = await res.json();
           document.getElementById('galleryLoading').style.display = 'none';
-
           const images = Array.isArray(files) ? files.filter(f => /\.(png|jpg|jpeg|webp|gif)$/i.test(f.name)) : [];
 
-          if (images.length === 0) {
-            document.getElementById('galleryEmpty').style.display = 'block';
-            return;
-          }
+          if (!images.length) { document.getElementById('galleryEmpty').style.display = 'block'; return; }
 
           const grid = document.getElementById('adminGallery');
           grid.style.display = 'grid';
           grid.innerHTML = '';
-
           images.forEach(f => {
-            const url = `https://cdn.jsdelivr.net/gh/${GITHUB_OWNER}/${GITHUB_REPO}@main/${PATH}/${f.name}`;
+            const url = `https://cdn.jsdelivr.net/gh/marianarosaautora/aescolhidadadeusa@main/public/images/${f.name}`;
             const item = document.createElement('div');
             item.className = 'gallery-item';
-            item.innerHTML = `
-              <img src="${url}" alt="${f.name}" loading="lazy" />
-              <div class="gallery-item-overlay">
-                <div class="gallery-item-name">${f.name}</div>
-                <button class="copy-url-btn" onclick="copyURL('${url}', event)">Copiar URL</button>
-              </div>
-            `;
+            item.innerHTML = `<img src="${url}" alt="${f.name}" loading="lazy" /><div class="gallery-item-overlay"><div class="gallery-item-name">${f.name}</div><button class="copy-url-btn" onclick="copyURL('${url}',event)">Copiar URL</button></div>`;
             grid.appendChild(item);
           });
         } catch(e) {
@@ -1220,10 +863,7 @@
       function onFileSelect(input) {
         const file = input.files[0];
         if (!file) return;
-        if (file.size > 4 * 1024 * 1024) {
-          toast('Arquivo muito grande. Máximo 4MB.', 'error');
-          return;
-        }
+        if (file.size > 4 * 1024 * 1024) { toast('Máximo 4MB.', 'error'); return; }
         pendingFile = file;
         const reader = new FileReader();
         reader.onload = e => {
@@ -1243,34 +883,23 @@
         document.getElementById('uploadProgressBar').style.width = '40%';
 
         const reader = new FileReader();
-        reader.onload = async (e) => {
-          const base64Full = e.target.result;
-          const base64 = base64Full.split(',')[1];
-
+        reader.onload = async e => {
+          const base64 = e.target.result.split(',')[1];
           try {
             document.getElementById('uploadProgressBar').style.width = '70%';
             const res = await fetch('/api/upload-image', {
               method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + TOKEN
-              },
-              body: JSON.stringify({
-                filename: pendingFile.name,
-                base64: base64,
-                mimeType: pendingFile.type
-              })
+              headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
+              body: JSON.stringify({ filename: pendingFile.name, base64, mimeType: pendingFile.type })
             });
-
             document.getElementById('uploadProgressBar').style.width = '100%';
             const data = await res.json();
-            if (!res.ok) throw new Error(data.error || 'Erro no upload');
-
-            toast('✦ Imagem enviada com sucesso! URL: ' + data.url);
+            if (!res.ok) throw new Error(data.error || 'Erro');
+            toast('✦ Imagem enviada! URL: ' + data.url);
             clearUpload();
-            setTimeout(loadGallery, 2000);
+            setTimeout(() => { document.getElementById('galleryLoading').style.display = 'flex'; document.getElementById('adminGallery').style.display = 'none'; loadGallery(); }, 2000);
           } catch(err) {
-            toast('Erro no upload: ' + err.message, 'error');
+            toast('Erro: ' + err.message, 'error');
           } finally {
             btn.disabled = false;
             btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/></svg> Enviar Imagem';
@@ -1289,17 +918,15 @@
         document.getElementById('uploadBtn').disabled = true;
       }
 
-      /* ── DRAG AND DROP ── */
+      // Drag and Drop
       const zone = document.getElementById('uploadZone');
       zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('drag-over'); });
       zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
       zone.addEventListener('drop', e => {
-        e.preventDefault();
-        zone.classList.remove('drag-over');
+        e.preventDefault(); zone.classList.remove('drag-over');
         const file = e.dataTransfer.files[0];
-        if (file && file.type.startsWith('image/')) {
-          const dt = new DataTransfer();
-          dt.items.add(file);
+        if (file?.type.startsWith('image/')) {
+          const dt = new DataTransfer(); dt.items.add(file);
           document.getElementById('fileInput').files = dt.files;
           onFileSelect(document.getElementById('fileInput'));
         }
