@@ -1,0 +1,37 @@
+<USER_REQUEST>
+o site voltou a funcionar e o conteúdo foi atualizado, porém precisamos fazer alguns ajustes:
+1 - os cards do diário: o primeiro de destaque está muito grande e o conteúdo exibido do lado (excerpt) está muito curto deixando o espaço 'vazio'. precisamos ou diminuir o card, ou colocar um trecho do texto para que preencha o espaço mas sem barra de rolagem e sem alterar o tamanho do card, adicionando '...' quando não couber mais no espaço designado.
+
+2 - 8 cards de textos deixam o layout quebrado, precisamos manter 7 textos, seguindo exatamente as palavras da autora:
+'1- Bastidores · Criação
+Como nasceu o universo das Pigmentadoras?
+Resposta: Sinceramente, eu não lembro muito bem, mas mais ou menos há um ano e meio atrás. Por aí… minha memória é muito ruim. 
+Eu amo videogame e meu gênero preferido é RPG e aventura. Fico sempre maravilhada com a construção de mundo de alguns jogos, como Dragon Age, Baldur’s Gate 3, Mass Effect, Cyberpunk 2077 e Horizon Zero Dawn. Inspirada por eles, comecei a construir o meu próprio universo. Na realidade, me despertou a vontade. A princípio, não havia os diferentes mundos (reinos) e sim um único reino, onde raças coexistiam, sob uma grande Árvore. Eu ainda não tinha pensado nas raças direito ou nesses biomas. Também tive a vontade de inventar bruxas que guardavam essa árvore e esse reino. Sempre gostei de bruxas e do misticismo que as cercam.
+Mas, estava faltando algo, queria desenvolver uma história complexa, mas com um entendimento “fácil”, sabe? 
+Com isso, tempo depois, ainda quando estava terminando O Toque Letal do Corvo, comecei a assistir à série The Wheel of Time. Algo estalou dentro de mim, uma inspiração muito forte, e eu pensei: “PRONTO!”. 
+Alguns dias depois, eu sonhei com as minhas protagonistas.
+Tudo começou com Tainá e Celestria: um casal improvável entre uma serva (uma bruxa dos reinos) e a sua Deusa. No início, eu não tinha exatamente uma história: a primeira cena que surgiu na minha mente
+<truncated 10867 bytes>
+i que, neste livro, não haveria espaço e que a trama principal deveria ser Celestria e Tainá. O mundo que as rondava era importante, mas não mais do que o amor entre elas. Quem sabe, futuramente, mais enredos possam surgir, porque o universo criado em A Escolhida da Deusa me deu essa oportunidade. Existem, agora, 11 reinos, os últimos dois foram adicionados após a morte de Griara e a tentativa de desequilíbrio sempre vai existir. Inimigos poderosos também podem surgir e Tainá, embora poderosa com dois poderes primordiais, não teve a oportunidade de explorá-los. Certamente há coisas positivas e MUITO negativas de ser tão poderosa assim.
+O gênero Romantasia sempre me encantou. Na realidade, eu sou o tipo de autora que gosta de flertar com quase todos os gêneros. Mas a história de Celestria e Tainá e esse amor tão diferente me arrebatou demais, algo que mexeu diretamente com o meu âmago. ' Para isso podemos dividir a resposta 5 em duas partes, mas sem alterar as palavras da autora.
+
+3 - a seção 'As Pigmentadoras' precisa ter um modal para exibir a biografia de cada uma, mantendo a estrutura atual e somente ao clicar no card o modal deverá abrir com efeitos de modo que seja compatível com o tema do site e a ideia de magia e fantasia
+
+4 - a seção dos ✦ Os Nove Reinos ✦ está diferente, os textos e formatos eram outros antes do bug da página (alguns reinos estavam com o texto "em breve"
+
+5 - o mouse fica "invisível" quando abrimos um modal, dando sensação de bug e dificuldade para clicar nos botões
+
+
+
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-05-29T16:31:31-03:00.
+
+The user's current state is as follows:
+Active Document: d:\temporarios\mariana-rosa-cms\update-blog.js (LANGUAGE_JAVASCRIPT)
+Cursor is on line: 72
+Other open documents:
+- d:\temporarios\mariana-rosa-cms\update-blog.js (LANGUAGE_JAVASCRIPT)
+- d:\temporarios\mariana-rosa-cms\fix-membros.js (LANGUAGE_JAVASCRIPT)
+- d:\temporarios\mariana-rosa-cms\diff.txt (LANGUAGE_PLAINTEXT)
+</ADDITIONAL_METADATA>
