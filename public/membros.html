@@ -1445,10 +1445,8 @@
 
     /* Mobile: permite scroll vertical na página enquanto arrasta horizontal no carousel */
     .pigment-carousel {
-      touch-action: pan-y pinch-zoom;
+      touch-action: pan-x pan-y;
       overscroll-behavior-x: contain;
-      user-select: none;
-      -webkit-user-select: none;
       -webkit-overflow-scrolling: touch;
     }
 
@@ -2487,6 +2485,18 @@
 
       .cidade-mobile-tabs {
         display: flex;
+      }
+
+      .carousel-nav {
+        display: none;
+      }
+
+      .pigment-carousel {
+        scroll-snap-type: none;
+      }
+
+      .pigment-card {
+        scroll-snap-align: none;
       }
 
       .blog-featured {
