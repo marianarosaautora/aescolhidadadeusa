@@ -1489,6 +1489,8 @@
       color: var(--ink-mid);
       flex: 1; overflow: hidden;
       position: relative; z-index: 1;
+      -webkit-mask-image: linear-gradient(180deg, black 90%, transparent 100%);
+      mask-image: linear-gradient(180deg, black 90%, transparent 100%);
     }
     .book-bio p { margin-bottom: 6px; text-align: justify; }
 
@@ -1498,6 +1500,8 @@
       color: var(--ink-mid);
       flex: 1; overflow: hidden;
       position: relative; z-index: 1;
+      -webkit-mask-image: linear-gradient(180deg, black 90%, transparent 100%);
+      mask-image: linear-gradient(180deg, black 90%, transparent 100%);
     }
     .book-bio-right p { margin-bottom: 6px; text-align: justify; }
 
@@ -3415,7 +3419,7 @@
         if (currentChars + pChars > currentLimit && !pageIsEmpty) {
           if (isLeft) {
             isLeft = false;
-            currentLimit = 800; // Right page of spread 0 — full page
+            currentLimit = 550; // Right page of spread 0 — full page
             currentChars = 0;
           } else {
             // Save current spread and create next spread
@@ -3425,7 +3429,7 @@
             });
             currentSpread = { left: [], right: [] };
             isLeft = true;
-            currentLimit = 800; // Left page of spread 1+ — full page
+            currentLimit = 550; // Left page of spread 1+ — full page
             currentChars = 0;
           }
         }
