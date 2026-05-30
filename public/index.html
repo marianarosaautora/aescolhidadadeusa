@@ -2411,6 +2411,90 @@
           closeMobileMenu();
         });
       });
+
+      // ── DYNAMIC CONTENT FROM CMS ──
+      async function loadCMSContent() {
+        try {
+          const res = await fetch('/content.json');
+          if (!res.ok) throw new Error('Failed to load content.json');
+          const data = await res.json();
+          const { index, site } = data;
+          
+          if (!index) return;
+
+          // Title & Meta
+          if (site.title) document.title = `Livro · ${site.title} · ${site.author}`;
+
+          // Hero
+          if (index.hero) {
+            const authorTag = document.querySelector('.author-tag');
+            if (authorTag && site.author) authorTag.textContent = `${site.author} · ${index.hero.tag}`;
+            
+            const titleLine1 = document.querySelector('.title-line-1');
+            if (titleLine1) titleLine1.textContent = index.hero.title;
+            
+            const titleLine2 = document.querySelector('.title-line-2');
+            if (titleLine2) titleLine2.textContent = index.hero.titleHighlight;
+
+            const subtitle = document.querySelector('.hero-tagline');
+            if (subtitle) subtitle.innerHTML = index.hero.subtitle.replace(/\n/g, '<br/>');
+
+            const ctaBtn = document.querySelector('.hero-cta-group .btn-gold');
+            if (ctaBtn) {
+              ctaBtn.textContent = index.hero.ctaLabel;
+              ctaBtn.href = index.hero.ctaLink;
+            }
+          }
+
+          // Sinopse
+          if (index.sinopse) {
+            const sEyebrow = document.querySelector('.synopsis-section .section-eyebrow');
+            if (sEyebrow) sEyebrow.textContent = index.sinopse.eyebrow;
+
+            const sTitle = document.querySelector('.synopsis-section .section-title');
+            if (sTitle) {
+              // The original was "O Véu se <em>Rasga</em>", we need to figure out where the em is. 
+              // We'll just replace the whole text if they change it.
+              // To maintain the em, we can check if they used it in JSON. Otherwise just set textContent.
+              sTitle.innerHTML = index.sinopse.title; 
+            }
+
+            const sTextCont = document.querySelector('.synopsis-text');
+            if (sTextCont && index.sinopse.text) {
+              const paras = index.sinopse.text.split('\\n\\n').map(p => p.trim()).filter(Boolean);
+              let html = '';
+              paras.forEach((p, i) => {
+                // To keep the original beautiful design, make paragraphs 1 and 4 highlighted (0-indexed)
+                if (i === 1 || i === 4) {
+                  html += `<div class="synopsis-highlight"><p>${p}</p></div>`;
+                } else {
+                  // Replace names with strong tags heuristically
+                  let formattedP = p
+                    .replace(/Tainá/g, '<strong>Tainá</strong>')
+                    .replace(/Pigmentadora/g, '<strong>Pigmentadora</strong>')
+                    .replace(/Deusa Celestria/g, '<strong>Deusa Celestria</strong>')
+                    .replace(/a Vazio/g, '<strong>a Vazio</strong>');
+                  html += `<p>${formattedP}</p>`;
+                }
+              });
+              sTextCont.innerHTML = html;
+            }
+          }
+
+          // Tropes (Book Genre Tags)
+          if (index.tropes && Array.isArray(index.tropes)) {
+            const tagsCont = document.querySelector('.book-genre-tags');
+            if (tagsCont) {
+              tagsCont.innerHTML = index.tropes.map(t => `<span class="genre-tag">${t}</span>`).join('');
+            }
+          }
+
+        } catch (err) {
+          console.error("Erro ao carregar textos dinâmicos do CMS:", err);
+        }
+      }
+
+      window.addEventListener('DOMContentLoaded', loadCMSContent);
     </script>
   </body>
 </html>

@@ -966,7 +966,13 @@
       <div class="login-box">
         <div class="login-logo">Mariana Rosa</div>
         <div class="login-sub">Painel de Controle</div>
-        <label>Senha de acesso</label>
+        
+        <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6;">
+          <strong>Nota:</strong> O acesso é feito através da <strong>Senha Mestra</strong> configurada na Vercel (<code>ADMIN_PASSWORD</code>). 
+          Não é necessário criar contas individuais no Supabase para acessar o painel.
+        </div>
+
+        <label>Senha Mestra de Acesso</label>
         <input
           type="password"
           id="loginInput"
@@ -1448,33 +1454,32 @@
             placeholder="Tainá — A Pigmentadora"
           />
         </div>
-        <div class="field">
-          <label class="lbl"
-            >Caminho da thumbnail
-            <span>(imagem de exibição — JPG ou WebP)</span></label
-          >
-          <input
-            class="inp"
-            id="gm-thumb"
-            placeholder="src/assets/gallery/taina.jpg"
-          />
-          <div class="helper">Caminho relativo à pasta public/</div>
+        
+        <!-- NEW UPLOAD AREA -->
+        <div class="field" id="gm-upload-field">
+          <label class="lbl">Arquivo de Imagem (PNG ou JPG de alta qualidade)</label>
+          <div class="img-upload-area" id="gm-upload-area" onclick="document.getElementById('gm-file-input').click()">
+            <input type="file" id="gm-file-input" accept="image/png, image/jpeg" style="display:none" onchange="handleGalleryUpload(this)" />
+            <div class="img-upload-icon">📁</div>
+            <div class="img-upload-label" id="gm-upload-label">
+              Clique ou arraste a imagem <strong>Original (100%)</strong>
+              <br/><span style="font-size:0.7rem; color:var(--text-dim)">O sistema irá gerar a miniatura automaticamente.</span>
+            </div>
+            <img id="gm-preview" class="img-preview" />
+          </div>
         </div>
-        <div class="field">
-          <label class="lbl"
-            >Caminho do download <span>(PNG de alta qualidade)</span></label
-          >
-          <input
-            class="inp"
-            id="gm-download"
-            placeholder="src/assets/gallery/taina.png"
-          />
+
+        <div class="field" style="display:none" id="gm-paths-preview">
+          <label class="lbl">Caminhos gerados</label>
+          <input class="inp" id="gm-thumb" readonly style="margin-bottom:8px" placeholder="Thumbnail..." />
+          <input class="inp" id="gm-download" readonly placeholder="Download..." />
         </div>
+
         <div class="modal-footer">
           <button class="btn-cancel" onclick="closeGaleriaModal()">
             Cancelar
           </button>
-          <button class="btn-confirm" onclick="saveGaleriaItem()">
+          <button class="btn-confirm" id="btnSaveGallery" onclick="saveGaleriaItem()">
             Salvar
           </button>
         </div>
@@ -1932,33 +1937,138 @@
       }
 
       function openGaleriaModal(idx) {
-        document.getElementById("galeriaEditId").value =
-          idx !== null ? idx : "";
-        document.getElementById("galeriaModalTitle").textContent =
-          idx !== null ? "Editar Imagem" : "Nova Imagem";
+        document.getElementById("galeriaEditId").value = idx !== null ? idx : "";
+        document.getElementById("galeriaModalTitle").textContent = idx !== null ? "Editar Imagem" : "Nova Imagem";
+        
+        // Reset file input
+        document.getElementById("gm-file-input").value = "";
+        document.getElementById("gm-preview").style.display = "none";
+        document.getElementById("gm-preview").src = "";
+        document.getElementById("gm-upload-label").innerHTML = `Clique ou arraste a imagem <strong>Original (100%)</strong><br/><span style="font-size:0.7rem; color:var(--text-dim)">O sistema irá gerar a miniatura automaticamente.</span>`;
+        document.getElementById("btnSaveGallery").disabled = false;
+
         if (idx !== null) {
           const it = content.membros.gallery[idx];
           set("gm-title", it.title);
           set("gm-thumb", it.thumb);
           set("gm-download", it.download);
+          document.getElementById("gm-paths-preview").style.display = "block";
         } else {
           set("gm-title", "");
           set("gm-thumb", "");
           set("gm-download", "");
+          document.getElementById("gm-paths-preview").style.display = "none";
         }
         openModal("galeriaModal");
       }
+
       function closeGaleriaModal() {
         closeModal("galeriaModal");
+      }
+
+      async function handleGalleryUpload(input) {
+        if (!input.files || !input.files[0]) return;
+        const file = input.files[0];
+        const label = document.getElementById("gm-upload-label");
+        const btnSave = document.getElementById("btnSaveGallery");
+        
+        label.innerHTML = `<span style="color:var(--gold)">Processando imagem... aguarde.</span>`;
+        btnSave.disabled = true;
+
+        try {
+          // Lê como DataURL
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          await new Promise((resolve) => (reader.onload = resolve));
+          const originalBase64 = reader.result; // data:image/png;base64,.....
+
+          // Mostra preview
+          const preview = document.getElementById("gm-preview");
+          preview.src = originalBase64;
+          preview.style.display = "block";
+
+          // Gera Thumbnail JPG (50%)
+          label.innerHTML = `<span style="color:var(--gold)">Gerando miniatura JPG...</span>`;
+          const img = new Image();
+          img.src = originalBase64;
+          await new Promise((resolve) => (img.onload = resolve));
+
+          const canvas = document.createElement("canvas");
+          // 50% size
+          canvas.width = img.width * 0.5;
+          canvas.height = img.height * 0.5;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          const thumbBase64 = canvas.toDataURL("image/jpeg", 0.85);
+
+          // Upload Original
+          label.innerHTML = `<span style="color:var(--gold)">Enviando original (1/2)...</span>`;
+          const extOriginal = file.name.split('.').pop();
+          const cleanName = file.name.replace('.' + extOriginal, '').replace(/[^a-zA-Z0-9]/g, '');
+          const originalName = cleanName + '-' + Date.now() + '.' + extOriginal;
+          
+          const origBase64Raw = originalBase64.split(",")[1];
+          const origRes = await fetch(`${API_BASE}/api/upload-image`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({ filename: 'gallery/' + originalName, base64: origBase64Raw })
+          });
+          if (!origRes.ok) throw new Error("Erro upload original");
+          const origData = await origRes.json();
+
+          // Upload Thumbnail
+          label.innerHTML = `<span style="color:var(--gold)">Enviando miniatura (2/2)...</span>`;
+          const thumbName = cleanName + '-thumb-' + Date.now() + '.jpg';
+          const thumbBase64Raw = thumbBase64.split(",")[1];
+          const thumbRes = await fetch(`${API_BASE}/api/upload-image`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({ filename: 'gallery/' + thumbName, base64: thumbBase64Raw })
+          });
+          if (!thumbRes.ok) throw new Error("Erro upload miniatura");
+          const thumbData = await thumbRes.json();
+
+          // Preenche os caminhos ocultos
+          set("gm-thumb", thumbData.path);
+          set("gm-download", origData.path);
+          document.getElementById("gm-paths-preview").style.display = "block";
+          
+          label.innerHTML = `<span style="color:var(--green)">✓ Upload concluído com sucesso!</span>`;
+          
+          // Se o titulo estiver vazio, preenche com o nome do arquivo
+          if (!get("gm-title")) {
+            set("gm-title", file.name.split('.')[0]);
+          }
+
+        } catch (e) {
+          console.error(e);
+          label.innerHTML = `<span style="color:var(--red)">Erro no upload: ${e.message}</span>`;
+        } finally {
+          btnSave.disabled = false;
+        }
       }
 
       function saveGaleriaItem() {
         if (!content.membros.gallery) content.membros.gallery = [];
         const idx = document.getElementById("galeriaEditId").value;
+        const thumbPath = get("gm-thumb");
+        const downloadPath = get("gm-download");
+        
+        if (!thumbPath || !downloadPath) {
+          toast("Faça o upload da imagem primeiro!", "error");
+          return;
+        }
+
         const item = {
           title: get("gm-title"),
-          thumb: get("gm-thumb"),
-          download: get("gm-download"),
+          thumb: thumbPath,
+          download: downloadPath,
         };
         if (idx !== "") content.membros.gallery[parseInt(idx)] = item;
         else content.membros.gallery.push(item);
