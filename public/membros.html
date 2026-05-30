@@ -1338,8 +1338,8 @@
       position: absolute;
       /* Calibrado para cair sobre as páginas brancas da imagem */
       top: 7%;
-      left: 9.5%;
-      right: 9.5%;
+      left: 11.5%;
+      right: 11.5%;
       bottom: 13.5%;
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -1392,11 +1392,12 @@
     .page-left {
       border-radius: 2px 0 0 2px;
       box-shadow: inset -6px 0 14px rgba(80,50,20,0.12);
+      padding: 7% 19% 9% 14%;
     }
     .page-right {
       border-radius: 0 2px 2px 0;
       box-shadow: inset 6px 0 14px rgba(80,50,20,0.12);
-      padding-left: 9%;
+      padding: 7% 14% 9% 19%;
     }
 
     /* Curvatura sutil de margem interna */
@@ -1511,8 +1512,8 @@
       font-size: 0.5rem; letter-spacing: 0.2em;
       color: var(--ink-mid); opacity: 0.4;
     }
-    .page-num-l { left: 7%; }
-    .page-num-r { right: 7%; }
+    .page-num-l { left: 14%; }
+    .page-num-r { right: 14%; }
 
     /* Ornamento de canto */
     .ornament {
@@ -1605,10 +1606,10 @@
       text-shadow: 0 0 8px var(--char-color);
     }
     .bio-nav-back {
-      right: 7%;
+      right: 19%;
     }
     .bio-nav-continue {
-      left: 9%;
+      left: 19%;
     }
 
     .book-counter {
@@ -1628,8 +1629,11 @@
 
     /* ══ RESPONSIVE ══ */
     @media (max-width: 640px) {
-      .page {
-        padding: 5% 5% 8%;
+      .page-left {
+        padding: 5% 19% 8% 14%;
+      }
+      .page-right {
+        padding: 5% 14% 8% 19%;
       }
       .book-bio, .book-bio-right {
         font-size: 0.68rem;
@@ -3389,7 +3393,7 @@
 
       let currentSpread = { left: [], right: [] };
       let isLeft = true;
-      let currentLimit = 250; // Left page of spread 0 (reduced capacity because of headers)
+      let currentLimit = 170; // Left page of spread 0 (reduced capacity because of headers)
       let currentChars = 0;
 
       for (let i = 0; i < paragraphs.length; i++) {
@@ -3402,7 +3406,7 @@
         if (currentChars + pChars > currentLimit && !pageIsEmpty) {
           if (isLeft) {
             isLeft = false;
-            currentLimit = 500; // Right page of spread 0
+            currentLimit = 330; // Right page of spread 0
             currentChars = 0;
           } else {
             // Save current spread and create next spread
@@ -3412,7 +3416,7 @@
             });
             currentSpread = { left: [], right: [] };
             isLeft = true;
-            currentLimit = 500; // Left page of spread 1+
+            currentLimit = 330; // Left page of spread 1+
             currentChars = 0;
           }
         }
