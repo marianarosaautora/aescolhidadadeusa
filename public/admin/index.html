@@ -426,6 +426,110 @@
       }
       .link-preview strong { color: var(--gold); }
 
+      /* ── MANUAL STYLES ── */
+      .manual-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+      .manual-service-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 24px;
+        transition: all 0.3s;
+      }
+      .manual-service-card:hover {
+        border-color: var(--gold-light);
+        background: rgba(201, 168, 76, 0.03);
+        transform: translateY(-2px);
+      }
+      .manual-service-badge {
+        display: inline-block;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        background: rgba(201,168,76,0.1);
+        color: var(--gold);
+        border: 1px solid var(--border);
+        margin-bottom: 12px;
+      }
+      .manual-step-list {
+        list-style: none;
+        padding-left: 0;
+      }
+      .manual-step-item {
+        position: relative;
+        padding-left: 24px;
+        margin-bottom: 12px;
+        font-size: 0.88rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+      }
+      .manual-step-item::before {
+        content: "✦";
+        position: absolute;
+        left: 0;
+        color: var(--gold);
+      }
+      .secure-box {
+        background: linear-gradient(135deg, rgba(201,168,76,0.05), rgba(13,0,16,0.2));
+        border: 1px dashed var(--gold);
+        border-radius: 8px;
+        padding: 24px;
+        margin-bottom: 30px;
+        position: relative;
+        overflow: hidden;
+      }
+      .secure-box::before {
+        content: "🔒";
+        position: absolute;
+        right: 16px;
+        bottom: 8px;
+        font-size: 4rem;
+        opacity: 0.05;
+      }
+      .problem-card {
+        border-left: 3px solid var(--error);
+        margin-bottom: 16px;
+        padding: 20px;
+        background: rgba(255, 51, 51, 0.02);
+      }
+      .problem-title {
+        font-family: "Cinzel", serif;
+        font-size: 0.9rem;
+        color: var(--text-light);
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .problem-solution {
+        font-size: 0.85rem;
+        color: var(--text-muted);
+        line-height: 1.6;
+        padding-left: 12px;
+        border-left: 1px solid rgba(255,255,255,0.06);
+      }
+      .checklist-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 0.88rem;
+        color: var(--text-muted);
+      }
+      .checklist-item input[type="checkbox"] {
+        accent-color: var(--gold);
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+      }
+
       @media (max-width: 768px) {
         .sidebar { display: none; }
         .main { margin-left: 0; max-width: 100%; padding: 24px 16px; }
@@ -473,6 +577,12 @@
           <div class="sidebar-link" onclick="goTo('imagens')" id="nav-imagens">
             <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
             Imagens
+          </div>
+
+          <div class="sidebar-label">Suporte</div>
+          <div class="sidebar-link" onclick="goTo('manual')" id="nav-manual">
+            <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V5A2.5 2.5 0 0 1 6.5 2.5H20M20 2v20"/></svg>
+            Manual
           </div>
         </aside>
 
@@ -614,6 +724,314 @@
               <div class="empty-state" id="galleryEmpty" style="display:none;">
                 <span class="empty-icon">🖼️</span>
                 <div class="empty-text">Nenhuma imagem enviada ainda.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── MANUAL ── -->
+          <div class="page" id="page-manual">
+            <div class="page-header">
+              <span class="page-eyebrow">Ajuda & Suporte</span>
+              <h1 class="page-title">📖 Manual da Administradora</h1>
+              <p class="page-desc">Guia detalhado sobre o funcionamento técnico, contas de acesso e solução de problemas do site A Escolhida da Deusa.</p>
+            </div>
+
+            <!-- Quick Navigation Menu -->
+            <div style="display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap;">
+              <a href="#m-funcionamento" class="btn btn-outline" style="font-size: 0.6rem; padding: 6px 12px;">🗺️ Como Funciona</a>
+              <a href="#m-servicos" class="btn btn-outline" style="font-size: 0.6rem; padding: 6px 12px;">🧰 Serviços</a>
+              <a href="#m-senhas" class="btn btn-outline" style="font-size: 0.6rem; padding: 6px 12px;">🔐 Senhas</a>
+              <a href="#m-erros" class="btn btn-outline" style="font-size: 0.6rem; padding: 6px 12px;">🚨 Erros Comuns</a>
+              <a href="#m-checklist" class="btn btn-outline" style="font-size: 0.6rem; padding: 6px 12px;">🗓️ Checklists</a>
+            </div>
+
+            <!-- Como o site funciona -->
+            <div class="card" id="m-funcionamento">
+              <div class="card-title">🗺️ Como o site funciona</div>
+              <p class="page-desc" style="margin-bottom: 20px;">O seu site é formado por 5 serviços diferentes que trabalham integrados. Veja o fluxo das informações:</p>
+              <div style="display: flex; flex-direction: column; gap: 16px; max-width: 500px; margin: 0 auto; padding: 20px 0;">
+                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 6px; padding: 12px; text-align: center; font-weight: bold; color: var(--gold);">
+                  Visitante acessa o site
+                </div>
+                <div style="text-align: center; color: var(--gold-dim); font-size: 1.2rem; line-height: 1;">↓</div>
+                <div style="background: rgba(201,168,76,0.06); border: 1px solid var(--border-hover); border-radius: 6px; padding: 12px; text-align: center;">
+                  <strong>🌐 GoDaddy</strong><br><span style="font-size: 0.75rem; color: var(--text-muted);">Direciona o endereço <code>aescolhidadadeusa.site</code></span>
+                </div>
+                <div style="text-align: center; color: var(--gold-dim); font-size: 1.2rem; line-height: 1;">↓</div>
+                <div style="background: rgba(201,168,76,0.06); border: 1px solid var(--border-hover); border-radius: 6px; padding: 12px; text-align: center;">
+                  <strong>🚀 Vercel</strong><br><span style="font-size: 0.75rem; color: var(--text-muted);">Hospeda e exibe o site de forma ultra-rápida</span>
+                </div>
+                <div style="text-align: center; color: var(--gold-dim); font-size: 1.2rem; line-height: 1;">↓</div>
+                <div style="background: rgba(201,168,76,0.06); border: 1px solid var(--border-hover); border-radius: 6px; padding: 12px; text-align: center;">
+                  <strong>🐙 GitHub</strong><br><span style="font-size: 0.75rem; color: var(--text-muted);">Guarda o código e as atualizações de conteúdo</span>
+                </div>
+                <div style="text-align: center; color: var(--gold-dim); font-size: 1.2rem; line-height: 1;">↓ (Integração)</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                  <div style="background: rgba(201,168,76,0.06); border: 1px solid var(--border-hover); border-radius: 6px; padding: 12px; text-align: center;">
+                    <strong>💜 Supabase</strong><br><span style="font-size: 0.75rem; color: var(--text-muted);">Guarda dados das leitoras</span>
+                  </div>
+                  <div style="background: rgba(201,168,76,0.06); border: 1px solid var(--border-hover); border-radius: 6px; padding: 12px; text-align: center;">
+                    <strong>📧 Resend</strong><br><span style="font-size: 0.75rem; color: var(--text-muted);">Envia e-mails de confirmação</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Os 5 serviços -->
+            <div class="card" id="m-servicos">
+              <div class="card-title">🧰 Os 5 Serviços e Suas Funções</div>
+              <div class="manual-grid">
+                <!-- GoDaddy -->
+                <div class="manual-service-card">
+                  <span class="manual-service-badge">1. Domínio</span>
+                  <h3 style="font-family: 'Cinzel', serif; font-size: 0.95rem; margin-bottom: 8px; color: var(--gold);">GoDaddy</h3>
+                  <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px;">Onde está registrado o nome do site (<code>aescolhidadadeusa.site</code>). O endereço que as leitoras digitam.</p>
+                  <ul class="manual-step-list" style="margin-bottom: 16px;">
+                    <li class="manual-step-item">Pagar a renovação anual do domínio</li>
+                    <li class="manual-step-item">Não ignore os avisos de vencimento da GoDaddy</li>
+                  </ul>
+                  <a href="https://godaddy.com" target="_blank" class="btn btn-outline" style="font-size: 0.6rem; padding: 6px 12px; display: inline-flex;">Acessar GoDaddy</a>
+                </div>
+
+                <!-- Vercel -->
+                <div class="manual-service-card">
+                  <span class="manual-service-badge">2. Hospedagem</span>
+                  <h3 style="font-family: 'Cinzel', serif; font-size: 0.95rem; margin-bottom: 8px; color: var(--gold);">Vercel</h3>
+                  <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px;">Plataforma que coloca o site no ar. Toda alteração no GitHub é publicada aqui automaticamente em 2 min.</p>
+                  <ul class="manual-step-list" style="margin-bottom: 16px;">
+                    <li class="manual-step-item">Monitorar se o site está online</li>
+                    <li class="manual-step-item">Configurar chaves secretas (env vars)</li>
+                  </ul>
+                  <a href="https://vercel.com" target="_blank" class="btn btn-outline" style="font-size: 0.6rem; padding: 6px 12px; display: inline-flex;">Acessar Vercel</a>
+                </div>
+
+                <!-- GitHub -->
+                <div class="manual-service-card">
+                  <span class="manual-service-badge">3. Código</span>
+                  <h3 style="font-family: 'Cinzel', serif; font-size: 0.95rem; margin-bottom: 8px; color: var(--gold);">GitHub</h3>
+                  <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px;">Onde fica guardado o código-fonte do site. As alterações de links são salvas aqui em um arquivo json.</p>
+                  <ul class="manual-step-list" style="margin-bottom: 16px;">
+                    <li class="manual-step-item">Cofre de segurança do código</li>
+                    <li class="manual-step-item">Permite reverter alterações erradas</li>
+                  </ul>
+                  <a href="https://github.com/marianarosaautora/aescolhidadadeusa" target="_blank" class="btn btn-outline" style="font-size: 0.6rem; padding: 6px 12px; display: inline-flex;">Ver Repositório</a>
+                </div>
+
+                <!-- Supabase -->
+                <div class="manual-service-card">
+                  <span class="manual-service-badge">4. Banco de Dados</span>
+                  <h3 style="font-family: 'Cinzel', serif; font-size: 0.95rem; margin-bottom: 8px; color: var(--gold);">Supabase</h3>
+                  <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px;">Banco de dados que guarda os e-mails e senhas criptografadas das leitoras cadastradas.</p>
+                  <ul class="manual-step-list" style="margin-bottom: 16px;">
+                    <li class="manual-step-item">Ver leitoras cadastradas se o painel falhar</li>
+                    <li class="manual-step-item">Restaurar banco se ele pausar por inatividade</li>
+                  </ul>
+                  <a href="https://supabase.com" target="_blank" class="btn btn-outline" style="font-size: 0.6rem; padding: 6px 12px; display: inline-flex;">Acessar Supabase</a>
+                </div>
+
+                <!-- Resend -->
+                <div class="manual-service-card">
+                  <span class="manual-service-badge">5. E-mails</span>
+                  <h3 style="font-family: 'Cinzel', serif; font-size: 0.95rem; margin-bottom: 8px; color: var(--gold);">Resend</h3>
+                  <p style="font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px;">Serviço responsável por disparar o e-mail de confirmação assim que a leitora se cadastra no site.</p>
+                  <ul class="manual-step-list" style="margin-bottom: 16px;">
+                    <li class="manual-step-item">Ver se os e-mails estão sendo entregues</li>
+                    <li class="manual-step-item">Monitorar limite diário de e-mails (100/dia)</li>
+                  </ul>
+                  <a href="https://resend.com" target="_blank" class="btn btn-outline" style="font-size: 0.6rem; padding: 6px 12px; display: inline-flex;">Acessar Resend</a>
+                </div>
+              </div>
+
+              <div class="table-wrap">
+                <table style="font-size: 0.8rem;">
+                  <thead>
+                    <tr>
+                      <th style="padding: 10px;">Variável na Vercel</th>
+                      <th style="padding: 10px;">Função / O que faz</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="padding: 10px;"><code>SUPABASE_URL</code></td>
+                      <td style="padding: 10px; color: var(--text-muted);">Endereço de conexão com a área de membros</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 10px;"><code>SUPABASE_SERVICE_ROLE_KEY</code></td>
+                      <td style="padding: 10px; color: var(--text-muted);">Chave de acesso total ao Supabase (não compartilhe)</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 10px;"><code>GITHUB_TOKEN</code></td>
+                      <td style="padding: 10px; color: var(--text-muted);">Chave de autorização para o Painel salvar as alterações do site</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 10px;"><code>ADMIN_PASSWORD</code></td>
+                      <td style="padding: 10px; color: var(--text-muted);">Senha de entrada do próprio Painel Administrativo</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 10px;"><code>RESEND_API_KEY</code></td>
+                      <td style="padding: 10px; color: var(--text-muted);">Chave secreta usada para o site conseguir disparar e-mails</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Senhas de acesso -->
+            <div class="secure-box" id="m-senhas">
+              <div class="card-title" style="border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 16px;">🔑 Credenciais das Contas</div>
+              <p style="font-size: 0.85rem; color: var(--text-light); margin-bottom: 16px; line-height: 1.6;">
+                ⚠️ <strong>IMPORTANTE:</strong> Para facilitar a administração, todas as plataformas (GitHub, Vercel, Resend, Supabase e GoDaddy) foram criadas ou vinculadas usando o mesmo e-mail principal e senha abaixo. <strong>Por favor, altere essas senhas assim que possível para manter a segurança do seu site!</strong>
+              </p>
+              
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 20px;">
+                <!-- Conta de E-mail -->
+                <div style="background: rgba(13,0,16,0.5); border: 1px solid var(--border); border-radius: 6px; padding: 16px;">
+                  <h4 style="font-family: 'Cinzel', serif; font-size: 0.75rem; color: var(--gold); margin-bottom: 10px; text-transform: uppercase;">E-mail Administrativo (Microsoft Outlook)</h4>
+                  <div style="font-size: 0.8rem; margin-bottom: 6px;"><span style="color: var(--text-muted);">E-mail:</span> <strong style="color: var(--text-light);">aescolhidadadeusa@outlook.com</strong></div>
+                  <div style="font-size: 0.8rem; display: flex; align-items: center; justify-content: space-between;">
+                    <div><span style="color: var(--text-muted);">Senha:</span> <code style="background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 3px; font-size: 0.8rem;">CelestriaeTaina1!</code></div>
+                    <button class="btn btn-outline" style="font-size: 0.5rem; padding: 3px 6px;" onclick="navigator.clipboard.writeText('CelestriaeTaina1!').then(() => toast('✦ Senha copiada!'))">Copiar</button>
+                  </div>
+                  <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 8px;">Acesso ao e-mail em: <a href="https://outlook.com" target="_blank" style="color: var(--gold);">outlook.com</a></p>
+                </div>
+
+                <!-- Painel Administrativo -->
+                <div style="background: rgba(13,0,16,0.5); border: 1px solid var(--border); border-radius: 6px; padding: 16px;">
+                  <h4 style="font-family: 'Cinzel', serif; font-size: 0.75rem; color: var(--gold); margin-bottom: 10px; text-transform: uppercase;">Painel Administrativo do Site</h4>
+                  <div style="font-size: 0.8rem; margin-bottom: 6px;"><span style="color: var(--text-muted);">Acesso em:</span> <strong style="color: var(--text-light);">aescolhidadadeusa.site/admin</strong></div>
+                  <div style="font-size: 0.8rem;"><span style="color: var(--text-muted);">Senha:</span> <code style="background: rgba(255,255,255,0.06); padding: 2px 6px; border-radius: 3px; font-size: 0.8rem;">(A mesma usada para acessar esta tela)</code></div>
+                  <p style="font-size: 0.7rem; color: var(--text-muted); margin-top: 8px;">Esta senha fica guardada com segurança na Vercel.</p>
+                </div>
+              </div>
+
+              <div style="background: rgba(201,168,76,0.05); border: 1px solid var(--border); border-radius: 6px; padding: 16px; font-size: 0.82rem; color: var(--text-muted); line-height: 1.6;">
+                <h4 style="font-family: 'Cinzel', serif; font-size: 0.75rem; color: var(--gold); margin-bottom: 8px; text-transform: uppercase;">🔄 Como Alterar as Senhas:</h4>
+                <ol style="padding-left: 20px;">
+                  <li style="margin-bottom: 6px;"><strong>E-mail Principal:</strong> Acesse <a href="https://outlook.com" target="_blank" style="color: var(--gold);">outlook.com</a> → faça login → vá em Minha Conta (foto do perfil no topo direito) → Segurança → Alterar Senha.</li>
+                  <li style="margin-bottom: 6px;"><strong>Contas Vinculadas (GitHub, Vercel, GoDaddy):</strong> Como todas usam o e-mail <code>aescolhidadadeusa@outlook.com</code> para login, se você alterar a senha de acesso destas plataformas, lembre de anotá-las.</li>
+                  <li style="margin-bottom: 0;"><strong>Painel do Site:</strong> Acesse a Vercel → vá no projeto → aba <strong>"Settings"</strong> → <strong>"Environment Variables"</strong> → Edite o valor de <code>ADMIN_PASSWORD</code>. O site será republicado com a nova senha automaticamente.</li>
+                </ol>
+              </div>
+            </div>
+
+            <!-- Problemas Comuns -->
+            <div class="card" id="m-erros">
+              <div class="card-title">🚨 Problemas Comuns e Como Resolver</div>
+              <p class="page-desc" style="margin-bottom: 20px;">Se algo der errado com o site, verifique estas soluções antes de acionar o suporte técnico:</p>
+
+              <!-- Problema 1 -->
+              <div class="problem-card" style="border-left-color: var(--error);">
+                <div class="problem-title">❌ O site está fora do ar (erro de conexão ou página não encontrada)</div>
+                <div class="problem-solution">
+                  <strong>Possíveis causas:</strong>
+                  <ul style="padding-left: 20px; margin: 8px 0; font-size: 0.8rem; color: var(--text-muted);">
+                    <li>O domínio (GoDaddy) venceu ou não foi pago.</li>
+                    <li>O servidor de hospedagem (Vercel) teve uma falha na publicação de alguma alteração.</li>
+                  </ul>
+                  <strong>O que fazer:</strong>
+                  <ol style="padding-left: 20px; font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+                    <li>Acesse o <a href="https://godaddy.com" target="_blank" style="color: var(--gold);">GoDaddy.com</a> e veja se o domínio <code>aescolhidadadeusa.site</code> está ativo e pago.</li>
+                    <li>Acesse a <a href="https://vercel.com" target="_blank" style="color: var(--gold);">Vercel.com</a>, clique no projeto e vá na aba <strong>Deployments</strong>. Se o último deploy tiver uma bola vermelha (falha), clique para ler os logs do erro.</li>
+                  </ol>
+                </div>
+              </div>
+
+              <!-- Problema 2 -->
+              <div class="problem-card" style="border-left-color: var(--error);">
+                <div class="problem-title">❌ As leitoras não conseguem se cadastrar na Área de Membros</div>
+                <div class="problem-solution">
+                  <strong>Possíveis causas:</strong>
+                  <ul style="padding-left: 20px; margin: 8px 0; font-size: 0.8rem; color: var(--text-muted);">
+                    <li>O banco de dados (Supabase) está pausado por falta de uso temporário (projetos gratuitos pausam após 1 semana sem cadastros).</li>
+                    <li>A conexão entre o site e o Supabase falhou.</li>
+                  </ul>
+                  <strong>O que fazer:</strong>
+                  <ol style="padding-left: 20px; font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+                    <li>Acesse o <a href="https://supabase.com" target="_blank" style="color: var(--gold);">Supabase.com</a> e faça login.</li>
+                    <li>Veja se o seu projeto está ativo. Se estiver com status de "Pausado" (Paused), clique no botão <strong>"Restore Project"</strong> (Restaurar Projeto). Ele voltará a funcionar em poucos minutos.</li>
+                  </ol>
+                </div>
+              </div>
+
+              <!-- Problema 3 -->
+              <div class="problem-card" style="border-left-color: var(--error);">
+                <div class="problem-title">❌ O e-mail de confirmação de cadastro não chega para a leitora</div>
+                <div class="problem-solution">
+                  <strong>Possíveis causas:</strong>
+                  <ul style="padding-left: 20px; margin: 8px 0; font-size: 0.8rem; color: var(--text-muted);">
+                    <li>O e-mail caiu na pasta de <strong>Lixo Eletrônico</strong> ou <strong>Spam</strong> da leitora.</li>
+                    <li>Você ultrapassou o limite do plano gratuito da ferramenta de envio de e-mails (Resend permite até 100 envios por dia).</li>
+                  </ul>
+                  <strong>O que fazer:</strong>
+                  <ol style="padding-left: 20px; font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+                    <li>Peça para a leitora verificar o lixo eletrônico ou a aba "Promoções" do e-mail.</li>
+                    <li>Acesse o <a href="https://resend.com" target="_blank" style="color: var(--gold);">Resend.com</a> e verifique o gráfico de envios na página inicial para ver se a conta está ativa e se o limite do dia foi atingido.</li>
+                  </ol>
+                </div>
+              </div>
+
+              <!-- Problema 4 -->
+              <div class="problem-card" style="border-left-color: var(--error);">
+                <div class="problem-title">❌ O painel admin diz "senha incorreta" ou não abre</div>
+                <div class="problem-solution">
+                  <strong>Possíveis causas:</strong>
+                  <ul style="padding-left: 20px; margin: 8px 0; font-size: 0.8rem; color: var(--text-muted);">
+                    <li>A senha foi digitada com espaços ou letras maiúsculas/minúsculas incorretas.</li>
+                    <li>A senha cadastrada nas variáveis de ambiente do site na Vercel foi modificada.</li>
+                  </ul>
+                  <strong>O que fazer:</strong>
+                  <ol style="padding-left: 20px; font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+                    <li>Faça login na <a href="https://vercel.com" target="_blank" style="color: var(--gold);">Vercel.com</a>.</li>
+                    <li>Entre no projeto <code>aescolhidadadeusa</code> → aba <strong>Settings</strong> → <strong>Environment Variables</strong>.</li>
+                    <li>Clique no botão com formato de "olho" ao lado da variável <code>ADMIN_PASSWORD</code> para ler a senha correta e usá-la para logar.</li>
+                  </ol>
+                </div>
+              </div>
+
+              <!-- Problema 5 -->
+              <div class="problem-card" style="border-left-color: var(--error);">
+                <div class="problem-title">❌ Salvei um link ou imagem no painel, mas o site não atualizou</div>
+                <div class="problem-solution">
+                  <strong>Possíveis causas:</strong>
+                  <ul style="padding-left: 20px; margin: 8px 0; font-size: 0.8rem; color: var(--text-muted);">
+                    <li>A publicação das alterações leva cerca de 2 a 3 minutos para finalizar na Vercel.</li>
+                    <li>O navegador guardou a versão antiga do site no histórico (cache).</li>
+                  </ul>
+                  <strong>O que fazer:</strong>
+                  <ol style="padding-left: 20px; font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+                    <li>Aguarde 3 minutos após clicar em salvar.</li>
+                    <li>No computador, recarregue a página segurando <code>Ctrl + Shift + R</code> (no Mac: <code>Cmd + Shift + R</code>) para forçar o navegador a buscar a versão mais recente.</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+
+            <!-- Manutenção Preventiva -->
+            <div class="card" id="m-checklist">
+              <div class="card-title">🗓️ Manutenção Preventiva (Verificar todo mês)</div>
+              <p class="page-desc" style="margin-bottom: 20px;">Faça esta rápida verificação uma vez por mês para garantir que tudo continue funcionando perfeitamente:</p>
+              
+              <div style="background: rgba(255, 255, 255, 0.01); padding: 20px; border: 1px solid var(--border); border-radius: 6px;">
+                <label class="checklist-item">
+                  <input type="checkbox" />
+                  <span>Abrir este Painel Administrativo e ver se a lista de membros carrega sem erros.</span>
+                </label>
+                <label class="checklist-item">
+                  <input type="checkbox" />
+                  <span>Acessar o site como visitante e testar se os links (como o da Amazon) estão funcionando.</span>
+                </label>
+                <label class="checklist-item">
+                  <input type="checkbox" />
+                  <span>Cadastrar um e-mail alternativo seu no site para testar se a criação de conta e o e-mail de confirmação chegam certinho.</span>
+                </label>
+                <label class="checklist-item">
+                  <input type="checkbox" />
+                  <span>Verificar no GoDaddy se há saldo ou renovações pendentes para o domínio <code>aescolhidadadeusa.site</code>.</span>
+                </label>
+                <label class="checklist-item">
+                  <input type="checkbox" />
+                  <span>Entrar no Supabase para garantir que o banco de dados não esteja pausado.</span>
+                </label>
               </div>
             </div>
           </div>
