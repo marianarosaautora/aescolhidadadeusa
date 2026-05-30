@@ -1745,13 +1745,14 @@
     }
 
     .arvore-svg {
-      width: 180px;
-      height: 220px;
+      width: 340px;
+      height: 400px;
       margin: 0 auto 28px;
       position: relative;
       z-index: 1;
       filter: drop-shadow(0 0 20px #c9a84c44) drop-shadow(0 0 60px #9d4edd22);
       animation: arvoreBreath 5s infinite ease-in-out;
+      overflow: visible;
     }
 
     @keyframes arvoreBreath {
@@ -2494,12 +2495,7 @@
         padding: 36px 28px;
       }
 
-      .cidade-center {
-        padding: 40px 24px;
-        min-width: 0;
-        width: 100%;
-      }
-
+      /* Cidade Celestial: colapsa para coluna única com tabs no mobile */
       .cidade-celestial {
         grid-template-columns: 1fr;
       }
@@ -2511,6 +2507,20 @@
 
       .cidade-mobile-tabs {
         display: flex;
+      }
+
+      .cidade-center {
+        padding: 40px 24px;
+        min-width: 0;
+        width: 100%;
+        overflow: hidden;
+      }
+
+      .arvore-svg {
+        width: 100%;
+        max-width: 280px;
+        height: auto;
+        aspect-ratio: 340 / 400;
       }
 
       .footer-mobile-block {
