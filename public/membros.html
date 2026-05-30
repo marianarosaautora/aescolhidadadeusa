@@ -3798,8 +3798,30 @@
 
     async function checkAuth() {
       buildGateStars();
-      // Aguarda o Supabase processar o magic link da URL
-      await new Promise((r) => setTimeout(r, 500));
+
+      // Se há um hash com access_token na URL (magic link), aguarda o Supabase
+      // processar o token via onAuthStateChange antes de verificar a sessão.
+      const hasToken = window.location.hash.includes('access_token') ||
+        window.location.hash.includes('type=magiclink') ||
+        window.location.search.includes('code=');
+
+      if (hasToken) {
+        // Aguarda o evento SIGNED_IN do Supabase (até 8 segundos)
+        await new Promise((resolve) => {
+          const timeout = setTimeout(() => resolve(null), 8000);
+          const { data: { subscription } } = _sb.auth.onAuthStateChange((event, session) => {
+            if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+              clearTimeout(timeout);
+              subscription.unsubscribe();
+              resolve(session);
+            }
+          });
+        });
+      } else {
+        // Sem token na URL: pequeno delay para o Supabase inicializar
+        await new Promise((r) => setTimeout(r, 400));
+      }
+
       const {
         data: { session },
       } = await _sb.auth.getSession();
