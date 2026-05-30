@@ -1337,10 +1337,10 @@
     .book-pages {
       position: absolute;
       /* Calibrado para cair sobre as páginas brancas da imagem */
-      top: 6%;
-      left: 7.5%;
-      right: 7.5%;
-      bottom: 11%;
+      top: 7%;
+      left: 9.5%;
+      right: 9.5%;
+      bottom: 13.5%;
       display: grid;
       grid-template-columns: 1fr 1fr;
       transition: opacity 0.3s ease, transform 0.3s ease;
@@ -1483,30 +1483,30 @@
     }
 
     .book-bio {
-      font-size: clamp(0.72rem, 1.1vw, 0.88rem);
-      line-height: 1.75;
+      font-size: clamp(0.68rem, 1vw, 0.82rem);
+      line-height: 1.65;
       color: var(--ink-mid);
       flex: 1; overflow: hidden;
       position: relative; z-index: 1;
-      -webkit-mask-image: linear-gradient(180deg, black 78%, transparent 100%);
-      mask-image: linear-gradient(180deg, black 78%, transparent 100%);
+      -webkit-mask-image: linear-gradient(180deg, black 82%, transparent 100%);
+      mask-image: linear-gradient(180deg, black 82%, transparent 100%);
     }
-    .book-bio p { margin-bottom: 7px; text-align: justify; }
+    .book-bio p { margin-bottom: 6px; text-align: justify; }
 
     .book-bio-right {
-      font-size: clamp(0.72rem, 1.1vw, 0.88rem);
-      line-height: 1.75;
+      font-size: clamp(0.68rem, 1vw, 0.82rem);
+      line-height: 1.65;
       color: var(--ink-mid);
       flex: 1; overflow: hidden;
       position: relative; z-index: 1;
-      -webkit-mask-image: linear-gradient(180deg, black 80%, transparent 100%);
-      mask-image: linear-gradient(180deg, black 80%, transparent 100%);
+      -webkit-mask-image: linear-gradient(180deg, black 82%, transparent 100%);
+      mask-image: linear-gradient(180deg, black 82%, transparent 100%);
     }
-    .book-bio-right p { margin-bottom: 7px; text-align: justify; }
+    .book-bio-right p { margin-bottom: 6px; text-align: justify; }
 
     /* Números de página */
     .page-num {
-      position: absolute; bottom: 4%;
+      position: absolute; bottom: 5%;
       font-family: "Cinzel", serif;
       font-size: 0.5rem; letter-spacing: 0.2em;
       color: var(--ink-mid); opacity: 0.4;
@@ -1524,20 +1524,6 @@
     .ornament.tr { top: 3%; right: 4%; }
     .ornament.bl { bottom: 6%; left: 4%; }
     .ornament.br { bottom: 6%; right: 4%; }
-
-    /* Seta de virar página */
-    .page-arrow {
-      position: absolute; bottom: 4%; right: 5%;
-      font-size: 1rem;
-      color: var(--char-color, #8a6028);
-      opacity: 0.45;
-      animation: arrowPulse 2.5s infinite ease-in-out;
-      z-index: 3;
-    }
-    @keyframes arrowPulse {
-      0%,100% { opacity:0.35; transform:translateX(0); }
-      50% { opacity:0.7; transform:translateX(4px); }
-    }
 
     /* ══ ANIMAÇÃO DE VIRAR ══ */
     .book-pages.turning {
@@ -3401,24 +3387,51 @@
       const paragraphs = p.bio.split(/\n\s*\n+/).map(text => text.trim()).filter(Boolean);
       const spreads = [];
 
-      // Spread 0: Left page gets paragraph 0. Right page gets paragraphs 1 and 2.
-      const left0 = paragraphs.slice(0, 1);
-      const right0 = paragraphs.slice(1, 3);
-      spreads.push({
-        left: left0.map(text => `<p>${text}</p>`).join(""),
-        right: right0.map(text => `<p>${text}</p>`).join("")
-      });
+      let currentSpread = { left: [], right: [] };
+      let isLeft = true;
+      let currentLimit = 250; // Left page of spread 0 (reduced capacity because of headers)
+      let currentChars = 0;
 
-      // Subsequent spreads: 2 paragraphs on left page, 2 on right page.
-      let idx = 3;
-      while (idx < paragraphs.length) {
-        const leftNext = paragraphs.slice(idx, idx + 2);
-        const rightNext = paragraphs.slice(idx + 2, idx + 4);
+      for (let i = 0; i < paragraphs.length; i++) {
+        const paragraph = paragraphs[i];
+        const pChars = paragraph.length;
+
+        // Determine if page is currently empty
+        const pageIsEmpty = isLeft ? (currentSpread.left.length === 0) : (currentSpread.right.length === 0);
+
+        if (currentChars + pChars > currentLimit && !pageIsEmpty) {
+          if (isLeft) {
+            isLeft = false;
+            currentLimit = 500; // Right page of spread 0
+            currentChars = 0;
+          } else {
+            // Save current spread and create next spread
+            spreads.push({
+              left: currentSpread.left.map(t => `<p>${t}</p>`).join(""),
+              right: currentSpread.right.map(t => `<p>${t}</p>`).join("")
+            });
+            currentSpread = { left: [], right: [] };
+            isLeft = true;
+            currentLimit = 500; // Left page of spread 1+
+            currentChars = 0;
+          }
+        }
+
+        // Add paragraph
+        if (isLeft) {
+          currentSpread.left.push(paragraph);
+        } else {
+          currentSpread.right.push(paragraph);
+        }
+        currentChars += pChars;
+      }
+
+      // Add final spread
+      if (currentSpread.left.length > 0 || currentSpread.right.length > 0) {
         spreads.push({
-          left: leftNext.map(text => `<p>${text}</p>`).join(""),
-          right: rightNext.map(text => `<p>${text}</p>`).join("")
+          left: currentSpread.left.map(t => `<p>${t}</p>`).join(""),
+          right: currentSpread.right.map(t => `<p>${t}</p>`).join("")
         });
-        idx += 4;
       }
 
       return spreads;
@@ -3441,6 +3454,36 @@
         }
       }
       return roman;
+    }
+
+    function getReadabilityColor(hex) {
+      if (!hex) return '#1e0f00';
+      hex = hex.replace(/^\s*#|\s*$/g, '');
+      if (hex.length === 3) {
+        hex = hex.replace(/(.)/g, '$1$1');
+      }
+      const r = parseInt(hex.substr(0, 2), 16),
+            g = parseInt(hex.substr(2, 2), 16),
+            b = parseInt(hex.substr(4, 2), 16);
+
+      // Calculate relative luminance (standard formula)
+      const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+
+      // Darken light colors significantly to match yellow parchment paper readability
+      let darkenPercent = 0.2;
+      if (luminance > 0.75) {
+        darkenPercent = 0.65;
+      } else if (luminance > 0.5) {
+        darkenPercent = 0.5;
+      } else if (luminance > 0.3) {
+        darkenPercent = 0.35;
+      }
+      
+      const nr = Math.max(0, Math.floor(r * (1 - darkenPercent)));
+      const ng = Math.max(0, Math.floor(g * (1 - darkenPercent)));
+      const nb = Math.max(0, Math.floor(b * (1 - darkenPercent)));
+
+      return `#${nr.toString(16).padStart(2, '0')}${ng.toString(16).padStart(2, '0')}${nb.toString(16).padStart(2, '0')}`;
     }
 
     function navigate(dir) {
@@ -3607,7 +3650,8 @@
       const p = PIGMENTADORAS[idx];
       if (!p) return;
 
-      const c = p.color || '#c9a84c';
+      const rawColor = p.color || '#c9a84c';
+      const c = getReadabilityColor(rawColor);
 
       // Set character color variable on the pages element
       const bookPages = document.getElementById("bookPages");
