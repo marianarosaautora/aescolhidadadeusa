@@ -1340,7 +1340,7 @@
       top: 7%;
       left: 11.5%;
       right: 11.5%;
-      bottom: 13.5%;
+      bottom: 19.5%;
       display: grid;
       grid-template-columns: 1fr 1fr;
       transition: opacity 0.3s ease, transform 0.3s ease;
@@ -1584,7 +1584,7 @@
 
     .bio-nav-inner {
       position: absolute;
-      bottom: 4%;
+      bottom: 6%;
       font-family: "Cinzel", serif;
       font-size: 0.58rem;
       letter-spacing: 0.18em;
@@ -3731,7 +3731,7 @@
 
       const charBioRight = document.getElementById("charBioRight");
       if (charBioRight) {
-        charBioRight.innerHTML = spread.right || '<p>Biografia em breve...</p>';
+        charBioRight.innerHTML = spread.right || '';
       }
 
       // Page numbers (roman numerals based on spread index)
