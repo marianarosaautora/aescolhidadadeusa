@@ -1578,6 +1578,11 @@
       }
 
       @media (max-width: 768px) {
+        /* Remove mouse personalizado no mobile */
+        body { cursor: auto !important; }
+        .cursor-brush { display: none !important; }
+        a, button, .btn-gold, .btn-ghost, .nav-cta, .social-link, input { cursor: pointer !important; }
+
         header {
           padding: 16px 20px;
         }
