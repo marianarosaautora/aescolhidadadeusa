@@ -510,7 +510,7 @@
       letter-spacing: 0.4em;
       color: var(--gold-dim);
       text-transform: uppercase;
-      margin-bottom: 36px;
+      margin-bottom: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -3210,9 +3210,73 @@
             </div>
           </div>
 
-          <div class="cidade-right" id="sidebarReinos">
+          <div class="cidade-right">
             <div class="cidade-sidebar-label">✦ Também residentes</div>
-            <!-- Populated dynamically via JS -->
+            <div class="cidade-sidebar-item" data-resident="Vespera">
+              <div class="cidade-sidebar-gem" style="--gc: #00e676">
+                <svg viewBox="0 0 24 24">
+                  <use href="#gem" />
+                </svg>
+              </div>
+              <div>
+                <div class="cidade-sidebar-name">Vespera</div>
+                <div class="cidade-sidebar-sub">
+                  Pigmentadora Verde · Veneno e Sangue
+                </div>
+              </div>
+            </div>
+            <div class="cidade-sidebar-item" data-resident="Pietra">
+              <div class="cidade-sidebar-gem" style="--gc: #8d6e63">
+                <svg viewBox="0 0 24 24">
+                  <use href="#gem" />
+                </svg>
+              </div>
+              <div>
+                <div class="cidade-sidebar-name">Pietra</div>
+                <div class="cidade-sidebar-sub">
+                  Pigmentadora Marrom · Pedra e Metal
+                </div>
+              </div>
+            </div>
+            <div class="cidade-sidebar-item" data-resident="Lyra">
+              <div class="cidade-sidebar-gem" style="--gc: #d7ccc8">
+                <svg viewBox="0 0 24 24">
+                  <use href="#gem" />
+                </svg>
+              </div>
+              <div>
+                <div class="cidade-sidebar-name">Lyra</div>
+                <div class="cidade-sidebar-sub">
+                  Pigmentadora Cinza · Brutal
+                </div>
+              </div>
+            </div>
+            <div class="cidade-sidebar-item" data-resident="Nanima">
+              <div class="cidade-sidebar-gem" style="--gc: #00b0ff">
+                <svg viewBox="0 0 24 24">
+                  <use href="#gem" />
+                </svg>
+              </div>
+              <div>
+                <div class="cidade-sidebar-name">Nanima</div>
+                <div class="cidade-sidebar-sub">
+                  Pigmentadora Azul · Água e Cura
+                </div>
+              </div>
+            </div>
+            <div class="cidade-sidebar-item" data-resident="Celestria">
+              <div class="cidade-sidebar-gem" style="--gc: var(--gold)">
+                <svg viewBox="0 0 24 24">
+                  <use href="#gem" />
+                </svg>
+              </div>
+              <div>
+                <div class="cidade-sidebar-name">Celestria</div>
+                <div class="cidade-sidebar-sub">
+                  A Deusa · Regente dos Nove Reinos
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -3356,9 +3420,6 @@
 
         renderBlog();
         renderGallery();
-        renderSidebarReinos();
-        resetCidadeCenter(); // Carrega a Cidade Celestial do CMS logo na primeira exibição
-      } catch (err) {
         renderPigmentadoras();
         renderReinos();
         initCarouselDrag();
@@ -3450,40 +3511,22 @@
     }
 
     // ══ INTERATIVIDADE DA CIDADE CELESTIAL ══
-    function renderSidebarReinos() {
-      const sidebarContainer = document.getElementById('sidebarReinos');
-      if (!sidebarContainer || !PIGMENTADORAS) return;
-
-      const residentsToShow = ["Vespera", "Pietra", "Lyra", "Nanima", "Celestria"];
-      let html = '<div class="cidade-sidebar-label">✦ Também residentes</div>';
-
-      residentsToShow.forEach(name => {
-        let pig = PIGMENTADORAS.find(p => p.name === name);
-        let color = "var(--gold)";
-        let sub = "Pigmentadora";
-        if (pig) {
-          color = pig.color || color;
-          sub = `Pigmentadora · ${pig.power}`;
-        } else if (name === "Celestria") {
-          sub = "A Deusa · Regente dos Nove Reinos";
-        }
-        
-        html += `
-          <div class="cidade-sidebar-item" data-resident="${name}">
-            <div class="cidade-sidebar-gem" style="--gc: ${color}">
-              <svg viewBox="0 0 24 24"><use href="#gem-shape" /></svg>
-            </div>
-            <div>
-              <div class="cidade-sidebar-name">${name}</div>
-              <div class="cidade-sidebar-sub">${sub}</div>
-            </div>
-          </div>
-        `;
-      });
-      sidebarContainer.innerHTML = html;
-      initCidadeInteractions(); // re-init since we recreated the elements
-    }
-
+    const CIDADE_CELESTIAL_DEFAULT = {
+      nome: "Cidade Celestial",
+      gema: "Gema Dourada",
+      pigmentadora: "Celestria",
+      descricao: "Onde as <strong>Pigmentadoras</strong> vivem junto à Celestria. Lá a <strong>grande Árvore</strong> reside, assim como os moradores selecionados dos outros reinos. Um local em que a harmonia da fauna e da flora e da mistura da arquitetura são permitidas.",
+      detalhes: [
+        "Regida por <span>Celestria, a Deusa</span>",
+        "Lar da <span>grande Árvore</span>"
+      ],
+      lore: [
+        { icon: "◈", texto: "A cidade perfeita cresce sob a Grande Árvore Celestial. Embora pequena em extensão e controlada para que tudo aconteça harmoniosamente, ela é um microcosmo, abrigando em si a essência e os biomas dos nove reinos." },
+        { icon: "◈", texto: "Formando nove distritos, cada um deles mantém a natureza, os animais, a arquitetura e a cultura dos reinos. Os distritos se organizam em um gracioso leque a partir do centro, onde a arquitetura reflete o gosto etéreo de Celestria. Apesar de todos os reinos presentes, é a lei da divindade que predomina." },
+        { icon: "◈", texto: "Na cidade Celestial, a vida possui um propósito compartilhado: cada habitante, à sua maneira, dedica-se à manutenção e ao equilíbrio da Grande Árvore. Em troca, recebem a Bênção de Celestria. Este dom não apenas os torna resistentes às variações climáticas de cada bioma, mas lhes dá a oportunidade da compreensão do dialeto de cada reino, fazendo com que todos se compreendam mutuamente." },
+        { icon: "◈", texto: "É, em todos os sentidos, a cidade perfeita." }
+      ]
+    };
 
     const RESIDENT_TO_REINO = {
       "Taaf": "Mentálida",
@@ -3523,20 +3566,10 @@
 
       if (detalhesEl) {
         detalhesEl.innerHTML = '';
-        let detalhes = data.detalhes;
-        if (!detalhes) {
-          if (data.nome === "Cidade Celestial") {
-            detalhes = [
-              "Regida por <span>Celestria, a Deusa</span>",
-              "Lar da <span>grande Árvore</span>"
-            ];
-          } else {
-            detalhes = [
-              `Gema: <span>${data.gema}</span>`,
-              `Guardiã: <span>${data.pigmentadora}</span>`
-            ];
-          }
-        }
+        const detalhes = data.detalhes || [
+          `Gema: <span>${data.gema}</span>`,
+          `Guardiã: <span>${data.pigmentadora}</span>`
+        ];
         detalhes.forEach(det => {
           const div = document.createElement('div');
           div.className = 'cidade-detalhe';
@@ -3621,11 +3654,15 @@
 
       // 4. Find kingdom data
       const reinoName = RESIDENT_TO_REINO[resident];
-      const kingdom = REINOS_DATA.find(r => r.nome === reinoName);
-      if (kingdom) {
-        updateCidadeCenter(kingdom);
+      if (reinoName === "Cidade Celestial") {
+        updateCidadeCenter(CIDADE_CELESTIAL_DEFAULT);
       } else {
-        console.warn(`Kingdom not found: ${reinoName}`);
+        const kingdom = REINOS_DATA.find(r => r.nome === reinoName);
+        if (kingdom) {
+          updateCidadeCenter(kingdom);
+        } else {
+          console.warn(`Kingdom not found: ${reinoName}`);
+        }
       }
     }
 
