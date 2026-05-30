@@ -1767,11 +1767,11 @@
           <li><a href="#personagens">Personagens</a></li>
           <li><a href="#blog">Blog</a></li>
           <li><a href="#autora">Autora</a></li>
-          <li class="nav-mobile-only"><a href="https://amzn.to/4wVBjIC" target="_blank" class="btn-gold" style="font-size: 0.75rem; padding: 10px 24px; margin-top: 16px; display: inline-block; color: #0d0010 !important;">Comprar</a></li>
+          <li class="nav-mobile-only"><a href="https://amzn.to/4wVBjIC" target="_blank" id="buyLinkMobileNav" class="btn-gold" style="font-size: 0.75rem; padding: 10px 24px; margin-top: 16px; display: inline-block; color: #0d0010 !important;">Comprar</a></li>
         </ul>
       </nav>
       <div style="display: flex; align-items: center; z-index: 110;">
-        <a href="https://amzn.to/4wVBjIC" target="_blank" class="nav-cta">Comprar</a>
+        <a href="https://amzn.to/4wVBjIC" target="_blank" id="buyLinkNav" class="nav-cta">Comprar</a>
         <button class="nav-hamburger" aria-label="Abrir menu" onclick="toggleMobileMenu()">
           <span></span>
           <span></span>
@@ -1802,7 +1802,7 @@
           onde o amor é tão perigoso quanto os próprios conflitos.
         </p>
         <div class="hero-cta-group">
-          <a href="https://amzn.to/4wVBjIC" target="_blank" class="btn-gold">Garantir meu exemplar</a>
+          <a href="https://amzn.to/4wVBjIC" target="_blank" id="buyLinkHero" class="btn-gold">Garantir meu exemplar</a>
         </div>
       </div>
       <div class="scroll-hint">
@@ -1864,7 +1864,7 @@
           <span class="genre-tag">Magia</span>
         </div>
         <div style="display: flex; gap: 16px; flex-wrap: wrap" class="book-ctas">
-          <a href="https://amzn.to/4wVBjIC" target="_blank" class="btn-gold">Comprar</a>
+          <a href="https://amzn.to/4wVBjIC" target="_blank" id="buyLinkBook" class="btn-gold">Comprar</a>
           <a href="#sinopse" class="btn-ghost">Ler sinopse</a>
         </div>
       </div>
@@ -2194,6 +2194,7 @@
         <div class="author-social">
           <a
             href="https://instagram.com/mari_mrosa"
+            id="socialLinkInstagram"
             class="social-link"
             target="_blank"
             rel="noopener"
@@ -2241,6 +2242,36 @@
         © 2026 Mariana Rosa · Todos os direitos reservados.
       </p>
     </footer>
+
+    <!-- Atualiza links dinamicamente do content.json (gerenciado pelo painel admin) -->
+    <script>
+      (function() {
+        fetch('/content.json')
+          .then(r => r.json())
+          .then(data => {
+            // Buy links
+            const link = data?.index?.comprar?.link;
+            const label = data?.index?.comprar?.linkLabel;
+            if (link) {
+              ['buyLinkHero', 'buyLinkNav', 'buyLinkMobileNav', 'buyLinkBook'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                  el.href = link;
+                  if (label && (id === 'buyLinkHero')) el.textContent = label;
+                }
+              });
+            }
+            // Social links
+            const social = data?.social || {};
+            const ig = document.getElementById('socialLinkInstagram');
+            if (ig && social.instagram) {
+              ig.href = social.instagram;
+              ig.textContent = 'Instagram ' + social.instagram.replace('https://instagram.com/', '@').replace('https://www.instagram.com/', '@');
+            }
+          })
+          .catch(() => {}); // silently fail — fallback hardcoded links still work
+      })();
+    </script>
     <!-- ══ SUPABASE SDK ══ -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
