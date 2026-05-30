@@ -1392,12 +1392,12 @@
     .page-left {
       border-radius: 2px 0 0 2px;
       box-shadow: inset -6px 0 14px rgba(80,50,20,0.12);
-      padding: 7% 19% 9% 14%;
+      padding: 7% 19% 14% 14%;
     }
     .page-right {
       border-radius: 0 2px 2px 0;
       box-shadow: inset 6px 0 14px rgba(80,50,20,0.12);
-      padding: 7% 14% 9% 19%;
+      padding: 7% 14% 14% 19%;
     }
 
     /* Curvatura sutil de margem interna */
@@ -1489,8 +1489,6 @@
       color: var(--ink-mid);
       flex: 1; overflow: hidden;
       position: relative; z-index: 1;
-      -webkit-mask-image: linear-gradient(180deg, black 82%, transparent 100%);
-      mask-image: linear-gradient(180deg, black 82%, transparent 100%);
     }
     .book-bio p { margin-bottom: 6px; text-align: justify; }
 
@@ -1500,8 +1498,6 @@
       color: var(--ink-mid);
       flex: 1; overflow: hidden;
       position: relative; z-index: 1;
-      -webkit-mask-image: linear-gradient(180deg, black 82%, transparent 100%);
-      mask-image: linear-gradient(180deg, black 82%, transparent 100%);
     }
     .book-bio-right p { margin-bottom: 6px; text-align: justify; }
 
@@ -1509,11 +1505,11 @@
     .page-num {
       position: absolute; bottom: 5%;
       font-family: "Cinzel", serif;
-      font-size: 0.5rem; letter-spacing: 0.2em;
-      color: var(--ink-mid); opacity: 0.4;
+      font-size: 0.55rem; letter-spacing: 0.2em;
+      color: var(--ink-mid); opacity: 0.55;
     }
-    .page-num-l { left: 14%; }
-    .page-num-r { right: 14%; }
+    .page-num-l { left: 50%; transform: translateX(-50%); }
+    .page-num-r { left: 50%; transform: translateX(-50%); }
 
     /* Ornamento de canto */
     .ornament {
@@ -1591,25 +1587,36 @@
       bottom: 4%;
       font-family: "Cinzel", serif;
       font-size: 0.58rem;
-      letter-spacing: 0.25em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--char-color, var(--gold));
+      color: var(--char-color, var(--gold-dim));
       cursor: pointer !important;
-      opacity: 0.65;
+      opacity: 0.8;
       transition: opacity 0.3s, transform 0.3s, text-shadow 0.3s;
-      z-index: 10;
+      z-index: 20;
       user-select: none;
+      background: rgba(248, 240, 220, 0.7);
+      padding: 3px 8px;
+      border: 1px solid var(--char-color, var(--gold-dim));
+      border-radius: 2px;
+      backdrop-filter: blur(2px);
     }
     .bio-nav-inner:hover {
       opacity: 1;
-      transform: scale(1.05);
-      text-shadow: 0 0 8px var(--char-color);
+      background: rgba(248, 240, 220, 0.95);
+      box-shadow: 0 0 6px var(--char-color);
+    }
+    .bio-nav-inner:active {
+      transform: scale(0.97);
     }
     .bio-nav-back {
       left: 14%;
     }
     .bio-nav-continue {
       right: 14%;
+    }
+    .bio-arrow {
+      font-size: 0.75rem;
     }
 
     .book-counter {
@@ -1630,10 +1637,10 @@
     /* ══ RESPONSIVE ══ */
     @media (max-width: 640px) {
       .page-left {
-        padding: 5% 19% 8% 14%;
+        padding: 5% 19% 14% 14%;
       }
       .page-right {
-        padding: 5% 14% 8% 19%;
+        padding: 5% 14% 14% 19%;
       }
       .book-bio, .book-bio-right {
         font-size: 0.68rem;
@@ -2804,7 +2811,7 @@
                 <div class="book-divider" id="bookDivider"></div>
                 <div class="book-bio" id="charBio"></div>
 
-                <div class="bio-nav-inner bio-nav-back" id="bioBack" onclick="navigateSubPage(-1)">← Voltar</div>
+                <div class="bio-nav-inner bio-nav-back" id="bioBack" onclick="navigateSubPage(-1)"><span class="bio-arrow">←</span> Voltar</div>
                 <span class="page-num page-num-l" id="pageNumL">I</span>
                 <span class="ornament bl">✦</span>
               </div>
@@ -2813,7 +2820,7 @@
               <div class="page page-right" id="pageRight">
                 <span class="ornament tr">✦</span>
                 <div class="book-bio-right" id="charBioRight"></div>
-                <div class="bio-nav-inner bio-nav-continue" id="bioContinue" onclick="navigateSubPage(1)">Continuar →</div>
+                <div class="bio-nav-inner bio-nav-continue" id="bioContinue" onclick="navigateSubPage(1)">Continuar <span class="bio-arrow">→</span></div>
                 <span class="page-num page-num-r" id="pageNumR">II</span>
                 <span class="ornament br">✦</span>
               </div>
@@ -3393,7 +3400,9 @@
 
       let currentSpread = { left: [], right: [] };
       let isLeft = true;
-      let currentLimit = 170; // Left page of spread 0 (reduced capacity because of headers)
+      // Spread 0: left page has headers (name, realm, powers) so less text space
+      // Subsequent pages: full page available for text
+      let currentLimit = 400; // Left page of spread 0 (headers take ~30% of space)
       let currentChars = 0;
 
       for (let i = 0; i < paragraphs.length; i++) {
@@ -3406,7 +3415,7 @@
         if (currentChars + pChars > currentLimit && !pageIsEmpty) {
           if (isLeft) {
             isLeft = false;
-            currentLimit = 330; // Right page of spread 0
+            currentLimit = 800; // Right page of spread 0 — full page
             currentChars = 0;
           } else {
             // Save current spread and create next spread
@@ -3416,7 +3425,7 @@
             });
             currentSpread = { left: [], right: [] };
             isLeft = true;
-            currentLimit = 330; // Left page of spread 1+
+            currentLimit = 800; // Left page of spread 1+ — full page
             currentChars = 0;
           }
         }
