@@ -1599,6 +1599,32 @@
       transform: scale(1.4);
     }
 
+    .bio-nav-inner {
+      position: absolute;
+      bottom: 4%;
+      font-family: "Cinzel", serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--char-color, var(--gold));
+      cursor: pointer !important;
+      opacity: 0.65;
+      transition: opacity 0.3s, transform 0.3s, text-shadow 0.3s;
+      z-index: 10;
+      user-select: none;
+    }
+    .bio-nav-inner:hover {
+      opacity: 1;
+      transform: scale(1.05);
+      text-shadow: 0 0 8px var(--char-color);
+    }
+    .bio-nav-back {
+      right: 7%;
+    }
+    .bio-nav-continue {
+      left: 9%;
+    }
+
     .book-counter {
       position: relative;
       z-index: 2;
@@ -2776,7 +2802,7 @@
                 <span class="ornament tl">✦</span>
                 <div class="char-num-bg" id="charNumBg">01</div>
 
-                <div class="book-name-row">
+                <div class="book-name-row" id="bookHeaderRow">
                   <h3 class="book-name" id="charName">—</h3>
                   <div class="book-gem" id="charGem">
                     <svg viewBox="0 0 24 24"><use href="#gem"/></svg>
@@ -2788,6 +2814,7 @@
                 <div class="book-divider" id="bookDivider"></div>
                 <div class="book-bio" id="charBio"></div>
 
+                <div class="bio-nav-inner bio-nav-back" id="bioBack" onclick="navigateSubPage(-1)">← Voltar</div>
                 <span class="page-num page-num-l" id="pageNumL">I</span>
                 <span class="ornament bl">✦</span>
               </div>
@@ -2796,7 +2823,7 @@
               <div class="page page-right" id="pageRight">
                 <span class="ornament tr">✦</span>
                 <div class="book-bio-right" id="charBioRight"></div>
-                <div class="page-arrow" id="pageArrow">→</div>
+                <div class="bio-nav-inner bio-nav-continue" id="bioContinue" onclick="navigateSubPage(1)">Continuar →</div>
                 <span class="page-num page-num-r" id="pageNumR">II</span>
                 <span class="ornament br">✦</span>
               </div>
@@ -3366,18 +3393,35 @@
 
     // ── INTERACTIVE BOOK STATE & HELPERS ──
     let currentPigmentadora = 0;
+    let currentSubPage = 0;
     let isTurningPage = false;
 
-    function splitBio(bioText) {
-      if (!bioText) return { left: "", right: "" };
-      const paragraphs = bioText.split(/\n\s*\n+/).map(p => p.trim()).filter(Boolean);
-      const total = paragraphs.length;
-      const half = Math.ceil(total / 2);
-      const leftParagraphs = paragraphs.slice(0, half);
-      const rightParagraphs = paragraphs.slice(half);
-      const leftHtml = leftParagraphs.map(p => `<p>${p}</p>`).join("");
-      const rightHtml = rightParagraphs.map(p => `<p>${p}</p>`).join("");
-      return { left: leftHtml, right: rightHtml };
+    function getSpreads(p) {
+      if (!p || !p.bio) return [{ left: "", right: "" }];
+      const paragraphs = p.bio.split(/\n\s*\n+/).map(text => text.trim()).filter(Boolean);
+      const spreads = [];
+
+      // Spread 0: Left page gets paragraph 0. Right page gets paragraphs 1 and 2.
+      const left0 = paragraphs.slice(0, 1);
+      const right0 = paragraphs.slice(1, 3);
+      spreads.push({
+        left: left0.map(text => `<p>${text}</p>`).join(""),
+        right: right0.map(text => `<p>${text}</p>`).join("")
+      });
+
+      // Subsequent spreads: 2 paragraphs on left page, 2 on right page.
+      let idx = 3;
+      while (idx < paragraphs.length) {
+        const leftNext = paragraphs.slice(idx, idx + 2);
+        const rightNext = paragraphs.slice(idx + 2, idx + 4);
+        spreads.push({
+          left: leftNext.map(text => `<p>${text}</p>`).join(""),
+          right: rightNext.map(text => `<p>${text}</p>`).join("")
+        });
+        idx += 4;
+      }
+
+      return spreads;
     }
 
     function getPowerTags(powerStr) {
@@ -3414,12 +3458,14 @@
 
         setTimeout(() => {
           currentPigmentadora = targetIdx;
+          currentSubPage = 0;
           renderPage(currentPigmentadora);
           bookPages.classList.remove(animClass);
           isTurningPage = false;
         }, 300);
       } else {
         currentPigmentadora = targetIdx;
+        currentSubPage = 0;
         renderPage(currentPigmentadora);
         isTurningPage = false;
       }
@@ -3438,13 +3484,40 @@
 
         setTimeout(() => {
           currentPigmentadora = idx;
+          currentSubPage = 0;
           renderPage(currentPigmentadora);
           bookPages.classList.remove(animClass);
           isTurningPage = false;
         }, 300);
       } else {
         currentPigmentadora = idx;
+        currentSubPage = 0;
         renderPage(currentPigmentadora);
+        isTurningPage = false;
+      }
+    }
+
+    function navigateSubPage(dir) {
+      if (isTurningPage) return;
+      const spreads = getSpreads(PIGMENTADORAS[currentPigmentadora]);
+      const targetIdx = currentSubPage + dir;
+      if (targetIdx < 0 || targetIdx >= spreads.length) return;
+
+      isTurningPage = true;
+      const bookPages = document.getElementById("bookPages");
+      if (bookPages) {
+        const animClass = dir > 0 ? "turning" : "turning-left";
+        bookPages.classList.add(animClass);
+
+        setTimeout(() => {
+          currentSubPage = targetIdx;
+          renderPageSpread(currentPigmentadora, currentSubPage);
+          bookPages.classList.remove(animClass);
+          isTurningPage = false;
+        }, 300);
+      } else {
+        currentSubPage = targetIdx;
+        renderPageSpread(currentPigmentadora, currentSubPage);
         isTurningPage = false;
       }
     }
@@ -3501,6 +3574,8 @@
     }
 
     function renderPigmentadoras() {
+      currentSubPage = 0;
+
       // 1. Render dots
       const dotsEl = document.getElementById("navDots");
       if (dotsEl) {
@@ -3519,11 +3594,16 @@
         cTotalEl.textContent = PIGMENTADORAS.length;
       }
 
-      // 3. Render initial page
-      renderPage(currentPigmentadora);
+      // 3. Render initial spread
+      renderPageSpread(currentPigmentadora, currentSubPage);
     }
 
     function renderPage(idx) {
+      currentSubPage = 0;
+      renderPageSpread(idx, currentSubPage);
+    }
+
+    function renderPageSpread(idx, subIdx) {
       const p = PIGMENTADORAS[idx];
       if (!p) return;
 
@@ -3535,9 +3615,19 @@
         bookPages.style.setProperty("--char-color", c);
       }
 
-      // Left page elements
+      // Show/Hide Left Page Header Elements
+      const showHeader = (subIdx === 0);
+      
       const charNumBg = document.getElementById("charNumBg");
-      if (charNumBg) charNumBg.textContent = p.num || String(idx + 1).padStart(2, '0');
+      if (charNumBg) {
+        charNumBg.textContent = p.num || String(idx + 1).padStart(2, '0');
+        charNumBg.style.display = showHeader ? "block" : "none";
+      }
+
+      const bookHeaderRow = document.getElementById("bookHeaderRow");
+      if (bookHeaderRow) {
+        bookHeaderRow.style.display = showHeader ? "flex" : "none";
+      }
 
       const charName = document.getElementById("charName");
       if (charName) charName.textContent = p.name || '';
@@ -3548,37 +3638,48 @@
       }
 
       const charRealm = document.getElementById("charRealm");
-      if (charRealm) charRealm.textContent = 'Reino: ' + (p.realm || '');
+      if (charRealm) {
+        charRealm.textContent = 'Reino: ' + (p.realm || '');
+        charRealm.style.display = showHeader ? "block" : "none";
+      }
 
-      // Powers tag list
       const charPowers = document.getElementById("charPowers");
       if (charPowers) {
+        charPowers.style.display = showHeader ? "flex" : "none";
         charPowers.innerHTML = "";
-        const tags = getPowerTags(p.power);
-        tags.forEach(t => {
-          const tagEl = document.createElement("span");
-          tagEl.className = "book-power-tag";
-          tagEl.textContent = t;
-          charPowers.appendChild(tagEl);
-        });
+        if (showHeader) {
+          const tags = getPowerTags(p.power);
+          tags.forEach(t => {
+            const tagEl = document.createElement("span");
+            tagEl.className = "book-power-tag";
+            tagEl.textContent = t;
+            charPowers.appendChild(tagEl);
+          });
+        }
       }
 
-      // Bio text partition
-      const bioParts = splitBio(p.bio);
+      const bookDivider = document.getElementById("bookDivider");
+      if (bookDivider) {
+        bookDivider.style.display = showHeader ? "block" : "none";
+      }
+
+      // Render Spread text content
+      const spreads = getSpreads(p);
+      const spread = spreads[subIdx] || { left: "", right: "" };
+
       const charBio = document.getElementById("charBio");
       if (charBio) {
-        charBio.innerHTML = bioParts.left;
+        charBio.innerHTML = spread.left;
       }
 
-      // Right page elements
       const charBioRight = document.getElementById("charBioRight");
       if (charBioRight) {
-        charBioRight.innerHTML = bioParts.right || '<p>Biografia em breve...</p>';
+        charBioRight.innerHTML = spread.right || '<p>Biografia em breve...</p>';
       }
 
-      // Page numbers (roman numerals)
-      const romanL = toRoman(idx * 2 + 1);
-      const romanR = toRoman(idx * 2 + 2);
+      // Page numbers (roman numerals based on spread index)
+      const romanL = toRoman(idx * 2 + 1 + subIdx * 2);
+      const romanR = toRoman(idx * 2 + 2 + subIdx * 2);
       
       const pageNumL = document.getElementById("pageNumL");
       if (pageNumL) pageNumL.textContent = romanL;
@@ -3595,6 +3696,19 @@
 
       const btnNext = document.getElementById("btnNext");
       if (btnNext) btnNext.disabled = (idx === PIGMENTADORAS.length - 1);
+
+      // Inner sub-page bio navigation display
+      const bioBack = document.getElementById("bioBack");
+      if (bioBack) {
+        bioBack.style.display = (subIdx > 0) ? "block" : "none";
+        bioBack.style.setProperty("--char-color", c);
+      }
+
+      const bioContinue = document.getElementById("bioContinue");
+      if (bioContinue) {
+        bioContinue.style.display = (subIdx < spreads.length - 1) ? "block" : "none";
+        bioContinue.style.setProperty("--char-color", c);
+      }
 
       // Update active dot indicator
       const dots = document.querySelectorAll(".nav-dot");
