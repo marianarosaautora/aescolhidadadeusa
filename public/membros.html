@@ -1446,7 +1446,7 @@
 
     /* Mobile: permite scroll vertical na página enquanto arrasta horizontal no carousel */
     .pigment-carousel {
-      touch-action: pan-x;
+      touch-action: auto;
       user-select: none;
       -webkit-user-select: none;
     }
@@ -1596,26 +1596,25 @@
     }
 
     .carousel-btn {
-      width: 44px;
-      height: 44px;
-      border: 1px solid #c9a84c44;
-      background: #c9a84c08;
+      width: 50px;
+      height: 50px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      background: rgba(201, 168, 76, 0.1);
       color: var(--gold);
-      font-size: 1rem;
+      font-size: 1.2rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition:
-        background 0.3s,
-        border-color 0.3s,
-        transform 0.3s;
-      clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px rgba(201, 168, 76, 0.2);
     }
 
     .carousel-btn:hover {
-      background: #c9a84c22;
-      border-color: var(--gold);
+      background: var(--gold);
+      color: #0d0010;
       transform: scale(1.1);
+      box-shadow: 0 0 25px rgba(201, 168, 76, 0.5);
     }
 
     /* ── SEÇÃO REINOS ── */
@@ -2490,7 +2489,9 @@
       }
 
       .blog-feat-visual {
+        order: -1;
         min-height: 200px;
+        height: 250px;
       }
 
       .blog-grid {
@@ -2871,7 +2872,7 @@
                     <use href="#gem" />
                   </svg>
                 </div>
-                <span>Celestria</span>
+                <span>Cidade Celestial</span>
               </div>
               <div class="cidade-tab-item" data-resident="Taaf" onclick="selectResidentKingdom('Taaf')">
                 <div class="cidade-tab-gem" style="--gtc: #d500f9">
@@ -2879,7 +2880,7 @@
                     <use href="#gem" />
                   </svg>
                 </div>
-                <span>Taaf</span>
+                <span>Mentálida</span>
               </div>
               <div class="cidade-tab-item" data-resident="Calindra" onclick="selectResidentKingdom('Calindra')">
                 <div class="cidade-tab-gem" style="--gtc: #b0d4ff">
@@ -2887,7 +2888,7 @@
                     <use href="#gem" />
                   </svg>
                 </div>
-                <span>Calindra</span>
+                <span>Ártica</span>
               </div>
               <div class="cidade-tab-item" data-resident="Agnes" onclick="selectResidentKingdom('Agnes')">
                 <div class="cidade-tab-gem" style="--gtc: #ff3333">
@@ -2895,7 +2896,7 @@
                     <use href="#gem" />
                   </svg>
                 </div>
-                <span>Agnes</span>
+                <span>Ignis</span>
               </div>
               <div class="cidade-tab-item" data-resident="Lunara" onclick="selectResidentKingdom('Lunara')">
                 <div class="cidade-tab-gem" style="--gtc: #ffd600">
@@ -2903,7 +2904,7 @@
                     <use href="#gem" />
                   </svg>
                 </div>
-                <span>Lunara</span>
+                <span>Solaria</span>
               </div>
               <div class="cidade-tab-item" data-resident="Tenebra" onclick="selectResidentKingdom('Tenebra')">
                 <div class="cidade-tab-gem" style="--gtc: #aaaaaa">
@@ -2911,7 +2912,7 @@
                     <use href="#gem" />
                   </svg>
                 </div>
-                <span>Tenebra</span>
+                <span>Umbra</span>
               </div>
               <div class="cidade-tab-item" data-resident="Vespera" onclick="selectResidentKingdom('Vespera')">
                 <div class="cidade-tab-gem" style="--gtc: #00e676">
@@ -2919,7 +2920,7 @@
                     <use href="#gem" />
                   </svg>
                 </div>
-                <span>Vespera</span>
+                <span>Flora</span>
               </div>
               <div class="cidade-tab-item" data-resident="Pietra" onclick="selectResidentKingdom('Pietra')">
                 <div class="cidade-tab-gem" style="--gtc: #8d6e63">
@@ -2927,7 +2928,7 @@
                     <use href="#gem" />
                   </svg>
                 </div>
-                <span>Pietra</span>
+                <span>Ágata</span>
               </div>
               <div class="cidade-tab-item" data-resident="Lyra" onclick="selectResidentKingdom('Lyra')">
                 <div class="cidade-tab-gem" style="--gtc: #d7ccc8">
@@ -2935,7 +2936,7 @@
                     <use href="#gem" />
                   </svg>
                 </div>
-                <span>Lyra</span>
+                <span>Eterna</span>
               </div>
               <div class="cidade-tab-item" data-resident="Nanima" onclick="selectResidentKingdom('Nanima')">
                 <div class="cidade-tab-gem" style="--gtc: #00b0ff">
@@ -2943,7 +2944,7 @@
                     <use href="#gem" />
                   </svg>
                 </div>
-                <span>Nanima</span>
+                <span>Abissal</span>
               </div>
             </div>
             <svg class="arvore-svg" viewBox="0 0 340 400" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
@@ -3266,7 +3267,6 @@
 
     <!-- FOOTER -->
     <footer>
-      <a href="index.html" class="footer-back">← Voltar ao site principal</a>
       <a href="#top" class="footer-logo">A Escolhida da Deusa</a>
       <p class="footer-sub">
         Mariana Rosa · Área Exclusiva das Pigmentadoras
