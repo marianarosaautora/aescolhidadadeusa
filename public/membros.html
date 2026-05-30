@@ -1437,7 +1437,6 @@
       -ms-overflow-style: none;
       scrollbar-width: none;
       padding: 4px 60px 24px;
-      scroll-behavior: smooth;
     }
 
     .pigment-carousel::-webkit-scrollbar {
@@ -1446,9 +1445,11 @@
 
     /* Mobile: permite scroll vertical na página enquanto arrasta horizontal no carousel */
     .pigment-carousel {
-      touch-action: auto;
+      touch-action: pan-y pinch-zoom;
+      overscroll-behavior-x: contain;
       user-select: none;
       -webkit-user-select: none;
+      -webkit-overflow-scrolling: touch;
     }
 
     .pigment-card {
