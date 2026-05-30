@@ -3348,43 +3348,37 @@
       document.body.style.overflow = '';
     }
 
+    // ── CAROUSEL DE PIGMENTADORAS ──
+    function scrollCarousel(dir) {
+      const carousel = document.getElementById('pigmentCarousel');
+      if (!carousel) return;
+      carousel.scrollBy({ left: dir * 300, behavior: 'smooth' });
+    }
+
     // ── CAROUSEL DRAG (MOUSE) ──
-    (function initCarouselDrag() {
-      function setupDrag(el) {
-        if (!el) return;
-        let isDown = false, startX, scrollLeft;
-        el.addEventListener('mousedown', (e) => {
-          isDown = true;
-          el.style.cursor = 'grabbing';
-          startX = e.pageX - el.offsetLeft;
-          scrollLeft = el.scrollLeft;
-        });
-        document.addEventListener('mouseup', () => {
-          isDown = false;
-          if (el) el.style.cursor = '';
-        });
-        el.addEventListener('mouseleave', () => { isDown = false; el.style.cursor = ''; });
-        el.addEventListener('mousemove', (e) => {
-          if (!isDown) return;
-          e.preventDefault();
-          const x = e.pageX - el.offsetLeft;
-          const walk = (x - startX) * 1.5;
-          el.scrollLeft = scrollLeft - walk;
-        });
-      }
-      // Aguarda renderização dinâmica
-      const trySetup = setInterval(() => {
-        const c = document.getElementById('pigmentCarousel');
-        if (c && c.children.length > 0) {
-          setupDrag(c);
-          clearInterval(trySetup);
-        }
-      }, 300);
-    })();
-    const carousel = document.getElementById('pigmentCarousel');
-    if (!carousel) return;
-    carousel.scrollBy({ left: dir * 300, behavior: 'smooth' });
-      }
+    function initCarouselDrag() {
+      const el = document.getElementById('pigmentCarousel');
+      if (!el) return;
+      let isDown = false, startX, scrollLeft;
+      el.addEventListener('mousedown', (e) => {
+        isDown = true;
+        el.style.cursor = 'grabbing';
+        startX = e.pageX - el.offsetLeft;
+        scrollLeft = el.scrollLeft;
+      });
+      document.addEventListener('mouseup', () => {
+        isDown = false;
+        if (el) el.style.cursor = '';
+      });
+      el.addEventListener('mouseleave', () => { isDown = false; el.style.cursor = ''; });
+      el.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - el.offsetLeft;
+        const walk = (x - startX) * 1.5;
+        el.scrollLeft = scrollLeft - walk;
+      });
+    }
 
     // ── DOWNLOAD DE GALERIA ──
     function triggerDownload(url, filename) {
@@ -3411,6 +3405,7 @@
         renderGallery();
         renderPigmentadoras();
         renderReinos();
+        initCarouselDrag();
 
         initCidadeInteractions();
 
