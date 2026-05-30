@@ -1444,13 +1444,6 @@
       display: none;
     }
 
-    /* Mobile: permite scroll vertical na página enquanto arrasta horizontal no carousel */
-    .pigment-carousel {
-      touch-action: pan-x;
-      user-select: none;
-      -webkit-user-select: none;
-    }
-
     .pigment-card {
       scroll-snap-align: center;
       flex-shrink: 0;
@@ -1582,17 +1575,13 @@
       color: var(--text-muted);
     }
 
-    .pigment-carousel-wrap {
-      overflow: hidden;
-      width: 100%;
-    }
-
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    margin-top: 36px;
-    position: relative;
-    z-index: 1;
+    .carousel-nav {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 36px;
+      position: relative;
+      z-index: 1;
     }
 
     .carousel-btn {
@@ -1688,7 +1677,6 @@
       grid-template-columns: 1fr 2fr 1fr;
       gap: 2px;
       overflow: hidden;
-      min-width: 0;
     }
 
     .cidade-left,
@@ -1757,10 +1745,8 @@
     }
 
     .arvore-svg {
-      width: 100%;
-      max-width: 340px;
-      height: auto;
-      aspect-ratio: 340 / 400;
+      width: 340px;
+      height: 400px;
       margin: 0 auto 28px;
       position: relative;
       z-index: 1;
@@ -1953,13 +1939,8 @@
     .arvore-dot:hover,
     .arvore-dot.glow {
       fill-opacity: 1 !important;
-      transform: scale(1.4);
-      filter: drop-shadow(0 0 12px var(--dot-glow)) drop-shadow(0 0 20px var(--dot-glow));
-    }
-
-    .arvore-dot-hitarea {
-      cursor: pointer;
-      fill: transparent;
+      transform: scale(1.6);
+      filter: drop-shadow(0 0 8px var(--dot-glow));
     }
 
     .reinos-separador {
@@ -1994,7 +1975,6 @@
       width: 100%;
       gap: 10px;
       overflow-x: auto;
-      overflow-y: hidden;
       padding: 4px 4px 14px;
       margin-bottom: 24px;
       position: relative;
@@ -2004,9 +1984,6 @@
       /* Hide scrollbar Firefox */
       -ms-overflow-style: none;
       /* Hide scrollbar IE/Edge */
-      box-sizing: border-box;
-      /* Impede que o scroll interno empurre o layout da página */
-      overscroll-behavior-x: contain;
     }
 
     .cidade-mobile-tabs::-webkit-scrollbar {
@@ -2446,43 +2423,11 @@
       transition: color 0.3s;
     }
 
-    @media (hover: none) and (pointer: coarse) {
-
-      /* Dispositivos touch: desativa cursor personalizado */
-      body {
-        cursor: auto;
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .reinos-grid-exclusivo {
+        grid-template-columns: repeat(2, 1fr);
       }
-
-      .cursor-brush {
-        display: none !important;
-      }
-
-      button,
-      a,
-      .filter-btn,
-      .nav-pill,
-      .gallery-download-btn,
-      .blog-modal-close {
-        cursor: pointer !important;
-      }
-    }
-
-    .reinos-grid-exclusivo {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .cidade-celestial {
-      grid-template-columns: 1fr;
-    }
-
-    .cidade-left,
-    .cidade-right {
-      display: none;
-    }
-
-    .cidade-mobile-tabs {
-      display: flex;
-    }
     }
 
     @media (max-width: 992px) {
@@ -2550,6 +2495,20 @@
         padding: 36px 28px;
       }
 
+      /* Cidade Celestial: colapsa para coluna única com tabs no mobile */
+      .cidade-celestial {
+        grid-template-columns: 1fr;
+      }
+
+      .cidade-left,
+      .cidade-right {
+        display: none;
+      }
+
+      .cidade-mobile-tabs {
+        display: flex;
+      }
+
       .cidade-center {
         padding: 40px 24px;
         min-width: 0;
@@ -2557,33 +2516,16 @@
         overflow: hidden;
       }
 
+      .arvore-svg {
+        width: 100%;
+        max-width: 280px;
+        height: auto;
+        aspect-ratio: 340 / 400;
+      }
+
       .footer-mobile-block {
         display: block;
         margin-top: 6px;
-      }
-
-      /* Modais no mobile: padding menor para caber na tela */
-      .pigment-modal {
-        padding: 36px 20px 28px;
-      }
-
-      .blog-modal {
-        padding: 40px 24px 32px;
-      }
-
-      /* Evita que o SVG da árvore extrapole o container */
-      .cidade-celestial .arvore-svg {
-        max-width: min(280px, 80vw);
-        overflow: hidden;
-      }
-
-      /* Impede overflow horizontal global na seção de reinos */
-      .reinos-section {
-        overflow-x: hidden;
-      }
-
-      .cidade-celestial {
-        overflow: hidden;
       }
     }
   </style>
@@ -2947,190 +2889,71 @@
                 <span>Nanima</span>
               </div>
             </div>
-            <svg class="arvore-svg" viewBox="0 0 340 400" xmlns="http://www.w3.org/2000/svg" style="overflow: visible;">
+            <svg class="arvore-svg" viewBox="0 0 180 220" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <linearGradient id="trunkGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.95" />
-                  <stop offset="60%" stop-color="#a07830" stop-opacity="0.7" />
-                  <stop offset="100%" stop-color="#6a4a18" stop-opacity="0.4" />
+                  <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.9" />
+                  <stop offset="100%" stop-color="#8a6a28" stop-opacity="0.4" />
                 </linearGradient>
-                <linearGradient id="rootGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#8a6a28" stop-opacity="0.7" />
-                  <stop offset="100%" stop-color="#5a4018" stop-opacity="0.2" />
+                <linearGradient id="leafGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.8" />
+                  <stop offset="50%" stop-color="#9d4edd" stop-opacity="0.5" />
+                  <stop offset="100%" stop-color="#c9a84c" stop-opacity="0.2" />
                 </linearGradient>
-                <radialGradient id="glowAura" cx="50%" cy="40%" r="50%">
-                  <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.08" />
-                  <stop offset="60%" stop-color="#9d4edd" stop-opacity="0.05" />
-                  <stop offset="100%" stop-color="#c9a84c" stop-opacity="0" />
-                </radialGradient>
-                <radialGradient id="celestriaGlow" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.5" />
-                  <stop offset="100%" stop-color="#c9a84c" stop-opacity="0" />
-                </radialGradient>
-                <filter id="softGlow">
-                  <feGaussianBlur stdDeviation="3" result="blur" />
-                  <feMerge>
-                    <feMergeNode in="blur" />
-                    <feMergeNode in="SourceGraphic" />
-                  </feMerge>
-                </filter>
               </defs>
-
-              <!-- Aura geral ao redor da árvore -->
-              <ellipse cx="170" cy="180" rx="140" ry="160" fill="url(#glowAura)" />
-
-              <!-- ── RAÍZES ── -->
-              <path d="M170 345 Q145 360 115 358" fill="none" stroke="url(#rootGrad)" stroke-width="4"
-                stroke-linecap="round" />
-              <path d="M170 345 Q195 360 225 358" fill="none" stroke="url(#rootGrad)" stroke-width="4"
-                stroke-linecap="round" />
-              <path d="M170 345 Q138 372 104 375" fill="none" stroke="url(#rootGrad)" stroke-width="2.5"
-                stroke-linecap="round" />
-              <path d="M170 345 Q202 372 236 375" fill="none" stroke="url(#rootGrad)" stroke-width="2.5"
-                stroke-linecap="round" />
-              <path d="M155 350 Q135 380 120 385" fill="none" stroke="url(#rootGrad)" stroke-width="1.5"
-                stroke-linecap="round" />
-              <path d="M185 350 Q205 380 220 385" fill="none" stroke="url(#rootGrad)" stroke-width="1.5"
-                stroke-linecap="round" />
-
-              <!-- ── TRONCO PRINCIPAL ── -->
-              <path d="M160 345 Q158 280 162 200 Q164 160 166 100" fill="none" stroke="url(#trunkGrad)"
-                stroke-width="14" stroke-linecap="round" />
-              <path d="M180 345 Q182 280 178 200 Q176 160 174 100" fill="none" stroke="url(#trunkGrad)"
-                stroke-width="14" stroke-linecap="round" />
-              <!-- Tronco central sólido -->
-              <rect x="160" y="98" width="20" height="248" rx="10" fill="url(#trunkGrad)" />
-
-              <!-- ── GALHOS INFERIORES ESQUERDOS → Vespera & Taaf ── -->
-              <!-- Galho principal esquerdo inferior -->
-              <path d="M165 270 Q120 250 75 235 Q50 226 28 222" fill="none" stroke="#c9a84c" stroke-width="5"
-                stroke-linecap="round" stroke-opacity="0.8" />
-              <!-- Sub-galho de Taaf saindo do galho principal -->
-              <path d="M75 235 Q52 210 34 192" fill="none" stroke="#c9a84c" stroke-width="3.5" stroke-linecap="round"
-                stroke-opacity="0.7" />
-              <!-- Gravetos decorativos -->
-              <path d="M50 228 Q38 238 28 234" fill="none" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"
-                stroke-opacity="0.35" />
-              <path d="M62 225 Q52 215 48 208" fill="none" stroke="#c9a84c" stroke-width="1.2" stroke-linecap="round"
-                stroke-opacity="0.3" />
-
-              <!-- ── GALHOS INFERIORES DIREITOS → Lunara & Agnes ── -->
-              <path d="M175 270 Q220 250 265 235 Q290 226 312 222" fill="none" stroke="#c9a84c" stroke-width="5"
-                stroke-linecap="round" stroke-opacity="0.8" />
-              <path d="M265 235 Q288 210 306 192" fill="none" stroke="#c9a84c" stroke-width="3.5" stroke-linecap="round"
-                stroke-opacity="0.7" />
-              <path d="M290 228 Q302 238 312 234" fill="none" stroke="#c9a84c" stroke-width="1.5" stroke-linecap="round"
-                stroke-opacity="0.35" />
-              <path d="M278 225 Q288 215 292 208" fill="none" stroke="#c9a84c" stroke-width="1.2" stroke-linecap="round"
-                stroke-opacity="0.3" />
-
-              <!-- ── GALHOS MÉDIOS ESQUERDOS → Calindra & Lyra ── -->
-              <path d="M164 200 Q120 178 82 155 Q58 142 38 132" fill="none" stroke="#c9a84c" stroke-width="4"
-                stroke-linecap="round" stroke-opacity="0.78" />
-              <!-- Sub-galho de Lyra saindo mais acima -->
-              <path d="M105 166 Q88 140 80 110" fill="none" stroke="#c9a84c" stroke-width="2.5" stroke-linecap="round"
-                stroke-opacity="0.7" />
-              <path d="M58 148 Q44 158 34 154" fill="none" stroke="#c9a84c" stroke-width="1.2" stroke-linecap="round"
-                stroke-opacity="0.3" />
-
-              <!-- ── GALHOS MÉDIOS DIREITOS → Nanima & Pietra ── -->
-              <path d="M176 200 Q220 178 258 155 Q282 142 302 132" fill="none" stroke="#c9a84c" stroke-width="4"
-                stroke-linecap="round" stroke-opacity="0.78" />
-              <path d="M235 166 Q252 140 260 110" fill="none" stroke="#c9a84c" stroke-width="2.5" stroke-linecap="round"
-                stroke-opacity="0.7" />
-              <path d="M282 148 Q296 158 306 154" fill="none" stroke="#c9a84c" stroke-width="1.2" stroke-linecap="round"
-                stroke-opacity="0.3" />
-
-              <!-- ── GALHO CENTRAL → Tenebra & Celestria ── -->
-              <path d="M170 98 L170 52" fill="none" stroke="#c9a84c" stroke-width="6" stroke-linecap="round"
-                stroke-opacity="0.88" />
-              <path d="M170 52 L170 22" fill="none" stroke="#c9a84c" stroke-width="4" stroke-linecap="round"
-                stroke-opacity="0.88" />
-
-              <!-- ── GRAVETOS DECORATIVOS EXTRAS ── -->
-              <path d="M164 140 Q140 125 132 118" fill="none" stroke="#c9a84c" stroke-width="1" stroke-linecap="round"
-                stroke-opacity="0.25" />
-              <path d="M176 140 Q200 125 208 118" fill="none" stroke="#c9a84c" stroke-width="1" stroke-linecap="round"
-                stroke-opacity="0.25" />
-              <path d="M170 78 Q155 68 150 62" fill="none" stroke="#c9a84c" stroke-width="1" stroke-linecap="round"
-                stroke-opacity="0.3" />
-              <path d="M170 78 Q185 68 190 62" fill="none" stroke="#c9a84c" stroke-width="1" stroke-linecap="round"
-                stroke-opacity="0.3" />
-
-              <!-- ════════ BOLINHAS DOS REINOS ════════ -->
-
-              <!-- Taaf — esquerda baixo -->
-              <circle cx="34" cy="192" r="10" fill="#d500f9" fill-opacity="0.15" />
-              <circle cx="34" cy="192" r="8" fill="#d500f9" fill-opacity="0.85" class="arvore-dot"
-                style="--dot-glow: #d500f9; transform-origin: 34px 192px;" data-resident="Taaf" />
-              <circle cx="34" cy="192" r="18" class="arvore-dot-hitarea" data-resident="Taaf"
-                onclick="this.previousElementSibling.previousElementSibling.previousElementSibling.dispatchEvent(new MouseEvent('click',{bubbles:true}))" />
-
-              <!-- Calindra — esquerda meio -->
-              <circle cx="38" cy="132" r="9" fill="#b0d4ff" fill-opacity="0.15" />
-              <circle cx="38" cy="132" r="7" fill="#b0d4ff" fill-opacity="0.85" class="arvore-dot"
-                style="--dot-glow: #b0d4ff; transform-origin: 38px 132px;" data-resident="Calindra" />
-              <circle cx="38" cy="132" r="18" class="arvore-dot-hitarea" data-resident="Calindra"
-                onclick="this.previousElementSibling.previousElementSibling.previousElementSibling.dispatchEvent(new MouseEvent('click',{bubbles:true}))" />
-
-              <!-- Vespera — esquerda baixo externo -->
-              <circle cx="28" cy="222" r="8" fill="#00e676" fill-opacity="0.15" />
-              <circle cx="28" cy="222" r="7" fill="#00e676" fill-opacity="0.85" class="arvore-dot"
-                style="--dot-glow: #00e676; transform-origin: 28px 222px;" data-resident="Vespera" />
-              <circle cx="28" cy="222" r="18" class="arvore-dot-hitarea" data-resident="Vespera"
-                onclick="this.previousElementSibling.previousElementSibling.previousElementSibling.dispatchEvent(new MouseEvent('click',{bubbles:true}))" />
-
-              <!-- Agnes — direita baixo -->
-              <circle cx="306" cy="192" r="10" fill="#ff3333" fill-opacity="0.15" />
-              <circle cx="306" cy="192" r="8" fill="#ff3333" fill-opacity="0.85" class="arvore-dot"
-                style="--dot-glow: #ff3333; transform-origin: 306px 192px;" data-resident="Agnes" />
-              <circle cx="306" cy="192" r="18" class="arvore-dot-hitarea" data-resident="Agnes"
-                onclick="this.previousElementSibling.previousElementSibling.previousElementSibling.dispatchEvent(new MouseEvent('click',{bubbles:true}))" />
-
-              <!-- Nanima — direita meio -->
-              <circle cx="302" cy="132" r="9" fill="#00b0ff" fill-opacity="0.15" />
-              <circle cx="302" cy="132" r="7" fill="#00b0ff" fill-opacity="0.85" class="arvore-dot"
-                style="--dot-glow: #00b0ff; transform-origin: 302px 132px;" data-resident="Nanima" />
-              <circle cx="302" cy="132" r="18" class="arvore-dot-hitarea" data-resident="Nanima"
-                onclick="this.previousElementSibling.previousElementSibling.previousElementSibling.dispatchEvent(new MouseEvent('click',{bubbles:true}))" />
-
-              <!-- Lunara — direita baixo externo -->
-              <circle cx="312" cy="222" r="8" fill="#ffd600" fill-opacity="0.15" />
-              <circle cx="312" cy="222" r="7" fill="#ffd600" fill-opacity="0.85" class="arvore-dot"
-                style="--dot-glow: #ffd600; transform-origin: 312px 222px;" data-resident="Lunara" />
-              <circle cx="312" cy="222" r="18" class="arvore-dot-hitarea" data-resident="Lunara"
-                onclick="this.previousElementSibling.previousElementSibling.previousElementSibling.dispatchEvent(new MouseEvent('click',{bubbles:true}))" />
-
-              <!-- Lyra — esquerda alto -->
-              <circle cx="80" cy="110" r="8" fill="#d7ccc8" fill-opacity="0.15" />
-              <circle cx="80" cy="110" r="7" fill="#d7ccc8" fill-opacity="0.85" class="arvore-dot"
-                style="--dot-glow: #d7ccc8; transform-origin: 80px 110px;" data-resident="Lyra" />
-              <circle cx="80" cy="110" r="18" class="arvore-dot-hitarea" data-resident="Lyra"
-                onclick="this.previousElementSibling.previousElementSibling.previousElementSibling.dispatchEvent(new MouseEvent('click',{bubbles:true}))" />
-
-              <!-- Pietra — direita alto -->
-              <circle cx="260" cy="110" r="8" fill="#8d6e63" fill-opacity="0.15" />
-              <circle cx="260" cy="110" r="7" fill="#8d6e63" fill-opacity="0.85" class="arvore-dot"
-                style="--dot-glow: #8d6e63; transform-origin: 260px 110px;" data-resident="Pietra" />
-              <circle cx="260" cy="110" r="18" class="arvore-dot-hitarea" data-resident="Pietra"
-                onclick="this.previousElementSibling.previousElementSibling.previousElementSibling.dispatchEvent(new MouseEvent('click',{bubbles:true}))" />
-
-              <!-- Tenebra — centro alto -->
-              <circle cx="170" cy="52" r="8" fill="#888888" fill-opacity="0.15" />
-              <circle cx="170" cy="52" r="7" fill="#888888" fill-opacity="0.85" class="arvore-dot"
-                style="--dot-glow: #aaaaaa; transform-origin: 170px 52px;" data-resident="Tenebra" />
-              <circle cx="170" cy="52" r="18" class="arvore-dot-hitarea" data-resident="Tenebra"
-                onclick="this.previousElementSibling.previousElementSibling.previousElementSibling.dispatchEvent(new MouseEvent('click',{bubbles:true}))" />
-
-              <!-- Celestria — topo (maior e especial) -->
-              <circle cx="170" cy="18" r="26" fill="url(#celestriaGlow)" />
-              <circle cx="170" cy="18" r="16" fill="#c9a84c" fill-opacity="0.18" />
-              <circle cx="170" cy="18" r="11" fill="#c9a84c" fill-opacity="0.95" class="arvore-dot"
-                style="--dot-glow: #e8c97a; transform-origin: 170px 18px;" data-resident="Celestria" />
-              <text x="170" y="22" text-anchor="middle" font-family="Cinzel Decorative, serif" font-size="10"
-                fill="#0d0010" font-weight="bold" pointer-events="none">✦</text>
-              <circle cx="170" cy="18" r="26" class="arvore-dot-hitarea" data-resident="Celestria"
-                onclick="this.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.dispatchEvent(new MouseEvent('click',{bubbles:true}))" />
+              <path d="M90 180 Q70 190 50 185" fill="none" stroke="#8a6a28" stroke-width="1.5" stroke-opacity="0.6" />
+              <path d="M90 180 Q110 190 130 185" fill="none" stroke="#8a6a28" stroke-width="1.5" stroke-opacity="0.6" />
+              <path d="M90 180 Q75 200 55 198" fill="none" stroke="#8a6a28" stroke-width="1" stroke-opacity="0.4" />
+              <path d="M90 180 Q105 200 125 198" fill="none" stroke="#8a6a28" stroke-width="1" stroke-opacity="0.4" />
+              <rect x="85" y="90" width="10" height="90" rx="5" fill="url(#trunkGrad)" />
+              <!-- Lower Left Branches to Vespera (30,99) & Taaf (22,86) -->
+              <path d="M90 140 Q60 120 30 99" fill="none" stroke="#c9a84c" stroke-width="2.2" stroke-opacity="0.75" />
+              <path d="M60 120 Q35 105 22 86" fill="none" stroke="#c9a84c" stroke-width="1.6" stroke-opacity="0.7" />
+              <!-- Lower Right Branches to Lunara (150,99) & Agnes (158,86) -->
+              <path d="M90 140 Q120 120 150 99" fill="none" stroke="#c9a84c" stroke-width="2.2" stroke-opacity="0.75" />
+              <path d="M120 120 Q145 105 158 86" fill="none" stroke="#c9a84c" stroke-width="1.6" stroke-opacity="0.7" />
+              <!-- Mid Left Branches to Calindra (34,60) & Lyra (75,42) -->
+              <path d="M90 110 Q50 90 34 60" fill="none" stroke="#c9a84c" stroke-width="1.8" stroke-opacity="0.75" />
+              <path d="M62 96 Q70 70 75 42" fill="none" stroke="#c9a84c" stroke-width="1.3" stroke-opacity="0.7" />
+              <!-- Mid Right Branches to Nanima (148,60) & Pietra (105,42) -->
+              <path d="M90 110 Q130 90 148 60" fill="none" stroke="#c9a84c" stroke-width="1.8" stroke-opacity="0.75" />
+              <path d="M118 96 Q110 70 105 42" fill="none" stroke="#c9a84c" stroke-width="1.3" stroke-opacity="0.7" />
+              <!-- Center Trunk to Tenebra (90,30) & Celestria (90,15) -->
+              <path d="M90 90 L90 30" fill="none" stroke="#c9a84c" stroke-width="2.5" stroke-opacity="0.8" />
+              <path d="M90 30 L90 15" fill="none" stroke="#c9a84c" stroke-width="2.0" stroke-opacity="0.8" />
+              <!-- Decorative Twigs for Realism -->
+              <path d="M40 105 Q35 115 25 112" fill="none" stroke="#c9a84c" stroke-width="1" stroke-opacity="0.4" />
+              <path d="M60 85 Q45 75 42 68" fill="none" stroke="#c9a84c" stroke-width="1" stroke-opacity="0.4" />
+              <path d="M140 105 Q145 115 155 112" fill="none" stroke="#c9a84c" stroke-width="1" stroke-opacity="0.4" />
+              <path d="M120 85 Q135 75 138 68" fill="none" stroke="#c9a84c" stroke-width="1" stroke-opacity="0.4" />
+              <path d="M90 60 Q80 50 82 45" fill="none" stroke="#c9a84c" stroke-width="0.8" stroke-opacity="0.5" />
+              <path d="M90 60 Q100 50 98 45" fill="none" stroke="#c9a84c" stroke-width="0.8" stroke-opacity="0.5" />
+              <circle cx="22" cy="86" r="5" fill="#d500f9" fill-opacity="0.8" class="arvore-dot"
+                style="--dot-glow: #d500f9; transform-origin: 22px 86px;" data-resident="Taaf" />
+              <circle cx="34" cy="60" r="4.5" fill="#b0d4ff" fill-opacity="0.8" class="arvore-dot"
+                style="--dot-glow: #b0d4ff; transform-origin: 34px 60px;" data-resident="Calindra" />
+              <circle cx="158" cy="86" r="5" fill="#ff3333" fill-opacity="0.8" class="arvore-dot"
+                style="--dot-glow: #ff3333; transform-origin: 158px 86px;" data-resident="Agnes" />
+              <circle cx="148" cy="60" r="4.5" fill="#00b0ff" fill-opacity="0.8" class="arvore-dot"
+                style="--dot-glow: #00b0ff; transform-origin: 148px 60px;" data-resident="Nanima" />
+              <circle cx="30" cy="99" r="4" fill="#00e676" fill-opacity="0.8" class="arvore-dot"
+                style="--dot-glow: #00e676; transform-origin: 30px 99px;" data-resident="Vespera" />
+              <circle cx="150" cy="99" r="4" fill="#ffd600" fill-opacity="0.8" class="arvore-dot"
+                style="--dot-glow: #ffd600; transform-origin: 150px 99px;" data-resident="Lunara" />
+              <circle cx="75" cy="42" r="4" fill="#d7ccc8" fill-opacity="0.8" class="arvore-dot"
+                style="--dot-glow: #d7ccc8; transform-origin: 75px 42px;" data-resident="Lyra" />
+              <circle cx="105" cy="42" r="4" fill="#8d6e63" fill-opacity="0.8" class="arvore-dot"
+                style="--dot-glow: #8d6e63; transform-origin: 105px 42px;" data-resident="Pietra" />
+              <circle cx="90" cy="30" r="4" fill="#888888" fill-opacity="0.8" class="arvore-dot"
+                style="--dot-glow: #888888; transform-origin: 90px 30px;" data-resident="Tenebra" />
+              <circle cx="90" cy="15" r="7" fill="#c9a84c" fill-opacity="0.9" class="arvore-dot"
+                style="--dot-glow: #c9a84c; transform-origin: 90px 15px;" data-resident="Celestria" />
+              <circle cx="90" cy="15" r="14" fill="#c9a84c" fill-opacity="0.15" />
+              <text x="90" y="19" text-anchor="middle" font-family="Cinzel Decorative, serif" font-size="7"
+                fill="#0d0010" font-weight="bold">
+                ✦
+              </text>
+              <ellipse cx="90" cy="70" rx="65" ry="55" fill="url(#leafGrad)" opacity="0.12" />
             </svg>
             <div class="cidade-nome">Cidade Celestial</div>
             <div class="cidade-sub">
@@ -3355,31 +3178,6 @@
       carousel.scrollBy({ left: dir * 300, behavior: 'smooth' });
     }
 
-    // ── CAROUSEL DRAG (MOUSE) ──
-    function initCarouselDrag() {
-      const el = document.getElementById('pigmentCarousel');
-      if (!el) return;
-      let isDown = false, startX, scrollLeft;
-      el.addEventListener('mousedown', (e) => {
-        isDown = true;
-        el.style.cursor = 'grabbing';
-        startX = e.pageX - el.offsetLeft;
-        scrollLeft = el.scrollLeft;
-      });
-      document.addEventListener('mouseup', () => {
-        isDown = false;
-        if (el) el.style.cursor = '';
-      });
-      el.addEventListener('mouseleave', () => { isDown = false; el.style.cursor = ''; });
-      el.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - el.offsetLeft;
-        const walk = (x - startX) * 1.5;
-        el.scrollLeft = scrollLeft - walk;
-      });
-    }
-
     // ── DOWNLOAD DE GALERIA ──
     function triggerDownload(url, filename) {
       const a = document.createElement('a');
@@ -3405,7 +3203,6 @@
         renderGallery();
         renderPigmentadoras();
         renderReinos();
-        initCarouselDrag();
 
         initCidadeInteractions();
 
@@ -3619,17 +3416,7 @@
       document.querySelectorAll('.cidade-tab-item').forEach(item => {
         if (item.getAttribute('data-resident') === resident) {
           item.classList.add('active');
-          // Scroll apenas dentro do container de tabs, sem deslocar a página
-          const tabsContainer = item.closest('.cidade-mobile-tabs');
-          if (tabsContainer) {
-            const itemLeft = item.offsetLeft;
-            const itemWidth = item.offsetWidth;
-            const containerWidth = tabsContainer.offsetWidth;
-            tabsContainer.scrollTo({
-              left: itemLeft - (containerWidth / 2) + (itemWidth / 2),
-              behavior: 'smooth'
-            });
-          }
+          item.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
         } else {
           item.classList.remove('active');
         }
@@ -3663,7 +3450,6 @@
     function initCidadeInteractions() {
       const sidebarItems = document.querySelectorAll('.cidade-sidebar-item');
       const treeDots = document.querySelectorAll('.arvore-dot');
-      const hitAreas = document.querySelectorAll('.arvore-dot-hitarea');
 
       sidebarItems.forEach(item => {
         const resident = item.getAttribute('data-resident');
@@ -3700,30 +3486,6 @@
         });
 
         dot.addEventListener('mouseleave', () => {
-          const item = document.querySelector(`.cidade-sidebar-item[data-resident="${resident}"]`);
-          if (item) item.classList.remove('active-hover');
-        });
-      });
-
-      // Hitareas transparentes para área de clique maior
-      hitAreas.forEach(area => {
-        const resident = area.getAttribute('data-resident');
-        if (!resident) return;
-
-        area.addEventListener('click', () => {
-          selectResidentKingdom(resident);
-        });
-
-        area.addEventListener('mouseenter', () => {
-          const dot = document.querySelector(`.arvore-dot[data-resident="${resident}"]`);
-          if (dot) dot.classList.add('glow');
-          const item = document.querySelector(`.cidade-sidebar-item[data-resident="${resident}"]`);
-          if (item) item.classList.add('active-hover');
-        });
-
-        area.addEventListener('mouseleave', () => {
-          const dot = document.querySelector(`.arvore-dot[data-resident="${resident}"]`);
-          if (dot && !dot.classList.contains('active-selection')) dot.classList.remove('glow');
           const item = document.querySelector(`.cidade-sidebar-item[data-resident="${resident}"]`);
           if (item) item.classList.remove('active-hover');
         });
@@ -3798,30 +3560,8 @@
 
     async function checkAuth() {
       buildGateStars();
-
-      // Se há um hash com access_token na URL (magic link), aguarda o Supabase
-      // processar o token via onAuthStateChange antes de verificar a sessão.
-      const hasToken = window.location.hash.includes('access_token') ||
-        window.location.hash.includes('type=magiclink') ||
-        window.location.search.includes('code=');
-
-      if (hasToken) {
-        // Aguarda o evento SIGNED_IN do Supabase (até 8 segundos)
-        await new Promise((resolve) => {
-          const timeout = setTimeout(() => resolve(null), 8000);
-          const { data: { subscription } } = _sb.auth.onAuthStateChange((event, session) => {
-            if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
-              clearTimeout(timeout);
-              subscription.unsubscribe();
-              resolve(session);
-            }
-          });
-        });
-      } else {
-        // Sem token na URL: pequeno delay para o Supabase inicializar
-        await new Promise((r) => setTimeout(r, 400));
-      }
-
+      // Aguarda o Supabase processar o magic link da URL
+      await new Promise((r) => setTimeout(r, 500));
       const {
         data: { session },
       } = await _sb.auth.getSession();
