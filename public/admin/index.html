@@ -695,6 +695,10 @@
 
             <div class="card">
               <div class="card-title">Nova Imagem</div>
+              <div class="form-group" style="margin-bottom: 20px;">
+                <label class="form-label">Título da Arte (para a Galeria)</label>
+                <input type="text" class="form-input" id="galleryTitle" placeholder="Ex: Tainá — A Pigmentadora" />
+              </div>
               <div class="upload-zone" id="uploadZone">
                 <input type="file" id="fileInput" accept="image/*" onchange="onFileSelect(this)" />
                 <span class="upload-icon">🖼️</span>
@@ -1295,43 +1299,134 @@
 
       async function doUpload() {
         if (!pendingFile) return;
+        const title = document.getElementById('galleryTitle').value.trim();
+        if (!title) {
+          toast('Por favor, digite um Título da Arte para a galeria.', 'error');
+          return;
+        }
+
         const btn = document.getElementById('uploadBtn');
         btn.disabled = true;
-        btn.innerHTML = '<div class="spinner"></div> Enviando...';
+        btn.innerHTML = '<div class="spinner"></div> Processando imagem...';
         document.getElementById('uploadProgress').style.display = 'block';
-        document.getElementById('uploadProgressBar').style.width = '40%';
+        document.getElementById('uploadProgressBar').style.width = '10%';
 
-        const reader = new FileReader();
-        reader.onload = async e => {
-          const base64 = e.target.result.split(',')[1];
-          try {
-            document.getElementById('uploadProgressBar').style.width = '70%';
-            const res = await fetch('/api/upload-image', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
-              body: JSON.stringify({ filename: pendingFile.name, base64, mimeType: pendingFile.type })
-            });
-            document.getElementById('uploadProgressBar').style.width = '100%';
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.error || 'Erro');
-            toast('✦ Imagem enviada! URL: ' + data.url);
-            clearUpload();
-            setTimeout(() => { document.getElementById('galleryLoading').style.display = 'flex'; document.getElementById('adminGallery').style.display = 'none'; loadGallery(); }, 2000);
-          } catch(err) {
-            toast('Erro: ' + err.message, 'error');
-          } finally {
+        // Generate sanitized safe base filename
+        const safeBaseName = pendingFile.name
+          .substring(0, pendingFile.name.lastIndexOf('.'))
+          .toLowerCase()
+          .replace(/[^a-z0-9]/g, '-')
+          .replace(/-+/g, '-');
+
+        const fileReader = new FileReader();
+        fileReader.onload = function(event) {
+          const img = new Image();
+          img.onload = async function() {
+            try {
+              // 1. PNG version (original size)
+              document.getElementById('uploadProgressBar').style.width = '30%';
+              btn.innerHTML = '<div class="spinner"></div> Gerando PNG original...';
+              const canvasPng = document.createElement('canvas');
+              canvasPng.width = img.width;
+              canvasPng.height = img.height;
+              const ctxPng = canvasPng.getContext('2d');
+              ctxPng.drawImage(img, 0, 0);
+              const pngBase64 = canvasPng.toDataURL('image/png').split(',')[1];
+
+              // 2. JPG version (50% size)
+              document.getElementById('uploadProgressBar').style.width = '50%';
+              btn.innerHTML = '<div class="spinner"></div> Gerando JPG (50% do tamanho)...';
+              const canvasJpg = document.createElement('canvas');
+              canvasJpg.width = Math.max(1, Math.round(img.width * 0.5));
+              canvasJpg.height = Math.max(1, Math.round(img.height * 0.5));
+              const ctxJpg = canvasJpg.getContext('2d');
+              ctxJpg.drawImage(img, 0, 0, canvasJpg.width, canvasJpg.height);
+              const jpgBase64 = canvasJpg.toDataURL('image/jpeg', 0.85).split(',')[1];
+
+              // 3. Upload PNG
+              document.getElementById('uploadProgressBar').style.width = '70%';
+              btn.innerHTML = '<div class="spinner"></div> Enviando PNG original...';
+              const pngFilename = `${safeBaseName}.png`;
+              const resPng = await fetch('/api/upload-image', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
+                body: JSON.stringify({ filename: pngFilename, base64: pngBase64, mimeType: 'image/png' })
+              });
+              if (!resPng.ok) {
+                const errPng = await resPng.json().catch(() => ({}));
+                throw new Error(errPng.error || 'Erro ao enviar PNG');
+              }
+              const dataPng = await resPng.json();
+
+              // 4. Upload JPG
+              document.getElementById('uploadProgressBar').style.width = '85%';
+              btn.innerHTML = '<div class="spinner"></div> Enviando JPG comprimido...';
+              const jpgFilename = `${safeBaseName}.jpg`;
+              const resJpg = await fetch('/api/upload-image', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
+                body: JSON.stringify({ filename: jpgFilename, base64: jpgBase64, mimeType: 'image/jpeg' })
+              });
+              if (!resJpg.ok) {
+                const errJpg = await resJpg.json().catch(() => ({}));
+                throw new Error(errJpg.error || 'Erro ao enviar JPG');
+              }
+              const dataJpg = await resJpg.json();
+
+              // 5. Update content.json config
+              document.getElementById('uploadProgressBar').style.width = '95%';
+              btn.innerHTML = '<div class="spinner"></div> Salvando configuração...';
+              
+              if (!siteContent) {
+                await fetchContent();
+              }
+              
+              siteContent.membros = siteContent.membros || {};
+              siteContent.membros.gallery = siteContent.membros.gallery || [];
+              
+              // Add to gallery using relative path from root
+              siteContent.membros.gallery.push({
+                title: title,
+                thumb: `images/${jpgFilename}`,
+                download: `images/${pngFilename}`
+              });
+
+              await saveToGitHub();
+
+              document.getElementById('uploadProgressBar').style.width = '100%';
+              toast('✦ Imagem adicionada com sucesso à Galeria em ambos os formatos!');
+              clearUpload();
+              
+              setTimeout(() => {
+                document.getElementById('galleryLoading').style.display = 'flex';
+                document.getElementById('adminGallery').style.display = 'none';
+                loadGallery();
+              }, 2000);
+
+            } catch (err) {
+              toast('Erro: ' + err.message, 'error');
+            } finally {
+              btn.disabled = false;
+              btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/></svg> Enviar Imagem';
+              document.getElementById('uploadProgress').style.display = 'none';
+              document.getElementById('uploadProgressBar').style.width = '0%';
+            }
+          };
+          img.onerror = function() {
+            toast('Erro ao processar arquivo de imagem.', 'error');
             btn.disabled = false;
             btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/></svg> Enviar Imagem';
             document.getElementById('uploadProgress').style.display = 'none';
-            document.getElementById('uploadProgressBar').style.width = '0%';
-          }
+          };
+          img.src = event.target.result;
         };
-        reader.readAsDataURL(pendingFile);
+        fileReader.readAsDataURL(pendingFile);
       }
 
       function clearUpload() {
         pendingFile = null;
         document.getElementById('fileInput').value = '';
+        document.getElementById('galleryTitle').value = '';
         document.getElementById('uploadPreview').style.display = 'none';
         document.getElementById('previewImg').src = '';
         document.getElementById('uploadBtn').disabled = true;

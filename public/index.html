@@ -63,6 +63,16 @@
         transform: translate(-4px, -34px) rotate(-30deg) scale(0.92);
       }
 
+      /* Show native cursor on hover of clickable items */
+      a, button, [role="button"], input, select, textarea,
+      .btn-gold, .btn-ghost, .nav-cta, .blog-card, .presale-btn, .social-link,
+      .world-card, .index-pigment-card, .nav-links a {
+        cursor: pointer !important;
+      }
+      input[type="text"], input[type="email"], input[type="password"], textarea {
+        cursor: text !important;
+      }
+
       /* GRAIN OVERLAY */
       body::before {
         content: "";
@@ -297,7 +307,6 @@
         );
         color: #0d0010;
         border: none;
-        cursor: none;
         position: relative;
         overflow: hidden;
         text-decoration: none;
@@ -320,7 +329,6 @@
         background: transparent;
         color: var(--gold);
         border: 1px solid var(--gold-dim);
-        cursor: none;
         text-decoration: none;
         display: inline-block;
         transition:
@@ -964,6 +972,127 @@
         color: #ffffff44;
       }
 
+      /* ── INDEX PIGMENTADORAS GRID ── */
+      .index-pigmentadoras-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-top: 40px;
+        position: relative;
+        z-index: 2;
+      }
+      .index-pigment-card {
+        position: relative;
+        background: linear-gradient(180deg, #1a003088, #0d001288);
+        border: 1px solid #c9a84c15;
+        overflow: hidden;
+        transition: border-color 0.4s, transform 0.4s, box-shadow 0.4s;
+        display: flex;
+        flex-direction: column;
+      }
+      .index-pigment-card:hover {
+        border-color: var(--pc, #c9a84c);
+        transform: translateY(-4px);
+        box-shadow: 0 0 25px var(--pc-glow);
+      }
+      .index-pigment-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--pc, var(--gold)), transparent);
+        opacity: 0;
+        transition: opacity 0.4s;
+        z-index: 5;
+      }
+      .index-pigment-card:hover::before {
+        opacity: 1;
+      }
+      .index-pigment-card-top {
+        height: 220px;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .index-pigment-card-bg {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse 80% 60% at 50% 40%, var(--pc-bg, #2d0050) 0%, #0d0010 80%);
+      }
+      .index-pigment-card-rune {
+        font-family: "Cinzel Decorative", serif;
+        font-size: 6rem;
+        font-weight: 900;
+        color: transparent;
+        -webkit-text-stroke: 1px var(--pc-stroke, #c9a84c22);
+        text-shadow: 0 0 30px var(--pc-glow, #c9a84c22);
+        animation: cardRunePulse 5s infinite ease-in-out;
+        user-select: none;
+        position: relative;
+        z-index: 1;
+      }
+      .index-pigment-card-number {
+        position: absolute;
+        top: 16px;
+        left: 20px;
+        z-index: 2;
+        font-family: "Cinzel", serif;
+        font-size: 0.55rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--pc, var(--gold));
+      }
+      .index-pigment-card-body {
+        padding: 24px;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+      .index-pigment-card-realm {
+        font-family: "Cinzel", serif;
+        font-size: 0.65rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--pc, var(--gold));
+        margin-bottom: 6px;
+      }
+      .index-pigment-card-name {
+        font-family: "Cinzel Decorative", serif;
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--text-light);
+        margin-bottom: 10px;
+      }
+      .index-pigment-card-power {
+        font-family: "Cinzel", serif;
+        font-size: 0.52rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: var(--pc, var(--gold));
+        padding: 4px 10px;
+        border: 1px solid var(--pc, var(--gold));
+        background: transparent;
+        display: inline-block;
+        margin-bottom: 12px;
+        opacity: 0.8;
+        align-self: flex-start;
+      }
+      .index-pigment-card-desc {
+        font-size: 0.95rem;
+        line-height: 1.7;
+        color: var(--text-muted);
+        font-style: italic;
+      }
+
+      @keyframes cardRunePulse {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 1; }
+      }
+
       /* ── MEMBER SECTION ── */
       .member-section {
         padding: 64px 24px;
@@ -1079,7 +1208,6 @@
           background 0.4s,
           border-color 0.4s,
           transform 0.4s;
-        cursor: none;
       }
       .blog-card:hover {
         background: #c9a84c07;
@@ -1321,7 +1449,6 @@
         background: linear-gradient(135deg, var(--gold-dim), var(--gold));
         color: #0d0010;
         border: none;
-        cursor: none;
         white-space: nowrap;
         transition:
           filter 0.3s,
@@ -1478,7 +1605,6 @@
         background: linear-gradient(135deg, var(--gold-dim), var(--gold));
         color: #0d0010;
         border: none;
-        cursor: none;
         text-decoration: none;
         display: inline-block;
         transition: filter 0.3s;
@@ -1576,6 +1702,9 @@
         .world-grid {
           grid-template-columns: repeat(2, 1fr);
         }
+        .index-pigmentadoras-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
       }
 
       @media (max-width: 768px) {
@@ -1583,6 +1712,9 @@
         body { cursor: auto !important; }
         .cursor-brush { display: none !important; }
         a, button, .btn-gold, .btn-ghost, .nav-cta, .social-link, input { cursor: pointer !important; }
+        .index-pigmentadoras-grid {
+          grid-template-columns: 1fr;
+        }
 
         header {
           padding: 16px 20px;
@@ -2122,6 +2254,15 @@
             </div>
           </div>
         </div>
+
+        <!-- OUTRAS PIGMENTADORAS -->
+        <div class="reinos-separador reveal" style="margin-top: 60px;">
+          <div class="reinos-separador-texto">Outras Pigmentadoras</div>
+        </div>
+        <div class="index-pigmentadoras-grid" id="indexPigmentadorasGrid">
+          <!-- Dynamically populated from content.json -->
+        </div>
+
       </div>
     </section>
 
@@ -2268,6 +2409,39 @@
             if (ig && social.instagram) {
               ig.href = social.instagram;
               ig.textContent = 'Instagram ' + social.instagram.replace('https://instagram.com/', '@').replace('https://www.instagram.com/', '@');
+            }
+
+            // Render other pigmentadoras dynamic cards
+            const pigmentadoras = data?.membros?.pigmentadoras || [];
+            const grid = document.getElementById('indexPigmentadorasGrid');
+            if (grid && pigmentadoras.length > 0) {
+              grid.innerHTML = pigmentadoras.map((p, i) => {
+                const pc = p.color || p.pc || '#c9a84c';
+                const pcBg = p.colorBg || p.pcBg || '#1a0030';
+                const pcStroke = pc + '44';
+                const pcGlow = pc + '33';
+                const delay = (i * 0.05) + 's';
+                return `
+                  <div class="index-pigment-card reveal" style="--pc:${pc};--pc-bg:${pcBg};--pc-stroke:${pcStroke};--pc-glow:${pcGlow};transition-delay:${delay}">
+                    <div class="index-pigment-card-top">
+                      <div class="index-pigment-card-bg"></div>
+                      <div class="index-pigment-card-rune">${p.rune || p.name.charAt(0)}</div>
+                      <div class="index-pigment-card-number">${p.num}</div>
+                    </div>
+                    <div class="index-pigment-card-body">
+                      <div class="index-pigment-card-realm">${p.realm}</div>
+                      <div class="index-pigment-card-name">${p.name}</div>
+                      <div class="index-pigment-card-power">${p.power}</div>
+                      <p class="index-pigment-card-desc">${p.desc}</p>
+                    </div>
+                  </div>
+                `;
+              }).join('');
+
+              // Re-observe newly added elements
+              if (typeof observer !== 'undefined') {
+                grid.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+              }
             }
           })
           .catch(() => {}); // silently fail — fallback hardcoded links still work
