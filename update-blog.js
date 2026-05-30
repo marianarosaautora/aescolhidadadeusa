@@ -68,94 +68,94 @@ const newBlog = [
 
 const newPigmentadoras = [
   {
-    num: "01",
-    name: "Taaf",
-    realm: "Mentálida",
-    power: "Magia Psíquica",
-    color: "#d500f9",
-    colorBg: "#2d004a",
-    desc: "Uma Pigmentadora amável que carrega um passado extremamente sofrido. Torna-se um alicerce essencial para a sobrevivência de Tainá nos nove reinos.",
-    bio: "Vinda de Mentálida, onde apenas homens contém a maior quantidade de cor e controlam a política local, Taaf foi a mulher mais poderosa de sua geração. Em seu nascimento, seu destino já havia sido traçado, meninas como elas eram raras e extremamente úteis para controle de massa. \n\nVendida pelos pais para um homem com ambição de se tornar um governador, Taaf teve que se casar aos 12 anos de idade. Sua infância foi rasgada e substituída por opressão e abusos constantes. Embora sofrendo, Taaf achava que estava fazendo o certo, um bem maior que nem mesmo ela compreendia. Foi explorada como uma arma viva em guerras, com sua mente treinada à força para destruir.\n\nCresceu isolada e, em seu aniversário de vinte e cinco anos, depois de tentar fugir e não conseguir, Celestria a libertou, levando-a para a Árvore Celestial, onde seus dons poderiam florescer com propósito e não com dor. \n\nCelestria a ajudou, tratou-a e, depois de anos de cura, a divindade lhe atribuiu o título de Pigmentadora."
+    "num": "01",
+    "name": "Taaf",
+    "realm": "Mentálida",
+    "power": "Magia Psíquicos",
+    "color": "#d500f9",
+    "colorBg": "#2d004a",
+    "desc": "Uma Pigmentadora amável que carrega um passado extremamente sofrido. Torna-se um alicerce essencial para a sobrevivência de Tainá nos nove reinos.",
+    "bio": "Vinda de Mentálida, onde apenas homens contém a maior quantidade de cor e controlam a política local,  Taaf foi a mulher mais poderosa de sua geração. Em seu nascimento, seu destino já havia sido traçado, meninas como elas eram raras e extremamente úteis para controle de massa. \n\nVendida pelos pais para um homem com ambição de se tornar um governador, Taaf teve que se casar aos 12 anos de idade. Sua infância foi rasgada e substituída por opressão e abusos constantes. Embora sofrendo, Taaf achava que estava fazendo o certo, um bem maior que nem mesmo ela compreendia. Foi explorada como uma arma viva em guerras, com sua mente treinada à força para destruir.\n\nCresceu isolada e, em seu aniversário de vinte e cinco anos, depois de tentar fugir e não conseguir, Celestria a libertou, levando-a para a Árvore Celestial, onde seus dons poderiam florescer com propósito e não com dor. \n\nCelestria a ajudou, tratou-a e, depois de anos de cura, a divindade lhe atribuiu o título de Pigmentadora."
   },
   {
-    num: "02",
-    name: "Agnes",
-    realm: "Brasas Constantes",
-    power: "Fogo & Raio",
-    color: "#ff3333",
-    colorBg: "#330000",
-    desc: "Agnes é cortante, impaciente, mas extremamente leal. Atroz quando se trata em acabar com os inimigos. Apaixonada por Nanima.",
-    bio: "Agnes era uma mercenária em Brasas Constantes. Movida por boemia, sexo e dinheiro, a Pigmentadora do Fogo nunca seguiu regras, além de suas próprias, e por vezes, falhava. Sem escrúpulos, aceitava quase qualquer trabalho, o que lhe rendeu uma longa lista de assassinatos e inimigos. Apesar disso, era muito respeitada; afinal, uma mercenária mortífera como ela logo ganharia notoriedade.\n\nMigrando de uma cidade para outra, Agnes passou muito tempo escondida entre as dobras das montanhas vulcânicas, respirando a névoa que se tornava ainda mais densa perto das bocas de magma. Devido às suas desventuras, ela desenvolveu a doença térmica degenerativa que compromete a respiração da grande maioria dos habitantes de Brasas Constantes. \n\nDiferente de muitos, Agnes não aceitava a condição que lhe fora imposta. Tentou de todos os meios achar a própria cura. Muitas vezes, extrapolando a linha tênue do certo, fazendo o necessário para encontrá-la, mas infelizmente, mais rastros de corpos foram deixados no caminho. \n\nMesmo sendo cética em relação a Celestria, Agnes rogou por ela no topo do vulcão mais alto de seu reino. No momento em que deu seu último suspiro e seu corpo pendeu para a frente, pronto para cair no magma infernal, Celestria apareceu e a salvou, concedendo-lhe a Bênção da Pigmentadora. Hoje, Agnes é a pessoa mais velha viva de seu mundo e extremamente leal à divindade e às Pigmentadoras."
+    "num": "02",
+    "name": "Agnes",
+    "realm": "Brasas Constantes",
+    "power": "Magia de Fogo e Raio",
+    "color": "#ff3333",
+    "colorBg": "#330000",
+    "desc": "Agnes é cortante, impaciente, mas extremamente leal. Atroz quando se trata em acabar com os inimigos. Apaixonada por Nanima.",
+    "bio": "Agnes era uma mercenária em Brasas Constantes. Movida por boemia, sexo e dinheiro, a Pigmentadora do Fogo nunca seguiu regras, além de suas próprias, e por vezes, falhava. Sem escrúpulos, aceitava quase qualquer trabalho, o que lhe rendeu uma longa lista de assassinatos e inimigos. Apesar disso, era muito respeitada; afinal, uma mercenária mortífera como ela logo ganharia notoriedade.\n\nMigrando de uma cidade para outra, Agnes passou muito tempo escondida entre as dobras das montanhas vulcânicas, respirando a névoa que se tornava ainda mais densa perto das bocas de magma. Devido às suas desventuras, ela desenvolveu a doença térmica degenerativa que compromete a respiração da grande maioria dos habitantes de Brasas Constantes. \n\nDiferente de muitos, Agnes não aceitava a condição que lhe fora imposta. Tentou de todos os meios achar a própria cura. Muitas vezes, extrapolando a linha tênue  do certo, fazendo o necessário para encontrá-la, mas infelizmente, mais rastros de corpos foram deixados no caminho. \n\nMesmo sendo cética em relação a Celestria, Agnes rogou por ela no topo do vulcão mais alto de seu reino. No momento em que deu seu último suspiro e seu corpo pendeu para a frente, pronto para cair no magma infernal, Celestria apareceu e a salvou, concedendo-lhe a Bênção da Pigmentadora. Hoje, Agnes é a pessoa mais velha viva de seu mundo e extremamente leal à divindade e às Pigmentadoras."
   },
   {
-    num: "03",
-    name: "Nanima",
-    realm: "Aqualina",
-    power: "Água & Cura",
-    color: "#00b0ff",
-    colorBg: "#001833",
-    desc: "Abriu mão da realeza para servir Celestria, é calma e paciente. Apaixonada por Agnes. A maioria das Pigmentadoras acredita que Nanima é a Pigmentadora mais forte dentre todas.",
-    bio: "Nanima era a princesa herdeira de Aqualina. Sua vida foi marcada por protocolos, proibições e o peso da coroa. Um cotidiano que poderia soar perfeito e, de fato, para muitos e inclusive para ela, talvez fosse. A paz e a ordem que seus pais impunham ao reino garantiam exatamente essa estabilidade. \n\nContudo, manter a harmonia (equilíbrio) a todo custo gerava uma estagnação terrível e uma ociosidade angustiante, não apenas para ela, mas para muitos habitantes que eram obrigados a seguir seu ofício (determinado pelo reino) à risca, sem jamais quebrar as regras. Muitos dos seres sofriam com isso, com a terrível falta de desafio e marasmo, consequentemente o índice de suicídio entre os Aqualianos sempre foi alto. Entretanto, ignorado, pois parte da população almejava por essa paz que por muito tempo não existia. Era apenas um “efeito colateral” que, segundo os habitantes, valia a pena. Durante anos a fio, o reino se fragmentou em várias partes, trazendo guerra e fome. Foram os pais de Nanima que o unificaram como uma grande nação perfeita. \n\nNa superfície da água, Aqualina parecia impecável, mas foi justamente nessa busca pela perfeição que Nanima percebeu que sua liberdade era uma ilusão — e que conquistá-la teria um preço alto a se pagar.\n\nAlém de renunciar ao cargo, sentir a decepção dos pais que amava profundamente, se fosse capturada, ela seria banida para a tormenta das profundezas das cavernas aquáticas, onde o caos existia. Largada ao léu para viver à margem da sociedade e malfeitores. Foi nesse momento de angústia que Celestria a conheceu; em uma prece por liberdade, a Deusa atendeu ao seu chamado, concedendo-lhe o título de Pigmentadora.\n\nNanima tornou-se, assim, um símbolo de renúncia e coragem. Sua decisão rompeu tradições e, por isso, ela passou a ser vista pelos rebeldes com profundo respeito."
+    "num": "03",
+    "name": "Nanima",
+    "realm": "Aqualina",
+    "power": "Magia de Água e Cura",
+    "color": "#00b0ff",
+    "colorBg": "#001833",
+    "desc": "Abriu mão da realeza para servir Celestria, é calma e paciente. Apaixonada por Agnes. A maioria das Pigmentadoras acredita que Nanima é a Pigmentadora mais forte dentre todas.",
+    "bio": "Nanima era a princesa herdeira de Aqualina. Sua vida foi marcada por protocolos, proibições e o peso da coroa. Um cotidiano que poderia soar perfeito e, de fato, para muitos e inclusive para ela, talvez fosse. A paz e a ordem que seus pais impunham ao reino garantiam exatamente essa estabilidade. \n\nContudo, manter a harmonia (equilíbrio) a todo custo gerava uma estagnação terrível e uma ociosidade angustiante, não apenas para ela, mas para muitos habitantes que eram obrigados a seguir seu ofício (determinado pelo reino) à risca, sem jamais quebrar as regras. Muitos dos seres sofriam com isso, com a terrível falta de desafio e marasmo, consequentemente o índice de suicídio entre os Aqualianos sempre foi alto. Entretanto, ignorado, pois parte da população almejava por essa paz que por muito tempo não existia. Era apenas um “efeito colateral” que, segundo os habitantes, valia a pena. Durante anos a fio, o reino se fragmentou em várias partes, trazendo guerra e fome. Foram os pais de Nanima que o unificaram como uma grande nação perfeita. \n\nNa superfície da água, Aqualina parecia impecável, mas foi justamente nessa busca pela perfeição que Nanima percebeu que sua liberdade era uma ilusão — e que conquistá-la teria um preço alto a se pagar.\n\nAlém de renunciar ao cargo, sentir a decepção dos pais que amava profundamente, se fosse capturada, ela seria banida para a tormenta das profundezas das cavernas aquáticas, onde o caos existia. Largada ao léu para viver à margem da sociedade e malfeitores. Foi nesse momento de angústia que Celestria a conheceu; em uma prece por liberdade, a Deusa atendeu ao seu chamado, concedendo-lhe o título de Pigmentadora.\n\nNanima tornou-se, assim, um símbolo de renúncia e coragem. Sua decisão rompeu tradições e, por isso, ela passou a ser vista pelos rebeldes com profundo respeito."
   },
   {
-    num: "04",
-    name: "Lunara",
-    realm: "Luxanara",
-    power: "Tempo & Luz",
-    color: "#ffd600",
-    colorBg: "#1a1400",
-    desc: "Lunara demorou anos para dominar sua cor. Vinda de uma família de nobres e extremamente conservadores, Lunara tornou-se uma vergonha para a família, mesmo sendo uma Pigmentadora Amarela. É leve e afável.",
-    bio: "Lunara nasceu em meio ao prestígio e ao peso de uma linhagem de grandes canalizadores da cor amarela. Era esperado que ela fosse um prodígio — mas, aos olhos da família, nasceu \"sem talento\". Um desperdício de receptáculo. Demorou anos para que sua cor se desenvolvesse e, quando isso aconteceu, Lunara não conseguiu controlá-lo do jeito esperado.\n\nDurante muito tempo, foi tratada como uma decepção, até mesmo quando foi notada pela própria deusa e a chamou para ser Pigmentadora. A própria imperatriz de Luxanara, seus pais e informantes ainda são resistentes à escolha de Celestria.\n\nMesmo sem saber controlar seus dons, a Deusa viu nela um brilho que não podia ser ignorado. Levou-a para a Árvore Celestial, treinou-a, até que finalmente estivesse pronta para as suas missões.\n\nLunara tinha vergonha de si mesma, principalmente, por se considerar uma “Felcor” falha, incapaz de controlar sua própria cor. Entretanto, isso mudou, quando a cada missão que passava, mais forte se tornava. Esforçou-se imensamente e, junto com Pietra e Calindra, levou-se ao limite para evoluir. Embora, até hoje, toda vez que volta ao seu reino, ainda consiga ver os olhares atravessados daqueles que sabem que ela é uma Pigmentadora. Como se ela não valesse a pena ter conseguido o posto de Pigmentadora. \n\nControladora do tempo, Lunara já determinou o destino de algumas batalhas importantes e, inclusive, salvou suas colegas inúmeras vezes."
+    "num": "04",
+    "name": "Lunara",
+    "realm": "Luxanara",
+    "power": "Magia do Tempo e da Luz",
+    "color": "#ffd600",
+    "colorBg": "#1a1400",
+    "desc": "Lunara demorou anos para dominar sua cor. Vinda de uma família de nobres e extremamente conservadores, Lunara tornou-se uma vergonha para a família, mesmo sendo uma Pigmentadora Amarela. É leve e afável.",
+    "bio": "Lunara nasceu em meio ao prestígio e ao peso de uma linhagem de grandes canalizadores da cor amarela. Era esperado que ela fosse um prodígio — mas, aos olhos da família, nasceu \"sem talento\". Um desperdício de receptáculo. Demorou anos para que sua cor se desenvolvesse e, quando isso aconteceu, Lunara não conseguiu controlá-lo do jeito esperado.\n\nDurante muito tempo, foi tratada como uma decepção, até mesmo quando foi notada pela própria deusa e a chamou para ser Pigmentadora. A própria imperatriz de Luxanara, seus pais e informantes ainda são resistentes à escolha de Celestria.\n\nMesmo sem saber controlar seus dons, a Deusa viu nela um brilho que não podia ser ignorado. Levou-a para a Árvore Celestial, treinou-a, até que finalmente estivesse pronta para as suas missões.\n\nLunara tinha vergonha de si mesma, principalmente, por se considerar uma “Felcor” falha, incapaz de controlar sua própria cor. Entretanto, isso mudou, quando a cada missão que passava, mais forte se tornava. Esforçou-se imensamente e, junto com Pietra e Calindra, levou-se ao limite para evoluir. Embora, até hoje, toda vez que volta ao seu reino, ainda consiga ver os olhares atravessados daqueles que sabem que ela é uma Pigmentadora. Como se ela não valesse a pena ter conseguido o posto de Pigmentadora.\n\nControladora do tempo, Lunara já determinou o destino de algumas batalhas importantes e, inclusive, salvou suas colegas inúmeras vezes."
   },
   {
-    num: "05",
-    name: "Tenebra",
-    realm: "Caligobris",
-    power: "Magia da Morte",
-    color: "#aaaaaa",
-    colorBg: "#050505",
-    desc: "Após perder o marido e o filho, Tenebra rogou uma praga na cidade de seu Reino. Vendo o sofrimento, Celestria chamou-a para ser sua Pigmentadora. Tenebra é calada, fria, mas tem como sua principal amizade, Lyra.",
-    bio: "Tenebra vem de um lugar onde o luxo dos raios de sol acontece apenas dois meses por ano: Caligobris é um reino sombrio habitado por criaturas noturnas que flertam diretamente com a morte e a arte do oculto. \n\nDurante muito tempo, ela se dedicou a administrar sua vinícola, sem qualquer interesse em explorar as próprias habilidades, ainda que a quantidade de sua cor preta fosse extremamente estarrecedora. Tenebra viveu uma vida feliz com a sua família, não desejava se aprofundar na arte do misticismo ou da necromancia. Ser uma “fazendeira”, a fazia bem. Era assim que almejava viver até o fim de sua vida. Tranquila, aproveitando os pequenos momentos.\n\nTudo mudou quando sua safra foi infectada por um fungo devastador que, por consequência, envenenou e matou dezenas de habitantes locais.\n\nComo castigo pelo desastre, Tenebra foi forçada a assistir à execução de seu marido e de seu filho pelos conselheiros de sua cidade. \n\nCom a vinícola destruída e sua casa queimada, Tenebra seria a próxima a morrer, mas a fúria e o luto fizeram suas habilidades florescerem de forma avassaladora, espalhando-se como o próprio fungo que atacou suas uvas. Em um estalo de puro desespero, Tenebra dizimou parte da cidade, cometendo uma verdadeira chacina.\n\nConsumida pela dor da perda, tentou trazer sua família de volta, mas após tentativas frustradas, amaldiçoou a própria cor, tornando-se vazia, e sacrificou o próprio corpo: seu braço tornou-se fantasmagórico, uma extensão viva do oculto e da morte. \n\nEsse despertar chamou a atenção de Celestria, que a convocou para se tornar uma Pigmentadora, oferecendo-lhe uma chance de curar a ferida eterna de sua alma."
+    "num": "05",
+    "name": "Tenebra",
+    "realm": "Caligobris",
+    "power": "Magia da Morte",
+    "color": "#aaaaaa",
+    "colorBg": "#050505",
+    "desc": "Após perder o marido e o filho, Tenebra rogou uma praga na cidade de seu Reino. Vendo o sofrimento, Celestria chamou-a para ser sua Pigmentadora. Tenebra é calada, fria, mas tem como sua principal amizade, Lyra.",
+    "bio": "Tenebra vem de um lugar onde o luxo dos raios de sol acontece apenas dois meses por ano: Caligobris é um reino sombrio habitado por criaturas noturnas que flertam diretamente com a morte e a arte do oculto. \n\nDurante muito tempo, ela se dedicou a administrar sua vinícola, sem qualquer interesse em explorar as próprias habilidades, ainda que a quantidade de sua cor preta fosse extremamente estarrecedora. Tenebra vivia uma vida feliz com a sua família, não desejava se aprofundar na arte do misticismo ou da necromancia. Ser uma “fazendeira”, a fazia bem. Era assim que almejava viver até o fim de sua vida. Tranquila, aproveitando os pequenos momentos.\n\nTudo mudou quando sua safra foi infectada por um fungo devastador que, por consequência, envenenou e matou dezenas de habitantes locais.\n\nComo castigo pelo desastre, Tenebra foi forçada a assistir à execução de seu marido e de seu filho pelos conselheiros de sua cidade. \n\nCom a vinícola destruída e sua casa queimada, Tenebra seria a próxima a morrer, mas a fúria e o luto fizeram suas habilidades florescerem de forma avassaladora, espalhando-se como o próprio fungo que atacou suas uvas. Em um estalo de puro desespero, Tenebra dizimou parte da cidade, cometendo uma verdadeira chacina.\n\nConsumida pela dor da perda, tentou trazer sua família de volta, mas após tentativas frustradas, amaldiçoou a própria cor, tornando-se vazia, e sacrificou o próprio corpo: seu braço tornou-se fantasmagórico, uma extensão viva do oculto e da morte. \n\nEsse terrível despertar chamou a atenção de Celestria, que a convocou para se tornar uma Pigmentadora, oferecendo-lhe uma chance de curar a ferida eterna de sua alma."
   },
   {
-    num: "06",
-    name: "Vespera",
-    realm: "Florivena",
-    power: "Veneno & Sangue",
-    color: "#00e676",
-    colorBg: "#001a00",
-    desc: "Vespera é a Pigmentadora mais velha dentre todas, pode não ser a mais poderosa, mas todos a temem. Beira quase a perversidade, embora assim como Agnes é leal à causa das Pigmentadoras e as suas colegas.",
-    bio: "Vespera é la Pigmentadora mais velha entre todas. Apesar da idade e de não ter uma grande quantidade de cor dentro de seu âmago, ela carrega uma imponência e uma experiência que poucas Pigmentadoras já tiveram. Participou de inúmeras guerras e vislumbrou a frágil paz construída nos nove reinos. Viu algumas de suas companheiras Pigmentadoras perecerem e sofreu com suas perdas, contudo, com o passar do tempo, tentou criar um tipo de armadura que apenas a deixou mais distante das suas companheiras. \n\nSeu passado é um pouco indistinto, embora, dentro de seu próprio reino, seja extremamente respeitada. Na verdade, Véspera é respeitada por todos os reinos. Seja pelo medo ou pela referência, Vespera não se importa qual dos sentimentos almeja e aprecia esse tipo de atenção. \n\nPerdeu parte de sua perna em uma batalha sangrenta em Aqualina; Celestria ofereceu-lhe a reconstrução do membro, mas ela recusou, desejando encontrar a força através de sua perda e, de fato, encontrou. Sua prótese é um símbolo de resiliência entre as Pigmentadoras e um símbolo de respeito entre aqueles que a conhecem.\n\nAlém de ser uma excelente estrategista, o principal papel de Véspera é recolher respostas como ninguém — muitas vezes, de maneira um tanto quanto violenta. Ela usa a tortura e parece gostar disso. \n\nÉ mãe de Saino, o braço direito de Celestria e o único homem que trabalha diretamente com a divindade, e casada com a prefeita da Cidade Celestial. Ela ama sua família mais do que tudo, inclusive mais do que o seu próprio ofício de Pigmentadora. \n\nVéspera é dura, ríspida e letal, mas extremamente leal e respeitosa perante a sua deusa."
+    "num": "06",
+    "name": "Vespera",
+    "realm": "Florivena",
+    "power": "Magia de Veneno e Sangue",
+    "color": "#00e676",
+    "colorBg": "#001a00",
+    "desc": "Vespera é a Pigmentadora mais velha dentre todas, pode não ser a mais poderosa, mas todos a temem. Beira quase a perversidade, embora assim como Agnes é leal à causa das Pigmentadoras e as suas colegas.",
+    "bio": "Vespera é a Pigmentadora mais velha entre todas. Apesar da idade e de não ter uma grande quantidade de cor dentro de seu âmago, ela carrega uma imponência e uma experiência que poucas Pigmentadoras já tiveram. Participou de inúmeras guerras e vislumbrou a frágil paz construída nos nove reinos. Viu algumas de suas companheiras Pigmentadoras perecerem e sofreu com suas perdas, contudo, com o passar do tempo, tentou criar um tipo de armadura que apenas a deixou mais distante das suas companheiras. \n\nSeu passado é um pouco indistinto, embora, dentro de seu próprio reino, seja extremamente respeitada. Na verdade, Véspera é respeitada por todos os reinos. Seja pelo medo ou pela referência, Vespera não se importa qual dos sentimentos almeja e aprecia esse tipo de atenção. \n\nPerdeu parte de sua perna em uma batalha sangrenta em Aqualina; Celestria ofereceu-lhe a reconstrução do membro, mas ela recusou, desejando encontrar a força através de sua perda e, de fato, encontrou. Sua prótese é um símbolo de resiliência entre as Pigmentadoras e um símbolo de respeito entre aqueles que a conhecem.\n\nAlém de ser uma excelente estrategista, o principal papel de Véspera é recolher respostas como ninguém — muitas vezes, de maneira um tanto quanto violenta. Ela usa a tortura e parece gostar disso. \n\nÉ mãe de Saino, o braço direito de Celestria e o único homem que trabalha diretamente com a divindade, e casada com a prefeita da Cidade Celestial. Ela ama sua família mais do que tudo, inclusive mais do que o seu próprio ofício de Pgimentadora. \n\nVéspera é dura, ríspida e letal, mas extremamente leal e respeitosa perante a sua deusa."
   },
   {
-    num: "07",
-    name: "Calindra",
-    realm: "Nevalis",
-    power: "Vento & Gelo",
-    color: "#b0d4ff",
-    colorBg: "#001a33",
-    desc: "Calindra é doce, com um humor ligeiramente ácido e é casada com o braço direito de Celestria, Saino. Ela e Tainá descobrem ter uma ligação espiritual muito forte.",
-    bio: "Nascida em Nevalis, Calindra teve uma infância quase comum. Criada em meio a armas potentes na loja BIG BANG BOOM de sua mãe, Kalinda sempre dominou sua cor branca. Entre brincadeiras na neve, desenvolvendo sua expertise em armas e cultivando um coração empático, cresceu destacando-se como uma das melhores atiradoras de seu reino. Naturalmente, sua habilidade chamou a atenção de Celestria. \n\nAo ingressar no grupo das Pigmentadoras, conheceu Saino. A paixão entre os dois foi instantânea, uma conexão profunda que logo se transformou em um amor visceral. Juntos, sonham em cultivar uma família. \n\nTornou-se amiga de Lunara rapidamente e, em pouco tempo, as duas — que dividiam a paixão pela construção — passaram a desenvolver armas ainda mais potentes para otimizar a canalização de sua cor branca. Juntas, perdiam a noção das horas entre uma missão e outra, obcecadas em projetar o armamento perfeito. \n\nEntretanto, o equilíbrio parecia reservar um destino maior para ela. Anos depois, após perder a mãe e conhecer Tainá, descobriu que carregava o sangue do Vazio; embora não manifestasse a cor roxa, Calindra era capaz de caminhar entre as fendas. \n\nEla e Tainá construíram um laço extremamente forte, não apenas pelo sangue que dividiam, mas pelos sentimentos puros de quem deseja ter uma família real. Ambas tornaram-se próximas quase que imediatamente e cultivaram o significado da palavra família."
+    "num": "07",
+    "name": "Calindra",
+    "realm": "Nevalis",
+    "power": "Magia de Vento e Gelo",
+    "color": "#b0d4ff",
+    "colorBg": "#001a33",
+    "desc": "Calindra é doce, com um humor ligeiramente ácido e é casada com o braço direito de Celestria, Saino. Ela e Tainá descobrem ter uma ligação espiritual muito forte.",
+    "bio": "Nascida em Nevalis, Calindra teve uma infância quase comum. Criada em meio a armas potentes na loja BIG BANG BOOM de sua mãe, Kalinda sempre dominou sua cor branca. Entre brincadeiras na neve, desenvolvendo sua expertise em armas e cultivando um coração empático, cresceu destacando-se como uma das melhores atiradoras de seu reino. Naturalmente, sua habilidade chamou a atenção de Celestria. \n\nAo ingressar no grupo das Pigmentadoras, conheceu Saino. A paixão entre os dois foi instantânea, uma conexão profunda que logo se transformou em um amor visceral. Juntos, sonham em cultivar uma família. \n\nTornou-se amiga de Lunara rapidamente e, em pouco tempo, as duas — que dividiam a paixão pela construção — passaram a desenvolver armas ainda mais potentes para otimizar a canalização de sua cor branca. Juntas, perdiam a noção das horas entre uma missão e outra, obcecadas em projetar o armamento perfeito. \n\nEntretanto, o equilíbrio parecia reservar um destino maior para ela. Anos depois, após perder a mãe e conhecer Tainá, descobriu que carregava o sangue do Vazio; embora não manifestasse a cor roxa, Calindra era capaz de caminhar entre as fendas. \n\nEla e Tainá construíram um laço extremamente forte, não apenas pelo sangue que dividiam, mas pelos sentimentos puros de quem deseja ter uma família real. Ambas tornaram-se próximas quase que imediatamente e cultivaram o significado da palavra família."
   },
   {
-    num: "08",
-    name: "Lyra",
-    realm: "Nuvens Exaltadas",
-    power: "Magia Brutal",
-    color: "#d7ccc8",
-    colorBg: "#0a0a0a",
-    desc: "Engraçada é a mais nova das Pigmentadoras, Lyra é extremamente forte e positiva. Tornou-se Pigmentadora após a morte da mãe, que também era uma.",
-    bio: "Filha de uma das mais respeitadas Pigmentadoras da Deusa — vinda das Nuvens Exaltadas — Lyra herdou o pincel cinza da mãe, forjado em bravura e poder. Embora, durante muitos anos, tivesse dificuldade de controlá-lo, já que o artefato foi moldado especialmente para sua mãe e não para ela.\n\nA mãe de Lyra pereceu em uma missão, morrendo na grande terceira guerra dos Brasas Constante e deixando para a filha um legado tão vasto quanto difícil de carregar. Por agora, sua progenitora foi amante de Celestria, e foi sob as asas dessa divindade que Lyra encontrou refúgio e um lar.\n\nMovida por essa ligação, Celestria moldou o caminho da jovem, através de uma promessa: ao completar vinte e cinco anos, Lyra se tornaria a nova Pigmentadora Cinza. Criada entre os galhos da Árvore Celestial e educada pelos Informantes, Lyra adquiriu um conhecimento sobre os reinos que nenhuma outra de sua casta jamais possuiu.\n\nSua ligação com Tenebra foi extremamente importante para o seu crescimento. Ambas vieram da dor da perda, embora Lyra não se lembrasse de sua mãe. As duas tão diferentes encaixaram-se perfeitamente, formando uma das amizades mais fortes entre Pigmentadoras."
+    "num": "08",
+    "name": "Lyra",
+    "realm": "Nuvens Exaltadas",
+    "power": "Magia Brutal",
+    "color": "#d7ccc8",
+    "colorBg": "#0a0a0a",
+    "desc": "Engraçada é a mais nova das Pigmentadoras, Lyra é extremamente forte e positiva. Tornou-se Pigmentadora após a morte da mãe, que também era uma.",
+    "bio": "Filha de uma das mais respeitadas Pigmentadoras da Deusa — vinda das Nuvens Exaltadas — Lyra herdou o pincel cinza da mãe, forjado em bravura e poder. Embora, durante muitos anos, tivesse dificuldade de controlá-lo, já que o artefato foi moldado especialmente para sua mãe e não para ela.\n\nA mãe de Lyra pereceu em uma missão, morrendo na grande terceira guerra dos Brasas Constante e deixando para a filha um legado tão vasto quanto difícil de carregar. Por anos, sua progenitora foi amante de Celestria, e foi sob as asas dessa divindade que Lyra encontrou refúgio e um lar.\n\nMovida por essa ligação, Celestria moldou o caminho da jovem, através de uma promessa: ao completar vinte e cinco anos, Lyra se tornaria a nova Pigmentadora Cinza. Criada entre os galhos da Árvore Celestial e educada pelos Informantes, Lyra adquiriu um conhecimento sobre os reinos que nenhuma outra de sua casta jamais possuiu.\n\nSua ligação com Tenebra foi extremamente importante para o seu crescimento. Ambas vieram da dor da perda, embora Lyra não se lembrasse de sua mãe. As duas tão diferentes encaixaram-se perfeitamente, formando uma das amizades mais fortes entre Pigmentadoras."
   },
   {
-    num: "09",
-    name: "Pietra",
-    realm: "Itaveah",
-    power: "Pedra & Metal",
-    color: "#8d6e63",
-    colorBg: "#1a0f00",
-    desc: "Pietra faz poucas missões, sendo mãe de duas meninas. Extremamente poderosa em batalhas, a Pigmentadora Marrom é resistente a mudanças, principalmente, após a chegada de Tainá. Embora reservada, gosta de ter as Pigmentadoras reunidas.",
-    bio: "Pietra era uma professora em Itaveah. Ensinava os seres a dominarem suas habilidades e cores. Paciente com aqueles que tinham dificuldade, Pietra logo chamou a atenção de Celestria, que a convocou para ser uma Pigmentadora. Teve hesitação de ir para a Árvore Celestial, ainda que sempre tivera grande respeito pela Deusa Celestria. Os motivos das preocupações eram: não se achava capaz para o ofício de Pigmentadora e a outra, achou que seria apenas um peão que a qualquer momento poderia ser descartada.\n\nCom sua chegada na cidade Celestial, Pietra se apaixonou por um professor universitário, da única universidade da cidade. Casaram-se e tiveram duas filhas. Uma delas com as características da mãe e a outra a do Pai, um braseiro, com dois chifres pontudos.\n\nÉ austera não apenas com a criação de suas filhas, mas também com o jeito que responde às Pigmentadoras. \n\nNão gosta de mudanças, principalmente durante as missões. Por isso, muitas vezes, prefere fazê-las junto com Vespera e Tenebra. \n\nPor vezes, tem um lado maternal perante elas. Principalmente Calindra, que perdeu sua mãe."
+    "num": "09",
+    "name": "Pietra",
+    "realm": "Itaveah",
+    "power": "Magia de Pedra e Metal",
+    "color": "#8d6e63",
+    "colorBg": "#1a0f00",
+    "desc": "Pietra faz poucas missões, sendo mãe de duas meninas. Extremamente poderosa em batalhas, a Pigmentadora Marrom é resistente a mudanças, principalmente, após a chegada de Tainá.  Embora reservada, gosta de ter as Pigmentadoras reunidas.",
+    "bio": "Pietra era uma professora em Itaveah. Ensinava os seres a dominarem suas habilidades e cores. Paciente com aqueles que tinham dificuldade, Pietra logo chamou a atenção de Celestria, que a convocou para ser uma Pigmentadora. Teve hesitação de ir para a Árvore Celestial, ainda que sempre tivera grande respeito pela Deusa Celestria. Os motivos das preocupações eram: não se achava capaz para o ofício de Pigmentadora e a outra, achou que seria apenas um peão que a qualquer momento poderia ser descartada.\n\nCom sua chegada na cidade Celestial, Pietra se apaixonou por um professor universitário, da única universidade da cidade. Casaram-se e tiveram duas filhas. Uma delas com as características da mãe e a outra a do Pai, um braseiro, com dois chifres pontudos.\n\nÉ austera não apenas com a criação de suas filhas, mas também com o jeito que responde às Pigmentadoras.\n\nNão gosta de mudanças, principalmente durante as missões. Por isso, muitas vezes, prefere fazê-las junto com Vespera e Tenebra.\n\nPor vezes, tem um lado maternal perante elas. Principalmente Calindra, que perdeu sua mãe."
   }
 ];
 
