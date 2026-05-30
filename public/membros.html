@@ -1603,7 +1603,10 @@
       border-radius: 50%;
       background: rgba(201, 168, 76, 0.1);
       color: var(--gold);
-      font-size: 1.2rem;
+      font-size: 1.4rem;
+      line-height: 1;
+      padding: 0;
+      padding-bottom: 4px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -3585,8 +3588,8 @@
         if (data.nome !== "Cidade Celestial") {
           html += `
               <div style="text-align: center; margin-top: 24px;">
-                <button class="cidade-reset-btn" onclick="resetCidadeCenter()">
-                  ← Voltar para Cidade Celestial
+                <button class="cidade-reset-btn" onclick="resetCidadeCenter()" style="font-size: 1.2rem; padding: 4px 20px;">
+                  ↑
                 </button>
               </div>`;
         }
@@ -3661,6 +3664,10 @@
 
     function resetCidadeCenter() {
       selectResidentKingdom("Celestria");
+      const section = document.getElementById('reinos');
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
 
     function initCidadeInteractions() {
