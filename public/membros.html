@@ -1635,12 +1635,34 @@
     }
 
     /* ══ RESPONSIVE ══ */
-    @media (max-width: 640px) {
-      .page-left {
-        padding: 5% 19% 14% 14%;
+    @media (max-width: 819px) {
+      .book-outer {
+        aspect-ratio: 426 / 600;
+        background: url('pergaminho.png') no-repeat center center;
+        background-size: 100% 100%;
+        max-width: 450px;
+        margin: 0 auto;
       }
-      .page-right {
-        padding: 5% 14% 14% 19%;
+      .book-bg-img {
+        display: none;
+      }
+      .book-pages {
+        top: 6%;
+        left: 10%;
+        right: 10%;
+        bottom: 12%;
+        grid-template-columns: 1fr;
+      }
+      .book-spine {
+        display: none;
+      }
+      .page-left, .page-right {
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        padding: 8% 10% 14% 10% !important;
+      }
+      .page-left::after, .page-right::after {
+        display: none !important;
       }
       .book-bio, .book-bio-right {
         font-size: 0.8rem;
@@ -1648,10 +1670,21 @@
       .book-name {
         font-size: 1rem;
       }
+      /* Margens dos botões internos em formato pergaminho */
+      .bio-nav-back {
+        left: 10% !important;
+      }
+      .bio-nav-continue {
+        right: 10% !important;
+      }
     }
+
     @media (max-width: 480px) {
-      .page-right .book-bio-right {
-        font-size: 0.77rem;
+      .book-bio, .book-bio-right {
+        font-size: 0.72rem;
+      }
+      .book-outer {
+        max-width: 100%;
       }
     }
 
@@ -2812,6 +2845,7 @@
                 <div class="book-bio" id="charBio"></div>
 
                 <div class="bio-nav-inner bio-nav-back" id="bioBack" onclick="navigateSubPage(-1)"><span class="bio-arrow">←</span> Voltar</div>
+                <div class="bio-nav-inner bio-nav-continue" id="bioContinueLeft" onclick="navigateSubPage(1)">Continuar <span class="bio-arrow">→</span></div>
                 <span class="page-num page-num-l" id="pageNumL">I</span>
                 <span class="ornament bl">✦</span>
               </div>
@@ -2820,6 +2854,7 @@
               <div class="page page-right" id="pageRight">
                 <span class="ornament tr">✦</span>
                 <div class="book-bio-right" id="charBioRight"></div>
+                <div class="bio-nav-inner bio-nav-back" id="bioBackRight" onclick="navigateSubPage(-1)"><span class="bio-arrow">←</span> Voltar</div>
                 <div class="bio-nav-inner bio-nav-continue" id="bioContinue" onclick="navigateSubPage(1)">Continuar <span class="bio-arrow">→</span></div>
                 <span class="page-num page-num-r" id="pageNumR">II</span>
                 <span class="ornament br">✦</span>
@@ -3595,11 +3630,29 @@
       }
     }
 
+    function getPagesList(p) {
+      const spreads = getSpreads(p);
+      const pagesList = [];
+      spreads.forEach((s, sIdx) => {
+        if (s.left || sIdx === 0) {
+          pagesList.push({ html: s.left, side: 'left', spreadIdx: sIdx });
+        }
+        if (s.right) {
+          pagesList.push({ html: s.right, side: 'right', spreadIdx: sIdx });
+        }
+      });
+      return pagesList;
+    }
+
     function navigateSubPage(dir) {
       if (isTurningPage) return;
-      const spreads = getSpreads(PIGMENTADORAS[currentPigmentadora]);
+      const isMobile = window.innerWidth < 820;
+      const p = PIGMENTADORAS[currentPigmentadora];
+      const pagesList = getPagesList(p);
+      const limit = isMobile ? pagesList.length : Math.ceil(pagesList.length / 2);
+
       const targetIdx = currentSubPage + dir;
-      if (targetIdx < 0 || targetIdx >= spreads.length) return;
+      if (targetIdx < 0 || targetIdx >= limit) return;
 
       isTurningPage = true;
       const bookPages = document.getElementById("bookPages");
@@ -3619,6 +3672,12 @@
         isTurningPage = false;
       }
     }
+
+    window.addEventListener('resize', () => {
+      if (PIGMENTADORAS.length > 0) {
+        renderPageSpread(currentPigmentadora, currentSubPage);
+      }
+    });
 
     // ── DOWNLOAD DE GALERIA ──
     function triggerDownload(url, filename) {
@@ -3708,85 +3767,173 @@
       const rawColor = p.color || '#c9a84c';
       const c = getReadabilityColor(rawColor);
 
-      // Set character color variable on the pages element
       const bookPages = document.getElementById("bookPages");
       if (bookPages) {
         bookPages.style.setProperty("--char-color", c);
       }
 
-      // Show/Hide Left Page Header Elements
-      const showHeader = (subIdx === 0);
+      const isMobile = window.innerWidth < 820;
+      const pagesList = getPagesList(p);
+
+      // Ensure subIdx is within bounds
+      const maxSubIdx = isMobile ? (pagesList.length - 1) : (Math.ceil(pagesList.length / 2) - 1);
+      if (subIdx > maxSubIdx) {
+        subIdx = maxSubIdx;
+        currentSubPage = subIdx;
+      }
+
+      const pageLeft = document.getElementById("pageLeft");
+      const pageRight = document.getElementById("pageRight");
+      const charBio = document.getElementById("charBio");
+      const charBioRight = document.getElementById("charBioRight");
+      const pageNumL = document.getElementById("pageNumL");
+      const pageNumR = document.getElementById("pageNumR");
       
       const charNumBg = document.getElementById("charNumBg");
-      if (charNumBg) {
-        charNumBg.textContent = p.num || String(idx + 1).padStart(2, '0');
-        charNumBg.style.display = showHeader ? "block" : "none";
-      }
-
       const bookHeaderRow = document.getElementById("bookHeaderRow");
-      if (bookHeaderRow) {
-        bookHeaderRow.style.display = showHeader ? "flex" : "none";
-      }
-
       const charName = document.getElementById("charName");
-      if (charName) charName.textContent = p.name || '';
-
       const charGem = document.getElementById("charGem");
-      if (charGem) {
-        charGem.style.setProperty("--char-color", c);
-      }
-
       const charRealm = document.getElementById("charRealm");
-      if (charRealm) {
-        charRealm.textContent = 'Reino: ' + (p.realm || '');
-        charRealm.style.display = showHeader ? "block" : "none";
-      }
-
       const charPowers = document.getElementById("charPowers");
-      if (charPowers) {
-        charPowers.style.display = showHeader ? "flex" : "none";
-        charPowers.innerHTML = "";
-        if (showHeader) {
-          const tags = getPowerTags(p.power);
-          tags.forEach(t => {
-            const tagEl = document.createElement("span");
-            tagEl.className = "book-power-tag";
-            tagEl.textContent = t;
-            charPowers.appendChild(tagEl);
-          });
+      const bookDivider = document.getElementById("bookDivider");
+
+      const bioBack = document.getElementById("bioBack");
+      const bioContinueLeft = document.getElementById("bioContinueLeft");
+      const bioBackRight = document.getElementById("bioBackRight");
+      const bioContinue = document.getElementById("bioContinue");
+
+      if (isMobile) {
+        // --- MOBILE MODE (PARCHMENT - SINGLE PAGE) ---
+        const activePage = pagesList[subIdx] || { html: "", side: "left", spreadIdx: 0 };
+        const showHeader = (subIdx === 0);
+
+        if (activePage.side === 'left') {
+          if (pageLeft) pageLeft.style.display = "flex";
+          if (pageRight) pageRight.style.display = "none";
+          if (charBio) charBio.innerHTML = activePage.html;
+          
+          const roman = toRoman(idx * 2 + 1 + activePage.spreadIdx * 2);
+          if (pageNumL) pageNumL.textContent = roman;
+
+          if (bioBack) {
+            bioBack.style.display = (subIdx > 0) ? "block" : "none";
+            bioBack.style.setProperty("--char-color", c);
+          }
+          if (bioContinueLeft) {
+            bioContinueLeft.style.display = (subIdx < pagesList.length - 1) ? "block" : "none";
+            bioContinueLeft.style.setProperty("--char-color", c);
+          }
+        } else {
+          if (pageLeft) pageLeft.style.display = "none";
+          if (pageRight) pageRight.style.display = "flex";
+          if (charBioRight) charBioRight.innerHTML = activePage.html;
+          
+          const roman = toRoman(idx * 2 + 2 + activePage.spreadIdx * 2);
+          if (pageNumR) pageNumR.textContent = roman;
+
+          if (bioBackRight) {
+            bioBackRight.style.display = (subIdx > 0) ? "block" : "none";
+            bioBackRight.style.setProperty("--char-color", c);
+          }
+          if (bioContinue) {
+            bioContinue.style.display = (subIdx < pagesList.length - 1) ? "block" : "none";
+            bioContinue.style.setProperty("--char-color", c);
+          }
+        }
+
+        if (charNumBg) {
+          charNumBg.textContent = p.num || String(idx + 1).padStart(2, '0');
+          charNumBg.style.display = showHeader ? "block" : "none";
+        }
+        if (bookHeaderRow) {
+          bookHeaderRow.style.display = showHeader ? "flex" : "none";
+        }
+        if (charName) charName.textContent = p.name || '';
+        if (charGem) charGem.style.setProperty("--char-color", c);
+        if (charRealm) {
+          charRealm.textContent = 'Reino: ' + (p.realm || '');
+          charRealm.style.display = showHeader ? "block" : "none";
+        }
+        if (charPowers) {
+          charPowers.style.display = showHeader ? "flex" : "none";
+          charPowers.innerHTML = "";
+          if (showHeader) {
+            const tags = getPowerTags(p.power);
+            tags.forEach(t => {
+              const tagEl = document.createElement("span");
+              tagEl.className = "book-power-tag";
+              tagEl.textContent = t;
+              charPowers.appendChild(tagEl);
+            });
+          }
+        }
+        if (bookDivider) {
+          bookDivider.style.display = showHeader ? "block" : "none";
+        }
+      } else {
+        // --- DESKTOP MODE (BOOK - SPREAD) ---
+        if (pageLeft) pageLeft.style.display = "flex";
+        if (pageRight) pageRight.style.display = "flex";
+
+        const showHeader = (subIdx === 0);
+
+        if (charNumBg) {
+          charNumBg.textContent = p.num || String(idx + 1).padStart(2, '0');
+          charNumBg.style.display = showHeader ? "block" : "none";
+        }
+        if (bookHeaderRow) {
+          bookHeaderRow.style.display = showHeader ? "flex" : "none";
+        }
+        if (charName) charName.textContent = p.name || '';
+        if (charGem) charGem.style.setProperty("--char-color", c);
+        if (charRealm) {
+          charRealm.textContent = 'Reino: ' + (p.realm || '');
+          charRealm.style.display = showHeader ? "block" : "none";
+        }
+        if (charPowers) {
+          charPowers.style.display = showHeader ? "flex" : "none";
+          charPowers.innerHTML = "";
+          if (showHeader) {
+            const tags = getPowerTags(p.power);
+            tags.forEach(t => {
+              const tagEl = document.createElement("span");
+              tagEl.className = "book-power-tag";
+              tagEl.textContent = t;
+              charPowers.appendChild(tagEl);
+            });
+          }
+        }
+        if (bookDivider) {
+          bookDivider.style.display = showHeader ? "block" : "none";
+        }
+
+        const spreads = getSpreads(p);
+        const spread = spreads[subIdx] || { left: "", right: "" };
+
+        if (charBio) charBio.innerHTML = spread.left;
+        if (charBioRight) charBioRight.innerHTML = spread.right || '';
+
+        const romanL = toRoman(idx * 2 + 1 + subIdx * 2);
+        const romanR = toRoman(idx * 2 + 2 + subIdx * 2);
+        if (pageNumL) pageNumL.textContent = romanL;
+        if (pageNumR) pageNumR.textContent = romanR;
+
+        if (bioBack) {
+          bioBack.style.display = (subIdx > 0) ? "block" : "none";
+          bioBack.style.setProperty("--char-color", c);
+        }
+        if (bioContinueLeft) {
+          bioContinueLeft.style.display = "none";
+        }
+        if (bioBackRight) {
+          bioBackRight.style.display = "none";
+        }
+        if (bioContinue) {
+          bioContinue.style.display = (subIdx < spreads.length - 1) ? "block" : "none";
+          bioContinue.style.setProperty("--char-color", c);
         }
       }
 
-      const bookDivider = document.getElementById("bookDivider");
-      if (bookDivider) {
-        bookDivider.style.display = showHeader ? "block" : "none";
-      }
-
-      // Render Spread text content
-      const spreads = getSpreads(p);
-      const spread = spreads[subIdx] || { left: "", right: "" };
-
-      const charBio = document.getElementById("charBio");
-      if (charBio) {
-        charBio.innerHTML = spread.left;
-      }
-
-      const charBioRight = document.getElementById("charBioRight");
-      if (charBioRight) {
-        charBioRight.innerHTML = spread.right || '';
-      }
-
-      // Page numbers (roman numerals based on spread index)
-      const romanL = toRoman(idx * 2 + 1 + subIdx * 2);
-      const romanR = toRoman(idx * 2 + 2 + subIdx * 2);
-      
-      const pageNumL = document.getElementById("pageNumL");
-      if (pageNumL) pageNumL.textContent = romanL;
-      
-      const pageNumR = document.getElementById("pageNumR");
-      if (pageNumR) pageNumR.textContent = romanR;
-
-      // Update counters and navigation buttons
       const cCurrent = document.getElementById("cCurrent");
       if (cCurrent) cCurrent.textContent = idx + 1;
 
@@ -3796,20 +3943,6 @@
       const btnNext = document.getElementById("btnNext");
       if (btnNext) btnNext.disabled = (idx === PIGMENTADORAS.length - 1);
 
-      // Inner sub-page bio navigation display
-      const bioBack = document.getElementById("bioBack");
-      if (bioBack) {
-        bioBack.style.display = (subIdx > 0) ? "block" : "none";
-        bioBack.style.setProperty("--char-color", c);
-      }
-
-      const bioContinue = document.getElementById("bioContinue");
-      if (bioContinue) {
-        bioContinue.style.display = (subIdx < spreads.length - 1) ? "block" : "none";
-        bioContinue.style.setProperty("--char-color", c);
-      }
-
-      // Update active dot indicator
       const dots = document.querySelectorAll(".nav-dot");
       dots.forEach((d, i) => {
         if (i === idx) {
