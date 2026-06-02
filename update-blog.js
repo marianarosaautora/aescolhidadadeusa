@@ -403,7 +403,7 @@ const newReinos = [
       },
       {
         icon: "◈",
-        texto: "Os Caligobris dominam as artes do oculto. Brincam com a morte como quem DESEJA POR ELA."
+        texto: "Os Caligobris dominam as artes do oculto. Brincam com a morte como quem deseja por ela."
       },
       {
         icon: "◈",
