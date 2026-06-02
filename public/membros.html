@@ -3776,6 +3776,7 @@
         renderGallery();
         renderPigmentadoras();
         renderReinos();
+        initDynamicSidebarAndMap();
 
         initCidadeInteractions();
 
@@ -3786,6 +3787,68 @@
       } catch (err) {
         console.error("Failed to load content.json", err);
       }
+    }
+
+    function initDynamicSidebarAndMap() {
+      if (!REINOS_DATA) return;
+      
+      // Update sidebar items
+      document.querySelectorAll('.cidade-sidebar-item').forEach(item => {
+        const resident = item.getAttribute('data-resident');
+        if (!resident) return;
+        
+        const r = REINOS_DATA.find(k => k.pigmentadora === resident);
+        if (r) {
+          const nameEl = item.querySelector('.cidade-sidebar-name');
+          const subEl = item.querySelector('.cidade-sidebar-sub');
+          const gemEl = item.querySelector('.cidade-sidebar-gem');
+          
+          if (nameEl) nameEl.textContent = r.nome || r.name;
+          if (subEl) {
+            const colorName = r.gema ? r.gema.replace('Gema ', '') : '';
+            subEl.textContent = `${resident} · Pigmentadora ${colorName}`;
+          }
+          if (gemEl) {
+            gemEl.style.setProperty('--gc', r.rc || r.color);
+          }
+        }
+      });
+      
+      // Update mobile tabs
+      document.querySelectorAll('.cidade-tab-item').forEach(item => {
+        const resident = item.getAttribute('data-resident');
+        if (!resident || resident === 'Celestria') return;
+        
+        const r = REINOS_DATA.find(k => k.pigmentadora === resident);
+        if (r) {
+          const spanEl = item.querySelector('span');
+          const gemEl = item.querySelector('.cidade-tab-gem');
+          
+          if (spanEl) spanEl.textContent = r.nome || r.name;
+          if (gemEl) {
+            gemEl.style.setProperty('--gtc', r.rc || r.color);
+          }
+        }
+      });
+      
+      // Update interactive tree dots and their glow backgrounds
+      document.querySelectorAll('.arvore-dot').forEach(dot => {
+        const resident = dot.getAttribute('data-resident');
+        if (!resident || resident === 'Celestria') return;
+        
+        const r = REINOS_DATA.find(k => k.pigmentadora === resident);
+        if (r) {
+          const color = r.rc || r.color;
+          dot.setAttribute('fill', color);
+          dot.style.setProperty('--dot-glow', color);
+          
+          // Glow background circle is the previous sibling
+          const glowBg = dot.previousElementSibling;
+          if (glowBg && glowBg.tagName === 'circle') {
+            glowBg.setAttribute('fill', color);
+          }
+        }
+      });
     }
 
     function renderGallery() {
