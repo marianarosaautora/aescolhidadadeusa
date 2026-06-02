@@ -3762,7 +3762,7 @@
 
     async function loadSiteData() {
       try {
-        const res = await fetch('/content.json');
+        const res = await fetch('/content.json?t=' + Date.now());
         const data = await res.json();
         BLOG_POSTS = data.membros.blog;
         GALLERY_ITEMS = data.membros.gallery;

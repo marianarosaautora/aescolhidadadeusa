@@ -2393,7 +2393,7 @@
     <!-- Atualiza links dinamicamente do content.json (gerenciado pelo painel admin) -->
     <script>
       (function() {
-        fetch('/content.json')
+        fetch('/content.json?t=' + Date.now())
           .then(r => r.json())
           .then(data => {
             // Buy links
