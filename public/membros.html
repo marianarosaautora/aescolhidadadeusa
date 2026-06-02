@@ -3470,7 +3470,12 @@
       
       function getLimitForPage(index) {
         const width = window.innerWidth;
-        if (width < 425) {
+        if (width < 350) {
+          if (index === 0) {
+            return Math.max(30, 190 - headerLength);
+          }
+          return 220;
+        } else if (width < 425) {
           if (index === 0) {
             return Math.max(40, 200 - headerLength);
           }
