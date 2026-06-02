@@ -1719,8 +1719,14 @@
     }
 
     @media (max-width: 349px) {
+      .book-pages {
+        bottom: 7% !important; /* Estende a altura do contêiner para baixo */
+      }
+      .page-left, .page-right {
+        padding: 8% 10% 12% 10% !important; /* Reduz padding inferior para o texto fluir mais */
+      }
       .bio-nav-inner {
-        bottom: 2.5% !important; /* Deslocado ~10px para baixo (de 5% para 2.5%) */
+        bottom: 2% !important; /* Posiciona os botões mais próximos do final do papel */
       }
     }
 
