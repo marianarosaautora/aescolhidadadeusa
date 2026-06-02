@@ -3396,57 +3396,94 @@
     function getSpreads(p) {
       if (!p || !p.bio) return [{ left: "", right: "" }];
       const paragraphs = p.bio.split(/\n\s*\n+/).map(text => text.trim()).filter(Boolean);
-      const spreads = [];
-
-      let currentSpread = { left: [], right: [] };
-      let isLeft = true;
-      // Spread 0: left page has headers (name, realm, powers) so less text space
-      // Subsequent pages: full page available for text
-      let currentLimit = 400; // Left page of spread 0 (headers take ~30% of space)
-      let currentChars = 0;
-
-      for (let i = 0; i < paragraphs.length; i++) {
-        const paragraph = paragraphs[i];
-        const pChars = paragraph.length;
-
-        // Determine if page is currently empty
-        const pageIsEmpty = isLeft ? (currentSpread.left.length === 0) : (currentSpread.right.length === 0);
-
-        if (currentChars + pChars > currentLimit && !pageIsEmpty) {
-          if (isLeft) {
-            isLeft = false;
-            currentLimit = 500; // Right page of spread 0 — full page
-            currentChars = 0;
+      
+      const pages = [];
+      let currentPageText = [];
+      let currentPageChars = 0;
+      
+      function getLimitForPage(index) {
+        return index === 0 ? 400 : 500;
+      }
+      
+      let pageIndex = 0;
+      let queue = [...paragraphs];
+      
+      while (queue.length > 0) {
+        let paragraph = queue.shift();
+        let limit = getLimitForPage(pageIndex);
+        let spaceLeft = limit - currentPageChars;
+        
+        // If remaining space on page is too small and page is not empty, push to next page
+        if (spaceLeft < 60 && currentPageText.length > 0) {
+          pages.push(currentPageText.map(t => `<p>${t}</p>`).join(""));
+          currentPageText = [];
+          currentPageChars = 0;
+          pageIndex++;
+          queue.unshift(paragraph);
+          continue;
+        }
+        
+        if (paragraph.length <= spaceLeft) {
+          currentPageText.push(paragraph);
+          currentPageChars += paragraph.length;
+        } else {
+          // If the paragraph is too large and the page has some content already,
+          // only split it if the remaining space is decent (>= 100 chars),
+          // otherwise push the entire paragraph to the next page.
+          if (currentPageText.length > 0 && spaceLeft < 100) {
+            pages.push(currentPageText.map(t => `<p>${t}</p>`).join(""));
+            currentPageText = [];
+            currentPageChars = 0;
+            pageIndex++;
+            queue.unshift(paragraph);
+            continue;
+          }
+          
+          // Split at space/punctuation to fit as much as possible
+          let splitIdx = spaceLeft;
+          let lastSpace = paragraph.lastIndexOf(' ', splitIdx);
+          
+          if (lastSpace > 0 && lastSpace > spaceLeft - 150) {
+            splitIdx = lastSpace;
           } else {
-            // Save current spread and create next spread
-            spreads.push({
-              left: currentSpread.left.map(t => `<p>${t}</p>`).join(""),
-              right: currentSpread.right.map(t => `<p>${t}</p>`).join("")
-            });
-            currentSpread = { left: [], right: [] };
-            isLeft = true;
-            currentLimit = 500; // Left page of spread 1+ — full page
-            currentChars = 0;
+            let nextSpace = paragraph.indexOf(' ', splitIdx);
+            if (nextSpace > 0 && nextSpace - splitIdx < 30) {
+              splitIdx = nextSpace;
+            } else if (lastSpace > 0) {
+              splitIdx = lastSpace;
+            }
+          }
+          
+          const part1 = paragraph.substring(0, splitIdx).trim();
+          const part2 = paragraph.substring(splitIdx).trim();
+          
+          if (part1) {
+            currentPageText.push(part1);
+            currentPageChars += part1.length;
+          }
+          
+          pages.push(currentPageText.map(t => `<p>${t}</p>`).join(""));
+          currentPageText = [];
+          currentPageChars = 0;
+          pageIndex++;
+          
+          if (part2) {
+            queue.unshift(part2);
           }
         }
-
-        // Add paragraph
-        if (isLeft) {
-          currentSpread.left.push(paragraph);
-        } else {
-          currentSpread.right.push(paragraph);
-        }
-        currentChars += pChars;
       }
-
-      // Add final spread
-      if (currentSpread.left.length > 0 || currentSpread.right.length > 0) {
+      
+      if (currentPageText.length > 0) {
+        pages.push(currentPageText.map(t => `<p>${t}</p>`).join(""));
+      }
+      
+      const spreads = [];
+      for (let i = 0; i < pages.length; i += 2) {
         spreads.push({
-          left: currentSpread.left.map(t => `<p>${t}</p>`).join(""),
-          right: currentSpread.right.map(t => `<p>${t}</p>`).join("")
+          left: pages[i] || "",
+          right: pages[i+1] || ""
         });
       }
-
       return spreads;
     }
 
