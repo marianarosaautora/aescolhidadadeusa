@@ -2393,7 +2393,7 @@
     <!-- Atualiza links dinamicamente do content.json (gerenciado pelo painel admin) -->
     <script>
       (function() {
-        fetch('/content.json?t=' + Date.now())
+        fetch('/content.json')
           .then(r => r.json())
           .then(data => {
             // Buy links
@@ -2414,6 +2414,177 @@
             if (ig && social.instagram) {
               ig.href = social.instagram;
               ig.textContent = 'Instagram ' + social.instagram.replace('https://instagram.com/', '@').replace('https://www.instagram.com/', '@');
+            }
+
+            // Dynamically inject all index texts
+            const idxTexts = data?.index;
+            if (idxTexts) {
+              // Hero
+              if (idxTexts.hero) {
+                const authorTag = document.querySelector('.author-tag');
+                if (authorTag && idxTexts.hero.tag) authorTag.textContent = idxTexts.hero.tag;
+                
+                const titleLine1 = document.querySelector('.title-line-1');
+                if (titleLine1 && idxTexts.hero.title1) titleLine1.textContent = idxTexts.hero.title1;
+                
+                const titleLine2 = document.querySelector('.title-line-2');
+                if (titleLine2 && idxTexts.hero.title2) titleLine2.textContent = idxTexts.hero.title2;
+                
+                const titleBgText = document.querySelector('.title-bg-text');
+                if (titleBgText && idxTexts.hero.bgText) titleBgText.textContent = idxTexts.hero.bgText;
+                
+                const heroTagline = document.querySelector('.hero-tagline');
+                if (heroTagline && idxTexts.hero.tagline) heroTagline.innerHTML = idxTexts.hero.tagline;
+                
+                const buyHero = document.getElementById('buyLinkHero');
+                if (buyHero && idxTexts.hero.ctaLabel) buyHero.textContent = idxTexts.hero.ctaLabel;
+              }
+              
+              // Book
+              if (idxTexts.book) {
+                const bookLabel = document.querySelector('.book-label');
+                if (bookLabel && idxTexts.book.label) bookLabel.textContent = idxTexts.book.label;
+                
+                const bookTitle = document.querySelector('.book-title-sm');
+                if (bookTitle && idxTexts.book.title) bookTitle.innerHTML = idxTexts.book.title;
+                
+                const bookSyn = document.querySelector('.book-synopsis');
+                if (bookSyn && idxTexts.book.synopsis) bookSyn.innerHTML = idxTexts.book.synopsis;
+                
+                const bookTags = document.querySelector('.book-genre-tags');
+                if (bookTags && idxTexts.book.tags) {
+                  bookTags.innerHTML = idxTexts.book.tags.map(t => `<span class="genre-tag">${t}</span>`).join('');
+                }
+                
+                const buyBook = document.getElementById('buyLinkBook');
+                if (buyBook && idxTexts.book.ctaBuy) buyBook.textContent = idxTexts.book.ctaBuy;
+                
+                const bookGhost = document.querySelector('.book-ctas .btn-ghost');
+                if (bookGhost && idxTexts.book.ctaSynopsis) bookGhost.textContent = idxTexts.book.ctaSynopsis;
+              }
+              
+              // Sinopse
+              if (idxTexts.sinopse) {
+                const sinEyebrow = document.querySelector('#sinopse .section-eyebrow');
+                if (sinEyebrow && idxTexts.sinopse.eyebrow) sinEyebrow.textContent = idxTexts.sinopse.eyebrow;
+                
+                const sinTitle = document.querySelector('#sinopse .section-title');
+                if (sinTitle && idxTexts.sinopse.title) sinTitle.innerHTML = idxTexts.sinopse.title;
+                
+                const sinText = document.querySelector('.synopsis-text');
+                if (sinText && idxTexts.sinopse.paragraphs) {
+                  sinText.innerHTML = idxTexts.sinopse.paragraphs.map((p, i) => {
+                    if (i === 1 || i === 4) {
+                      return `<div class="synopsis-highlight"><p>${p}</p></div>`;
+                    }
+                    return `<p>${p}</p>`;
+                  }).join('');
+                }
+              }
+              
+              // World grid
+              const worldGrid = document.querySelector('.world-grid');
+              if (worldGrid) {
+                const cc = data.membros?.cidade_celestial;
+                const reinos = data.membros?.reinos || [];
+                let cardsHtml = '';
+                
+                if (cc) {
+                  cardsHtml += `
+                    <div class="world-card main-realm reveal" style="--gem-color: var(--gold)">
+                      <div class="gem-icon-wrap">
+                        <svg class="gem-icon"><use href="#gem-shape" /></svg>
+                      </div>
+                      <h3 class="world-card-title">${cc.nome}</h3>
+                      <div class="world-card-subtitle">${cc.gema}</div>
+                      <p class="world-card-text">${cc.descricao}</p>
+                    </div>
+                  `;
+                }
+                
+                reinos.forEach(r => {
+                  const gemColor = r.rc || '#c9a84c';
+                  cardsHtml += `
+                    <div class="world-card reveal" style="--gem-color: ${gemColor}">
+                      <div class="gem-icon-wrap">
+                        <svg class="gem-icon"><use href="#gem-shape" /></svg>
+                      </div>
+                      <h3 class="world-card-title">${r.nome}</h3>
+                      <div class="world-card-subtitle">${r.gema}</div>
+                      <p class="world-card-text">${r.descricao}</p>
+                    </div>
+                  `;
+                });
+                
+                worldGrid.innerHTML = cardsHtml;
+                if (typeof observer !== 'undefined') {
+                  worldGrid.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+                }
+              }
+              
+              // Personagens
+              if (idxTexts.personagens) {
+                const charEyebrow = document.querySelector('#personagens .section-eyebrow');
+                if (charEyebrow && idxTexts.personagens.eyebrow) charEyebrow.textContent = idxTexts.personagens.eyebrow;
+                
+                const charTitle = document.querySelector('#personagens .section-title');
+                if (charTitle && idxTexts.personagens.title) charTitle.innerHTML = idxTexts.personagens.title;
+                
+                if (idxTexts.personagens.celestria) {
+                  const cel = idxTexts.personagens.celestria;
+                  const celRole = document.querySelector('.char-card-celestria .char-role');
+                  if (celRole && cel.role) celRole.textContent = cel.role;
+                  const celName = document.querySelector('.char-card-celestria .char-name');
+                  if (celName && cel.name) celName.textContent = cel.name;
+                  const celDesc = document.querySelector('.char-card-celestria .char-desc');
+                  if (celDesc && cel.desc) celDesc.innerHTML = cel.desc;
+                }
+                
+                if (idxTexts.personagens.taina) {
+                  const tai = idxTexts.personagens.taina;
+                  const taiRole = document.querySelector('.char-card-taina .char-role');
+                  if (taiRole && tai.role) taiRole.textContent = tai.role;
+                  const taiName = document.querySelector('.char-card-taina .char-name');
+                  if (taiName && tai.name) taiName.textContent = tai.name;
+                  const taiDesc = document.querySelector('.char-card-taina .char-desc');
+                  if (taiDesc && tai.desc) taiDesc.innerHTML = tai.desc;
+                }
+              }
+              
+              // Autora
+              if (idxTexts.autora) {
+                const autEyebrow = document.querySelector('.author-name-lbl');
+                if (autEyebrow && idxTexts.autora.eyebrow) autEyebrow.textContent = idxTexts.autora.eyebrow;
+                
+                const autName = document.querySelector('.author-name-big');
+                if (autName && idxTexts.autora.name) autName.textContent = idxTexts.autora.name;
+                
+                const autBio = document.querySelector('.author-bio');
+                if (autBio && idxTexts.autora.bio) autBio.innerHTML = idxTexts.autora.bio;
+              }
+              
+              // Comunidade
+              if (idxTexts.comunidade) {
+                const comTitle = document.querySelector('.presale-title');
+                if (comTitle && idxTexts.comunidade.title) comTitle.innerHTML = idxTexts.comunidade.title;
+                
+                const comSub = document.querySelector('.presale-sub');
+                if (comSub && idxTexts.comunidade.desc) comSub.textContent = idxTexts.comunidade.desc;
+                
+                const comNote = document.querySelector('.presale-note');
+                if (comNote && idxTexts.comunidade.note) comNote.textContent = idxTexts.comunidade.note;
+                
+                const comBtn = document.getElementById('emailSubmit');
+                if (comBtn && idxTexts.comunidade.button && comBtn.textContent !== 'Inscrita ✓') {
+                  comBtn.textContent = idxTexts.comunidade.button;
+                }
+              }
+            }
+            
+            // Footer copy
+            if (data?.site?.footerCopy) {
+              const foot = document.querySelector('.footer-copy');
+              if (foot) foot.textContent = data.site.footerCopy;
             }
 
             // Render other pigmentadoras dynamic cards

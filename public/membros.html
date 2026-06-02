@@ -3762,12 +3762,15 @@
 
     async function loadSiteData() {
       try {
-        const res = await fetch('/content.json?t=' + Date.now());
+        const res = await fetch('/content.json');
         const data = await res.json();
         BLOG_POSTS = data.membros.blog;
         GALLERY_ITEMS = data.membros.gallery;
         PIGMENTADORAS = data.membros.pigmentadoras;
         REINOS_DATA = data.membros.reinos;
+        if (data.membros?.cidade_celestial) {
+          CIDADE_CELESTIAL_DEFAULT = data.membros.cidade_celestial;
+        }
 
         renderBlog();
         renderGallery();
@@ -4064,7 +4067,7 @@
     }
 
     // ══ INTERATIVIDADE DA CIDADE CELESTIAL ══
-    const CIDADE_CELESTIAL_DEFAULT = {
+    let CIDADE_CELESTIAL_DEFAULT = {
       nome: "Cidade Celestial",
       gema: "Gema Dourada",
       pigmentadora: "Celestria",

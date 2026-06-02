@@ -14,19 +14,23 @@
   },
   "index": {
     "hero": {
-      "tag": "Uma Romantasia Sáfica",
-      "title": "A Escolhida",
-      "titleHighlight": "da Deusa",
-      "subtitle": "Tainá é uma escritora renomada de romantasias sáficas. Ela retira as palavras de seus sonhos, onde uma mulher de olhos dourados sempre está presente. Tudo muda quando o único legado de sua mãe — um antigo pincel — atrai um ataque sombrio inesperado.",
-      "ctaLabel": "Garantir meu exemplar",
-      "ctaLink": "#comprar",
-      "ctaSecondaryLabel": "Área Exclusiva",
-      "ctaSecondaryLink": "membros.html"
+      "tag": "Mariana Rosa · Romantasia Sáfica",
+      "title1": "A Escolhida da",
+      "title2": "Deusa",
+      "bgText": "DEUSA",
+      "tagline": "O roxo e o dourado entrelaçados em filamentos de perigo e atração,<br />onde o amor é tão perigoso quanto os próprios conflitos.",
+      "ctaLabel": "Garantir meu exemplar"
     },
     "sinopse": {
       "eyebrow": "A História",
-      "title": "Sinopse",
-      "text": "Tainá é uma escritora renomada de romantasias sáficas. Ela retira as palavras de seus sonhos, onde uma mulher de olhos dourados sempre está presente.\n\nTudo muda quando o único legado de sua mãe — um antigo pincel — atrai um ataque sombrio inesperado. Em um lampejo de energia roxa, a realidade se rasga em um véu feito pelo seu pincel.\n\nTainá cai em um mundo que apenas sua imaginação conseguiria descrever. Descobre ser uma Pigmentadora, uma guardiã destinada a trazer o equilíbrio nos nove reinos. O choque final, porém, não vem apenas da magia que adquiriu, mas do altar. A divindade a quem ela deve servir é a Deusa Celestria, a mesma mulher que habitou seus sonhos.\n\nEnquanto tenta compreender seu papel e o laço inexplicável que as prendem, duas ameaças primordiais se erguem nas sombras: a Vazio, uma titã ancestral ligada ao passado de Tainá, que anseia consumir toda a vida dos nove mundos, e um Deus traído pela própria filha — Celestria —, preso nas raízes da Árvore Celestial.\n\nO roxo e o dourado estão entrelaçados em filamentos de perigo e atração, onde o amor e o desejo entre elas são tão perigosos quanto os próprios conflitos."
+      "title": "O Véu se <em>Rasga</em>",
+      "paragraphs": [
+        "<strong>Tainá</strong> é uma escritora renomada de romantasias sáficas. Ela retira as palavras de seus sonhos, onde uma mulher de olhos dourados sempre está presente. Tudo muda quando o único legado de sua mãe, um antigo pincel, atrai um ataque sombrio inesperado.",
+        "Em um lampejo de energia roxa, a realidade se rasga em um véu feito pelo seu pincel. Tainá cai em um mundo que apenas sua imaginação conseguiria descrever.",
+        "Ela descobre ser uma <strong>Pigmentadora</strong>, uma guardiã destinada a trazer o equilíbrio nos nove reinos. O choque final, porém, não vem apenas da magia que adquiriu, mas do altar. A divindade a quem ela deve servir é a <strong>Deusa Celestria</strong>, a mesma mulher que habitou seus sonhos.",
+        "Enquanto tenta compreender seu papel e o laço inexplicável que as prende, duas ameaças primordiais se erguem nas sombras: <strong>a Vazio</strong>, uma titã ancestral ligada ao passado de Tainá que anseia consumir toda a vida dos nove mundos, e um <strong>Deus traído</strong> pela própria filha Celestria, preso nas raízes da Árvore Celestial.",
+        "O roxo e o dourado estão entrelaçados em filamentos de perigo e atração, onde o amor e o desejo entre elas são tão perigosos quanto os próprios conflitos, cada vez mais próximos."
+      ]
     },
     "tropes": [
       "Romantasia Sáfica",
@@ -50,6 +54,45 @@
       "subtitle": "Acesse conteúdo exclusivo, bastidores e o universo expandido dos Nove Reinos.",
       "link": "membros.html",
       "linkLabel": "Acessar Área Exclusiva"
+    },
+    "book": {
+      "label": "Novo lançamento · 2026",
+      "title": "A Escolhida<br />da Deusa",
+      "synopsis": "Uma escritora de mundos imaginários descobre que seus sonhos são uma janela para um reino real e, que a divindade que a escolheu habita seus sonhos há anos. <em> Entre magia, destino e desejo, dois mundos se rasgarão.</em>",
+      "tags": [
+        "Romantasia",
+        "Fantasia Épica",
+        "Sáfico",
+        "Magia"
+      ],
+      "ctaBuy": "Comprar",
+      "ctaSynopsis": "Ler sinopse"
+    },
+    "personagens": {
+      "eyebrow": "As Protagonistas",
+      "title": "Duas <em>Almas</em> Entrelaçadas",
+      "celestria": {
+        "role": "A Deusa",
+        "name": "Celestria",
+        "desc": "Divindade dos nove reinos que habita os sonhos de Tainá há anos. Seus olhos dourados guardam segredos que podem salvar, ou destruir, tudo o que existe."
+      },
+      "taina": {
+        "role": "A Pigmentadora",
+        "name": "Tainá",
+        "desc": "Escritora de romantasias sáficas que retira as palavras de seus sonhos. Herdeira de um pincel ancestral, descobrirá que sua imaginação sempre foi mais do que ficção."
+      }
+    },
+    "autora": {
+      "eyebrow": "A Autora",
+      "name": "Mariana Rosa",
+      "bio": "Mariana Rosa, escritora de romances lésbicos/sáficos. Nascida em Floripa, mas criada em Niterói, é conhecida por escrever uma série de romances chamado “Entre Elas”. Com mais 10 romances na Amazon, Mariana foca seu estilo de escrita em romances eróticos e dramáticos. Mesmo sempre escrevendo, a autora arranja um tempinho para jogar videogame, colecionar cartinhas Pokémon e assistir documentários. <br/><br/>Em <em>A Escolhida da Deusa</em>, ela tece um universo onde a magia nasce da criação e o amor desafia deuses e titãs. Siga sua jornada criativa no Instagram."
+    },
+    "comunidade": {
+      "eyebrow": "✦ ✦ ✦",
+      "title": "Entre no Portal das<br />Pigmentadoras",
+      "desc": "Cadastre seu e-mail para ter acesso ao diário completo da autora, ilustrações exclusivas e conteúdos adicionais do livro.",
+      "note": "Sem spam. Só o universo vivo da história e seus lançamentos. ✦",
+      "button": "Entrar"
     }
   },
   "membros": {
@@ -580,6 +623,34 @@
         "thumb": "src/assets/gallery/arte 5.jpg",
         "download": "src/assets/gallery/arte 5.png"
       }
-    ]
+    ],
+    "cidade_celestial": {
+      "nome": "Cidade Celestial",
+      "gema": "Gema Dourada",
+      "pigmentadora": "Celestria",
+      "descricao": "Onde as <strong>Pigmentadoras</strong> vivem junto à Celestria. Lá a <strong>grande Árvore</strong> reside, assim como os moradores selecionados dos outros reinos. Um local em que a harmonia da fauna e da flora e da mistura da arquitetura são permitidas.",
+      "detalhes": [
+        "Regida por <span>Celestria, a Deusa</span>",
+        "Lar da <span>grande Árvore</span>"
+      ],
+      "lore": [
+        {
+          "icon": "◈",
+          "texto": "A cidade perfeita cresce sob a Grande Árvore Celestial. Embora pequena em extensão e controlada para que tudo aconteça harmoniosamente, ela é um microcosmo, abrigando em si a essência e os biomas dos nove reinos."
+        },
+        {
+          "icon": "◈",
+          "texto": "Formando nove distritos, cada um deles mantém a natureza, os animais, a arquitetura e a cultura dos reinos. Os distritos se organizam em un gracioso leque a partir do centro, onde a arquitetura reflete o gosto etéreo de Celestria. Apesar de todos os reinos presentes, é a lei da divindade que predomina."
+        },
+        {
+          "icon": "◈",
+          "texto": "Na cidade Celestial, a vida possui um propósito compartilhado: cada habitante, à sua maneira, dedica-se à manutenção e ao equilíbrio da Grande Árvore. Em troca, recebem a Bênção de Celestria. Este dom não apenas os torna resistentes às variações climáticas de cada bioma, mas lhes dá a oportunidade da compreensão do dialeto de cada reino, fazendo com que todos se compreendam mutuamente."
+        },
+        {
+          "icon": "◈",
+          "texto": "É, em todos os sentidos, a cidade perfeita."
+        }
+      ]
+    }
   }
 }
