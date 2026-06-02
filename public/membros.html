@@ -3401,8 +3401,13 @@
       let currentPageText = [];
       let currentPageChars = 0;
       
+      const headerLength = (p.name || "").length + (p.realm || "").length + (p.power || "").length;
+      
       function getLimitForPage(index) {
-        return index === 0 ? 400 : 500;
+        if (index === 0) {
+          return Math.max(50, 310 - headerLength);
+        }
+        return 420;
       }
       
       let pageIndex = 0;
@@ -3414,7 +3419,7 @@
         let spaceLeft = limit - currentPageChars;
         
         // If remaining space on page is too small and page is not empty, push to next page
-        if (spaceLeft < 60 && currentPageText.length > 0) {
+        if (spaceLeft < 40 && currentPageText.length > 0) {
           pages.push(currentPageText.map(t => `<p>${t}</p>`).join(""));
           currentPageText = [];
           currentPageChars = 0;
@@ -3428,9 +3433,9 @@
           currentPageChars += paragraph.length;
         } else {
           // If the paragraph is too large and the page has some content already,
-          // only split it if the remaining space is decent (>= 100 chars),
+          // only split it if the remaining space is decent (>= 80 chars),
           // otherwise push the entire paragraph to the next page.
-          if (currentPageText.length > 0 && spaceLeft < 100) {
+          if (currentPageText.length > 0 && spaceLeft < 80) {
             pages.push(currentPageText.map(t => `<p>${t}</p>`).join(""));
             currentPageText = [];
             currentPageChars = 0;
@@ -3443,11 +3448,11 @@
           let splitIdx = spaceLeft;
           let lastSpace = paragraph.lastIndexOf(' ', splitIdx);
           
-          if (lastSpace > 0 && lastSpace > spaceLeft - 150) {
+          if (lastSpace > 0 && lastSpace > spaceLeft - 100) {
             splitIdx = lastSpace;
           } else {
             let nextSpace = paragraph.indexOf(' ', splitIdx);
-            if (nextSpace > 0 && nextSpace - splitIdx < 30) {
+            if (nextSpace > 0 && nextSpace - splitIdx < 20) {
               splitIdx = nextSpace;
             } else if (lastSpace > 0) {
               splitIdx = lastSpace;
