@@ -1024,7 +1024,7 @@
             <div style="margin-top: 24px;">
               <button class="btn btn-primary" onclick="saveAllTexts()">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-                Salvar Textos no GitHub
+                Salvar Textos e publicar
               </button>
             </div>
           </div>
@@ -1711,19 +1711,19 @@
         }
         
         closeEditorModal();
-        toast('✦ Alteração salva na memória. Salve no GitHub para publicar.');
+        toast('✦ Alteração salva na memória. Clique em "Salvar Textos e publicar" para publicar.');
       }
 
       async function saveAllTexts() {
         if (!siteContent) { toast('Conteúdo não carregado ainda.', 'error'); return; }
         
-        toast('Salvando no GitHub... Aguarde.');
+        toast('Publicando alterações... Aguarde.');
         
         try {
           await saveToGitHub();
-          toast('✦ Textos salvos com sucesso! O site será atualizado em 2-3 minutos.');
+          toast('✦ Alteração publicada com sucesso! O site será atualizado em 2-3 minutos.');
         } catch(e) {
-          toast('Erro ao salvar no GitHub: ' + e.message, 'error');
+          toast('Erro ao publicar: ' + e.message, 'error');
         }
       }
 
