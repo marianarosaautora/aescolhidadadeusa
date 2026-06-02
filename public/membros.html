@@ -1703,6 +1703,21 @@
       }
     }
 
+    @media (max-width: 424px) {
+      .bio-nav-inner {
+        font-size: 0.46rem !important;
+        letter-spacing: 0.06em !important;
+        padding: 2px 5px !important;
+        bottom: 5% !important;
+      }
+      .bio-nav-back {
+        left: 5% !important;
+      }
+      .bio-nav-continue {
+        right: 5% !important;
+      }
+    }
+
     /* ── SEÇÃO REINOS ── */
     .reinos-section {
       padding: 50px 24px 80px;
@@ -3454,10 +3469,23 @@
       const headerLength = (p.name || "").length + (p.realm || "").length + (p.power || "").length;
       
       function getLimitForPage(index) {
-        if (index === 0) {
-          return Math.max(50, 310 - headerLength);
+        const width = window.innerWidth;
+        if (width < 425) {
+          if (index === 0) {
+            return Math.max(40, 200 - headerLength);
+          }
+          return 290;
+        } else if (width < 820) {
+          if (index === 0) {
+            return Math.max(50, 350 - headerLength);
+          }
+          return 410;
+        } else {
+          if (index === 0) {
+            return Math.max(50, 310 - headerLength);
+          }
+          return 390;
         }
-        return 390;
       }
       
       let pageIndex = 0;
