@@ -407,7 +407,7 @@ const newReinos = [
       },
       {
         icon: "◈",
-        texto: "Não há um poder central que governe o reino. Em seu lugar, pequenos grupos de representantes se estabeleceram em antigos castelos abandonados, reivindicando autoridade. E, assim como seu povo, as criaturas que habitam as florestas são igualmente ameaçadoras. Em Caligobris, os fracos não sobrevivem, eles são lembrados apenas pelos entes queridos, como o filho e o marido de Tenebra."
+        texto: "Não há um poder central que governe o reino. Em seu lugar, pequenos grupos de representantes se estabeleceram em antigos castelos abandonados, reivindicando autoridade."
       }
     ]
   },
