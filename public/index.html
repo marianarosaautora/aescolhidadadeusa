@@ -1921,21 +1921,21 @@
       <div class="orb orb-2"></div>
       <div class="orb orb-3"></div>
       <div class="hero-content">
-        <p class="author-tag" data-editable="index.hero.tag">Mariana Rosa · Romantasia Sáfica</p>
+        <p class="author-tag">Mariana Rosa · Romantasia Sáfica</p>
         <div class="title-wrap">
-          <div class="title-bg-text" data-editable="index.hero.bgText">DEUSA</div>
+          <div class="title-bg-text">DEUSA</div>
           <h1 class="title-main">
-            <span class="title-line-1" data-editable="index.hero.title1">A Escolhida da</span>
-            <span class="title-line-2" data-editable="index.hero.title2">Deusa</span>
+            <span class="title-line-1">A Escolhida da</span>
+            <span class="title-line-2">Deusa</span>
           </h1>
         </div>
         <div class="title-divider"></div>
-        <p class="hero-tagline" data-editable="index.hero.tagline">
+        <p class="hero-tagline">
           O roxo e o dourado entrelaçados em filamentos de perigo e atração,<br />
           onde o amor é tão perigoso quanto os próprios conflitos.
         </p>
         <div class="hero-cta-group">
-          <a href="https://amzn.to/4wVBjIC" target="_blank" id="buyLinkHero" class="btn-gold" data-editable="index.hero.ctaLabel" data-editable-link="index.comprar.link">Garantir meu exemplar</a>
+          <a href="https://amzn.to/4wVBjIC" target="_blank" id="buyLinkHero" class="btn-gold">Garantir meu exemplar</a>
         </div>
       </div>
       <div class="scroll-hint">
@@ -2434,23 +2434,6 @@
             // Dynamically inject all index texts
             const idxTexts = data?.index;
             if (idxTexts) {
-              // Hero
-              if (idxTexts.hero) {
-                const authorTag = document.querySelector('.author-tag');
-                if (authorTag && idxTexts.hero.tag) { authorTag.textContent = idxTexts.hero.tag; authorTag.setAttribute('data-editable', 'index.hero.tag'); }
-                
-                const titleLine1 = document.querySelector('.title-line-1');
-                if (titleLine1 && idxTexts.hero.title1) { titleLine1.textContent = idxTexts.hero.title1; titleLine1.setAttribute('data-editable', 'index.hero.title1'); }
-                
-                const titleLine2 = document.querySelector('.title-line-2');
-                if (titleLine2 && idxTexts.hero.title2) { titleLine2.textContent = idxTexts.hero.title2; titleLine2.setAttribute('data-editable', 'index.hero.title2'); }
-                
-                const heroTagline = document.querySelector('.hero-tagline');
-                if (heroTagline && idxTexts.hero.tagline) { heroTagline.innerHTML = idxTexts.hero.tagline; heroTagline.setAttribute('data-editable', 'index.hero.tagline'); }
-                
-                const buyHero = document.getElementById('buyLinkHero');
-                if (buyHero && idxTexts.hero.ctaLabel) { buyHero.textContent = idxTexts.hero.ctaLabel; buyHero.setAttribute('data-editable', 'index.hero.ctaLabel'); }
-              }
               
               // Book
               if (idxTexts.book) {
