@@ -2796,11 +2796,12 @@
       <div class="orb orb-b"></div>
       <div class="orb orb-c"></div>
       <div class="welcome-content">
-        <div class="welcome-tag">Bem-vinda, Pigmentadora</div>
+        <div class="welcome-tag" data-editable="membros.hero.tag">Bem-vinda, Pigmentadora</div>
         <h1 class="welcome-h1">
-          Área <span>Exclusiva</span><br />das Guardiãs
+          <span data-editable="membros.hero.title">Área <span>Exclusiva</span></span><br />
+          <span data-editable="membros.hero.titleHighlight">das Guardiãs</span>
         </h1>
-        <p class="welcome-sub">
+        <p class="welcome-sub" data-editable="membros.hero.subtitle">
           Você cruzou o véu. Aqui vivem os segredos dos nove reinos, as
           histórias que só as guardiãs conhecem.
         </p>
@@ -3458,14 +3459,32 @@
 
     // ── BLOG MODAL ──
     function openBlogModal(id) {
-      const post = BLOG_POSTS.find(p => p.id === id) || BLOG_POSTS[id];
+      const pIdx = BLOG_POSTS.findIndex(p => p.id === id);
+      const post = pIdx !== -1 ? BLOG_POSTS[pIdx] : BLOG_POSTS[id];
       if (!post) return;
-      document.getElementById('modalEyebrow').textContent = post.eyebrow || post.cat || '';
-      document.getElementById('modalTitle').textContent = post.title || '';
-      document.getElementById('modalBody').innerHTML = post.body || '<p>' + (post.excerpt || '') + '</p>';
+      
+      const idx = pIdx !== -1 ? pIdx : id;
+      
+      const eyebrowEl = document.getElementById('modalEyebrow');
+      eyebrowEl.textContent = post.eyebrow || post.cat || '';
+      eyebrowEl.setAttribute('data-editable', `membros.blog.${idx}.eyebrow`);
+      
+      const titleEl = document.getElementById('modalTitle');
+      titleEl.textContent = post.title || '';
+      titleEl.setAttribute('data-editable', `membros.blog.${idx}.title`);
+      
+      const bodyEl = document.getElementById('modalBody');
+      bodyEl.innerHTML = post.body || '<p>' + (post.excerpt || '') + '</p>';
+      bodyEl.setAttribute('data-editable', `membros.blog.${idx}.body`);
+      
       const modal = document.getElementById('blogModal');
       modal.classList.add('open');
       document.body.style.overflow = 'hidden';
+      
+      // Notifica o frame pai admin para instrumentar os novos elementos do modal do blog
+      if (window.parent && typeof window.parent.setupIframeEditor === 'function') {
+        window.parent.setupIframeEditor(window.frameElement, 'membros');
+      }
     }
 
     function closeBlogModal() {
@@ -3762,14 +3781,34 @@
 
     async function loadSiteData() {
       try {
-        const res = await fetch('/content.json');
-        const data = await res.json();
+        const data = (window.parent && window.parent.siteContent)
+          ? window.parent.siteContent
+          : await fetch('/content.json?t=' + Date.now()).then(r => r.json());
         BLOG_POSTS = data.membros.blog;
         GALLERY_ITEMS = data.membros.gallery;
         PIGMENTADORAS = data.membros.pigmentadoras;
         REINOS_DATA = data.membros.reinos;
         if (data.membros?.cidade_celestial) {
           CIDADE_CELESTIAL_DEFAULT = data.membros.cidade_celestial;
+        }
+
+        // Load members hero texts dynamically
+        if (data.membros?.hero) {
+          const tag = document.querySelector('.welcome-tag');
+          if (tag && data.membros.hero.tag) {
+            tag.textContent = data.membros.hero.tag;
+            tag.setAttribute('data-editable', 'membros.hero.tag');
+          }
+          const h1 = document.querySelector('.welcome-h1');
+          if (h1 && data.membros.hero.title) {
+            const highlight = data.membros.hero.titleHighlight || 'das Guardiãs';
+            h1.innerHTML = `<span data-editable="membros.hero.title">${data.membros.hero.title.replace('Exclusiva', '<span>Exclusiva</span>')}</span><br /><span data-editable="membros.hero.titleHighlight">${highlight}</span>`;
+          }
+          const sub = document.querySelector('.welcome-sub');
+          if (sub && data.membros.hero.subtitle) {
+            sub.textContent = data.membros.hero.subtitle;
+            sub.setAttribute('data-editable', 'membros.hero.subtitle');
+          }
         }
 
         renderBlog();
@@ -3783,6 +3822,11 @@
         // Re-observe dynamically added elements
         if (_pageObserver) {
           document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => _pageObserver.observe(el));
+        }
+
+        // Notify parent to instrument editing triggers
+        if (window.parent && typeof window.parent.setupIframeEditor === 'function' && window.frameElement) {
+          window.parent.setupIframeEditor(window.frameElement, 'membros');
         }
       } catch (err) {
         console.error("Failed to load content.json", err);
@@ -3859,7 +3903,7 @@
         const div = document.createElement("div");
         div.className = "gallery-item reveal";
         div.style.transitionDelay = i * 0.1 + "s";
-        div.innerHTML = `<img src="${it.thumb}" alt="${it.title}"><div class="gallery-overlay"><div class="gallery-item-title">${it.title}</div><button class="gallery-download-btn" onclick="triggerDownload('${it.download}','${it.title}')"><span>⬇</span> Download</button></div>`;
+        div.innerHTML = `<img src="${it.thumb}" alt="${it.title}"><div class="gallery-overlay"><div class="gallery-item-title" data-editable="membros.gallery.${i}.title">${it.title}</div><button class="gallery-download-btn" onclick="triggerDownload('${it.download}','${it.title}')"><span>⬇</span> Download</button></div>`;
         grid.appendChild(div);
         if (_pageObserver) setTimeout(() => _pageObserver.observe(div), 10);
       });
@@ -4086,6 +4130,18 @@
           d.classList.remove("active");
         }
       });
+
+      // Add data-editable dynamically to active book elements
+      if (charName) charName.setAttribute('data-editable', 'membros.pigmentadoras.' + idx + '.name');
+      if (charRealm) charRealm.setAttribute('data-editable', 'membros.pigmentadoras.' + idx + '.realm');
+      if (charPowers) charPowers.setAttribute('data-editable', 'membros.pigmentadoras.' + idx + '.power');
+      if (charBio) charBio.setAttribute('data-editable', 'membros.pigmentadoras.' + idx + '.bio');
+      if (charBioRight) charBioRight.setAttribute('data-editable', 'membros.pigmentadoras.' + idx + '.bio');
+
+      // Notify parent to re-instrument edit triggers
+      if (window.parent && typeof window.parent.setupIframeEditor === 'function' && window.frameElement) {
+        window.parent.setupIframeEditor(window.frameElement, 'membros');
+      }
     }
 
     function renderReinos() {
@@ -4102,7 +4158,7 @@
         const pigmentadora = r.pigmentadora || r.resident || '';
         const descricao = r.descricao || r.text || '';
         const delay = r.delay || (i * 0.1) + 's';
-        let loreHtml = r.lore ? r.lore.map((l) => `<div class="reino-lore-item"><span class="lore-icon">${l.icon}</span><p class="lore-texto">${l.texto}</p></div>`).join("") : "";
+        let loreHtml = r.lore ? r.lore.map((l, lIdx) => `<div class="reino-lore-item"><span class="lore-icon">${l.icon}</span><p class="lore-texto" data-editable="membros.reinos.${i}.lore.${lIdx}.texto">${l.texto}</p></div>`).join("") : "";
         const div = document.createElement("div");
         div.className = "reino-card-exclusivo reveal";
         div.style.cssText = `--rc:${rc};--rc-bg:${rcBg};--rc-border:${rc}22;--card-delay:${delay};transition-delay:${delay};`;
@@ -4115,10 +4171,10 @@
               <div class="reino-gem-icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><use href="#gem"/></svg></div>
             </div>
             <div class="reino-corpo">
-              <div class="reino-nome">${nome}</div>
-              <div class="reino-gema">${gema}</div>
-              <div class="reino-pigmentadora">✦ ${pigmentadora}</div>
-              <p class="reino-descricao">${descricao}</p>
+              <div class="reino-nome" data-editable="membros.reinos.${i}.nome">${nome}</div>
+              <div class="reino-gema" data-editable="membros.reinos.${i}.gema">${gema}</div>
+              <div class="reino-pigmentadora" data-editable="membros.reinos.${i}.pigmentadora">✦ ${pigmentadora}</div>
+              <p class="reino-descricao" data-editable="membros.reinos.${i}.descricao">${descricao}</p>
               <div class="reino-lore">
                 <div class="reino-lore-titulo">Lore exclusivo</div>
                 ${loreHtml}
@@ -4169,7 +4225,20 @@
       const detalhesEl = document.getElementById('cidadeDetalhes');
       const loreEl = document.getElementById('cidadeLore');
 
-      if (nomeEl) nomeEl.textContent = data.nome || data.name;
+      let prefix = '';
+      if (data.nome === "Cidade Celestial") {
+        prefix = 'membros.cidade_celestial';
+      } else {
+        const kIdx = REINOS_DATA.findIndex(r => r.nome === data.nome || r.name === data.nome);
+        if (kIdx !== -1) {
+          prefix = 'membros.reinos.' + kIdx;
+        }
+      }
+
+      if (nomeEl) {
+        nomeEl.textContent = data.nome || data.name;
+        if (prefix) nomeEl.setAttribute('data-editable', prefix + '.nome');
+      }
       if (subEl) {
         if (data.nome === "Cidade Celestial") {
           subEl.textContent = "Gema Dourada · O Coração dos Nove Reinos";
@@ -4181,30 +4250,45 @@
       }
       if (textoEl) {
         textoEl.innerHTML = data.descricao || data.text || '';
+        if (prefix) textoEl.setAttribute('data-editable', prefix + '.descricao');
       }
 
       if (detalhesEl) {
         detalhesEl.innerHTML = '';
-        const detalhes = data.detalhes || [
-          `Gema: <span>${data.gema}</span>`,
-          `Guardiã: <span>${data.pigmentadora}</span>`
-        ];
-        detalhes.forEach(det => {
-          const div = document.createElement('div');
-          div.className = 'cidade-detalhe';
-          div.innerHTML = det;
-          detalhesEl.appendChild(div);
-        });
+        if (data.nome === "Cidade Celestial") {
+          const detalhes = data.detalhes || [
+            "Regida por <span>Celestria, a Deusa</span>",
+            "Lar da <span>grande Árvore</span>"
+          ];
+          detalhes.forEach((det, dIdx) => {
+            const div = document.createElement('div');
+            div.className = 'cidade-detalhe';
+            div.innerHTML = det;
+            div.setAttribute('data-editable', 'membros.cidade_celestial.detalhes.' + dIdx);
+            detalhesEl.appendChild(div);
+          });
+        } else {
+          const div1 = document.createElement('div');
+          div1.className = 'cidade-detalhe';
+          div1.innerHTML = `Gema: <span data-editable="${prefix}.gema">${data.gema || ''}</span>`;
+          detalhesEl.appendChild(div1);
+
+          const div2 = document.createElement('div');
+          div2.className = 'cidade-detalhe';
+          div2.innerHTML = `Guardiã: <span data-editable="${prefix}.pigmentadora">${data.pigmentadora || ''}</span>`;
+          detalhesEl.appendChild(div2);
+        }
       }
 
       if (loreEl) {
         let html = '<div class="reino-lore-titulo">Lore exclusivo</div>';
         if (data.lore && data.lore.length > 0) {
-          data.lore.forEach(item => {
+          data.lore.forEach((item, lIdx) => {
+            const pathAttr = prefix ? `data-editable="${prefix}.lore.${lIdx}.texto"` : '';
             html += `
                 <div class="reino-lore-item">
                   <span class="lore-icon">${item.icon || '◈'}</span>
-                  <p class="lore-texto">${item.texto || item.text || ''}</p>
+                  <p class="lore-texto" ${pathAttr}>${item.texto || item.text || ''}</p>
                 </div>`;
           });
         } else {
@@ -4225,6 +4309,11 @@
         }
 
         loreEl.innerHTML = html;
+      }
+
+      // Notify parent to re-instrument edit triggers
+      if (window.parent && typeof window.parent.setupIframeEditor === 'function' && window.frameElement) {
+        window.parent.setupIframeEditor(window.frameElement, 'membros');
       }
     }
 
@@ -4376,6 +4465,8 @@
 
       const featured = BLOG_POSTS.find(p => p.featured) || BLOG_POSTS[0];
       const others = BLOG_POSTS.filter(p => p !== featured);
+      
+      const featuredIdx = BLOG_POSTS.indexOf(featured);
 
       let htmlStr = '<div class="blog-featured">' +
         '<div class="blog-feat-body reveal">' +
@@ -4383,10 +4474,10 @@
         '<div class="blog-feat-num">01</div>' +
         '<div class="blog-feat-tag">' +
         '<span class="blog-tag featured">Exclusivo</span>' +
-        '<span class="blog-tag">' + (featured.cat || featured.eyebrow || '') + '</span>' +
+        '<span class="blog-tag" data-editable="membros.blog.' + featuredIdx + '.cat">' + (featured.cat || featured.eyebrow || '') + '</span>' +
         '</div>' +
-        '<h3 class="blog-feat-title">' + featured.title + '</h3>' +
-        '<p class="blog-feat-excerpt">' + (featured.excerpt || '') + '</p>' +
+        '<h3 class="blog-feat-title" data-editable="membros.blog.' + featuredIdx + '.title">' + featured.title + '</h3>' +
+        '<p class="blog-feat-excerpt" data-editable="membros.blog.' + featuredIdx + '.excerpt">' + (featured.excerpt || '') + '</p>' +
         '</div>' +
         '<a href="#" class="blog-read-link" onclick="openBlogModal(' + featured.id + '); return false;">Ler o diário completo &rarr;</a>' +
         '</div>' +
@@ -4401,13 +4492,14 @@
         '<div class="blog-grid">';
 
       others.forEach((p, i) => {
+        const pIdx = BLOG_POSTS.indexOf(p);
         const delay = (i + 1) * 0.1;
         const numStr = (i + 2).toString().padStart(2, '0');
         htmlStr += '<div class="blog-card reveal" style="transition-delay: ' + delay + 's">' +
           '<div class="blog-card-num">' + numStr + '</div>' +
-          '<div class="blog-card-cat">' + (p.cat || '') + '</div>' +
-          '<h3 class="blog-card-title">' + p.title + '</h3>' +
-          '<p class="blog-card-excerpt">' + (p.excerpt || '') + '</p>' +
+          '<div class="blog-card-cat" data-editable="membros.blog.' + pIdx + '.cat">' + (p.cat || '') + '</div>' +
+          '<h3 class="blog-card-title" data-editable="membros.blog.' + pIdx + '.title">' + p.title + '</h3>' +
+          '<p class="blog-card-excerpt" data-editable="membros.blog.' + pIdx + '.excerpt">' + (p.excerpt || '') + '</p>' +
           '<a href="#" class="blog-card-link" onclick="openBlogModal(' + p.id + '); return false;">Ler mais &rarr;</a>' +
           '</div>';
       });
@@ -4600,7 +4692,18 @@
     }
 
     // Executa a checagem no carregamento da página
-    checkAuth();
+    // Se estamos no iframe do painel admin, pular autenticação e mostrar conteúdo diretamente
+    if (window.parent && window.parent !== window && window.parent.siteContent) {
+      // Modo admin iframe: mostrar conteúdo sem login
+      const gate = document.getElementById('authGate');
+      if (gate) {
+        gate.style.display = 'none';
+      }
+      document.getElementById('mainContent').classList.add('visible');
+      initPage();
+    } else {
+      checkAuth();
+    }
   </script>
 </body>
 

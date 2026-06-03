@@ -1921,21 +1921,21 @@
       <div class="orb orb-2"></div>
       <div class="orb orb-3"></div>
       <div class="hero-content">
-        <p class="author-tag">Mariana Rosa · Romantasia Sáfica</p>
+        <p class="author-tag" data-editable="index.hero.tag">Mariana Rosa · Romantasia Sáfica</p>
         <div class="title-wrap">
-          <div class="title-bg-text">DEUSA</div>
+          <div class="title-bg-text" data-editable="index.hero.bgText">DEUSA</div>
           <h1 class="title-main">
-            <span class="title-line-1">A Escolhida da</span>
-            <span class="title-line-2">Deusa</span>
+            <span class="title-line-1" data-editable="index.hero.title1">A Escolhida da</span>
+            <span class="title-line-2" data-editable="index.hero.title2">Deusa</span>
           </h1>
         </div>
         <div class="title-divider"></div>
-        <p class="hero-tagline">
+        <p class="hero-tagline" data-editable="index.hero.tagline">
           O roxo e o dourado entrelaçados em filamentos de perigo e atração,<br />
           onde o amor é tão perigoso quanto os próprios conflitos.
         </p>
         <div class="hero-cta-group">
-          <a href="https://amzn.to/4wVBjIC" target="_blank" id="buyLinkHero" class="btn-gold">Garantir meu exemplar</a>
+          <a href="https://amzn.to/4wVBjIC" target="_blank" id="buyLinkHero" class="btn-gold" data-editable="index.hero.ctaLabel" data-editable-link="index.comprar.link">Garantir meu exemplar</a>
         </div>
       </div>
       <div class="scroll-hint">
@@ -1952,6 +1952,7 @@
           <img
             class="book-cover-img"
             src="src/assets/capa.png"
+            data-editable-image="index.images.bookCover"
             alt="Capa do livro A Escolhida da Deusa"
             onerror="
               this.style.display = 'none';
@@ -1982,9 +1983,9 @@
         </div>
       </div>
       <div class="book-info">
-        <div class="book-label">Novo lançamento · 2026</div>
-        <h2 class="book-title-sm">A Escolhida<br />da Deusa</h2>
-        <p class="book-synopsis">
+        <div class="book-label" data-editable="index.book.label">Novo lançamento · 2026</div>
+        <h2 class="book-title-sm" data-editable="index.book.title">A Escolhida<br />da Deusa</h2>
+        <p class="book-synopsis" data-editable="index.book.synopsis">
           Uma escritora de mundos imaginários descobre que seus sonhos são uma
           janela para um reino real e, que a divindade que a escolheu habita
           seus sonhos há anos.
@@ -1997,8 +1998,8 @@
           <span class="genre-tag">Magia</span>
         </div>
         <div style="display: flex; gap: 16px; flex-wrap: wrap" class="book-ctas">
-          <a href="https://amzn.to/4wVBjIC" target="_blank" id="buyLinkBook" class="btn-gold">Comprar</a>
-          <a href="#sinopse" class="btn-ghost">Ler sinopse</a>
+          <a href="https://amzn.to/4wVBjIC" target="_blank" id="buyLinkBook" class="btn-gold" data-editable="index.book.ctaBuy" data-editable-link="index.comprar.link">Comprar</a>
+          <a href="#sinopse" class="btn-ghost" data-editable="index.book.ctaSynopsis">Ler sinopse</a>
         </div>
       </div>
     </section>
@@ -2007,8 +2008,8 @@
     <section class="synopsis-section" id="sinopse">
       <div class="section-container">
         <div class="section-header reveal">
-          <span class="section-eyebrow">A História</span>
-          <h2 class="section-title">O Véu se <em>Rasga</em></h2>
+          <span class="section-eyebrow" data-editable="index.sinopse.eyebrow">A História</span>
+          <h2 class="section-title" data-editable="index.sinopse.title">O Véu se <em>Rasga</em></h2>
           <div class="synopsis-divider"></div>
         </div>
         <div class="synopsis-text reveal">
@@ -2213,8 +2214,8 @@
     <section class="characters-section" id="personagens">
       <div class="characters-inner">
         <div class="section-header reveal">
-          <span class="section-eyebrow">As Protagonistas</span>
-          <h2 class="section-title">Duas <em>Almas</em> Entrelaçadas</h2>
+          <span class="section-eyebrow" data-editable="index.personagens.eyebrow">As Protagonistas</span>
+          <h2 class="section-title" data-editable="index.personagens.title">Duas <em>Almas</em> Entrelaçadas</h2>
           <div class="synopsis-divider"></div>
         </div>
 
@@ -2223,13 +2224,13 @@
           <div class="char-card char-card-celestria reveal">
             <!-- ÁREA DE ILUSTRAÇÃO -->
             <div class="char-illustration">
-              <img src="src/assets/Celestria.png" alt="Ilustração de Celestria" />
+              <img src="src/assets/Celestria.png" data-editable-image="index.images.celestriaIllust" alt="Ilustração de Celestria" />
             </div>
             <!-- TEXTO -->
             <div class="char-body">
-              <span class="char-role">A Deusa</span>
-              <h3 class="char-name">Celestria</h3>
-              <p class="char-desc">
+              <span class="char-role" data-editable="index.personagens.celestria.role">A Deusa</span>
+              <h3 class="char-name" data-editable="index.personagens.celestria.name">Celestria</h3>
+              <p class="char-desc" data-editable="index.personagens.celestria.desc">
                 Divindade dos nove reinos que habita os sonhos de Tainá há anos.
                 Seus olhos dourados guardam segredos que podem salvar, ou
                 destruir, tudo o que existe.
@@ -2240,13 +2241,13 @@
           <div class="char-card char-card-taina reveal">
             <!-- ÁREA DE ILUSTRAÇÃO -->
             <div class="char-illustration">
-              <img src="src/assets/Taina.png" alt="Ilustração de Tainá" />
+              <img src="src/assets/Taina.png" data-editable-image="index.images.tainaIllust" alt="Ilustração de Tainá" />
             </div>
             <!-- TEXTO -->
             <div class="char-body">
-              <span class="char-role">A Pigmentadora</span>
-              <h3 class="char-name">Tainá</h3>
-              <p class="char-desc">
+              <span class="char-role" data-editable="index.personagens.taina.role">A Pigmentadora</span>
+              <h3 class="char-name" data-editable="index.personagens.taina.name">Tainá</h3>
+              <p class="char-desc" data-editable="index.personagens.taina.desc">
                 Escritora de romantasias sáficas que retira as palavras de seus
                 sonhos. Herdeira de um pincel ancestral, descobrirá que sua
                 imaginação sempre foi mais do que ficção.
@@ -2323,9 +2324,9 @@
           <div class="author-avatar-ring"></div>
           <div class="author-avatar-inner">M</div>
         </div>
-        <div class="author-name-lbl">A Autora</div>
-        <h2 class="author-name-big">Mariana Rosa</h2>
-        <p class="author-bio">
+        <div class="author-name-lbl" data-editable="index.autora.eyebrow">A Autora</div>
+        <h2 class="author-name-big" data-editable="index.autora.name">Mariana Rosa</h2>
+        <p class="author-bio" data-editable="index.autora.bio">
           Mariana Rosa, escritora de romances lésbicos/sáficos. Nascida em
           Floripa, mas criada em Niterói, é conhecida por escrever uma série de
           romances chamado “Entre Elas”. Com mais 10 romances na Amazon, Mariana
@@ -2343,6 +2344,7 @@
             href="https://instagram.com/mari_mrosa"
             id="socialLinkInstagram"
             class="social-link"
+            data-editable-link="social.instagram"
             target="_blank"
             rel="noopener"
             >Instagram @mari_mrosa</a
@@ -2351,12 +2353,12 @@
       </div>
     </section>
 
-    <!-- COMUNIDADE -->
+    <!-- PRE-VENDA / CAPTURA -->
     <section class="presale-section" id="pre-venda">
       <div class="presale-inner reveal">
-        <span class="presale-ornament">✦ ✦ ✦</span>
-        <h2 class="presale-title">Entre no Portal das<br />Pigmentadoras</h2>
-        <p class="presale-sub">
+        <span class="presale-ornament" data-editable="index.comunidade.eyebrow">✦ ✦ ✦</span>
+        <h2 class="presale-title" data-editable="index.comunidade.title">Entre no Portal das<br />Pigmentadoras</h2>
+        <p class="presale-sub" data-editable="index.comunidade.desc">
           Cadastre seu e-mail para ter acesso ao diário completo da autora, ilustrações exclusivas e conteúdos adicionais do livro.
         </p>
        <form id="emailForm" onsubmit="handleEmailSubmit(event)" novalidate>
@@ -2368,11 +2370,11 @@
               placeholder="Seu melhor e-mail..."
               required
             />
-            <button type="submit" id="emailSubmit" class="presale-btn">
+            <button type="submit" id="emailSubmit" class="presale-btn" data-editable="index.comunidade.button">
               Entrar
             </button>
           </div>
-          <p class="presale-note">
+          <p class="presale-note" data-editable="index.comunidade.note">
             Sem spam. Só o universo vivo da história e seus lançamentos. ✦
           </p>
           <div class="form-msg" id="formMsg" role="alert" aria-live="polite"></div>
@@ -2385,7 +2387,7 @@
       <a href="#top" class="footer-logo">A Escolhida da Deusa</a>
       <p class="footer-sub">Mariana Rosa · Romantasia Sáfica</p>
       <div class="footer-sep"></div>
-      <p class="footer-copy">
+      <p class="footer-copy" data-editable="site.footerCopy">
         © 2026 Mariana Rosa · Todos os direitos reservados.
       </p>
     </footer>
@@ -2393,9 +2395,11 @@
     <!-- Atualiza links dinamicamente do content.json (gerenciado pelo painel admin) -->
     <script>
       (function() {
-        fetch('/content.json')
-          .then(r => r.json())
-          .then(data => {
+        const loadPromise = (window.parent && window.parent.siteContent)
+          ? Promise.resolve(window.parent.siteContent)
+          : fetch('/content.json?t=' + Date.now()).then(r => r.json());
+
+        loadPromise.then(data => {
             // Buy links
             const link = data?.index?.comprar?.link;
             const label = data?.index?.comprar?.linkLabel;
@@ -2416,68 +2420,77 @@
               ig.textContent = 'Instagram ' + social.instagram.replace('https://instagram.com/', '@').replace('https://www.instagram.com/', '@');
             }
 
+            // Dynamically inject all index images
+            const idxImages = data?.index?.images;
+            if (idxImages) {
+              const bCover = document.querySelector('.book-cover-img');
+              if (bCover && idxImages.bookCover) { bCover.src = idxImages.bookCover; bCover.setAttribute('data-editable-image', 'index.images.bookCover'); }
+              const celIllust = document.querySelector('.char-card-celestria img');
+              if (celIllust && idxImages.celestriaIllust) { celIllust.src = idxImages.celestriaIllust; celIllust.setAttribute('data-editable-image', 'index.images.celestriaIllust'); }
+              const tainaIllust = document.querySelector('.char-card-taina img');
+              if (tainaIllust && idxImages.tainaIllust) { tainaIllust.src = idxImages.tainaIllust; tainaIllust.setAttribute('data-editable-image', 'index.images.tainaIllust'); }
+            }
+
             // Dynamically inject all index texts
             const idxTexts = data?.index;
             if (idxTexts) {
               // Hero
               if (idxTexts.hero) {
                 const authorTag = document.querySelector('.author-tag');
-                if (authorTag && idxTexts.hero.tag) authorTag.textContent = idxTexts.hero.tag;
+                if (authorTag && idxTexts.hero.tag) { authorTag.textContent = idxTexts.hero.tag; authorTag.setAttribute('data-editable', 'index.hero.tag'); }
                 
                 const titleLine1 = document.querySelector('.title-line-1');
-                if (titleLine1 && idxTexts.hero.title1) titleLine1.textContent = idxTexts.hero.title1;
+                if (titleLine1 && idxTexts.hero.title1) { titleLine1.textContent = idxTexts.hero.title1; titleLine1.setAttribute('data-editable', 'index.hero.title1'); }
                 
                 const titleLine2 = document.querySelector('.title-line-2');
-                if (titleLine2 && idxTexts.hero.title2) titleLine2.textContent = idxTexts.hero.title2;
-                
-                const titleBgText = document.querySelector('.title-bg-text');
-                if (titleBgText && idxTexts.hero.bgText) titleBgText.textContent = idxTexts.hero.bgText;
+                if (titleLine2 && idxTexts.hero.title2) { titleLine2.textContent = idxTexts.hero.title2; titleLine2.setAttribute('data-editable', 'index.hero.title2'); }
                 
                 const heroTagline = document.querySelector('.hero-tagline');
-                if (heroTagline && idxTexts.hero.tagline) heroTagline.innerHTML = idxTexts.hero.tagline;
+                if (heroTagline && idxTexts.hero.tagline) { heroTagline.innerHTML = idxTexts.hero.tagline; heroTagline.setAttribute('data-editable', 'index.hero.tagline'); }
                 
                 const buyHero = document.getElementById('buyLinkHero');
-                if (buyHero && idxTexts.hero.ctaLabel) buyHero.textContent = idxTexts.hero.ctaLabel;
+                if (buyHero && idxTexts.hero.ctaLabel) { buyHero.textContent = idxTexts.hero.ctaLabel; buyHero.setAttribute('data-editable', 'index.hero.ctaLabel'); }
               }
               
               // Book
               if (idxTexts.book) {
                 const bookLabel = document.querySelector('.book-label');
-                if (bookLabel && idxTexts.book.label) bookLabel.textContent = idxTexts.book.label;
+                if (bookLabel && idxTexts.book.label) { bookLabel.textContent = idxTexts.book.label; bookLabel.setAttribute('data-editable', 'index.book.label'); }
                 
                 const bookTitle = document.querySelector('.book-title-sm');
-                if (bookTitle && idxTexts.book.title) bookTitle.innerHTML = idxTexts.book.title;
+                if (bookTitle && idxTexts.book.title) { bookTitle.innerHTML = idxTexts.book.title; bookTitle.setAttribute('data-editable', 'index.book.title'); }
                 
                 const bookSyn = document.querySelector('.book-synopsis');
-                if (bookSyn && idxTexts.book.synopsis) bookSyn.innerHTML = idxTexts.book.synopsis;
+                if (bookSyn && idxTexts.book.synopsis) { bookSyn.innerHTML = idxTexts.book.synopsis; bookSyn.setAttribute('data-editable', 'index.book.synopsis'); }
                 
                 const bookTags = document.querySelector('.book-genre-tags');
                 if (bookTags && idxTexts.book.tags) {
                   bookTags.innerHTML = idxTexts.book.tags.map(t => `<span class="genre-tag">${t}</span>`).join('');
+                  bookTags.setAttribute('data-editable', 'index.book.tagsRaw');
                 }
                 
                 const buyBook = document.getElementById('buyLinkBook');
-                if (buyBook && idxTexts.book.ctaBuy) buyBook.textContent = idxTexts.book.ctaBuy;
+                if (buyBook && idxTexts.book.ctaBuy) { buyBook.textContent = idxTexts.book.ctaBuy; buyBook.setAttribute('data-editable', 'index.book.ctaBuy'); }
                 
                 const bookGhost = document.querySelector('.book-ctas .btn-ghost');
-                if (bookGhost && idxTexts.book.ctaSynopsis) bookGhost.textContent = idxTexts.book.ctaSynopsis;
+                if (bookGhost && idxTexts.book.ctaSynopsis) { bookGhost.textContent = idxTexts.book.ctaSynopsis; bookGhost.setAttribute('data-editable', 'index.book.ctaSynopsis'); }
               }
               
               // Sinopse
               if (idxTexts.sinopse) {
                 const sinEyebrow = document.querySelector('#sinopse .section-eyebrow');
-                if (sinEyebrow && idxTexts.sinopse.eyebrow) sinEyebrow.textContent = idxTexts.sinopse.eyebrow;
+                if (sinEyebrow && idxTexts.sinopse.eyebrow) { sinEyebrow.textContent = idxTexts.sinopse.eyebrow; sinEyebrow.setAttribute('data-editable', 'index.sinopse.eyebrow'); }
                 
                 const sinTitle = document.querySelector('#sinopse .section-title');
-                if (sinTitle && idxTexts.sinopse.title) sinTitle.innerHTML = idxTexts.sinopse.title;
+                if (sinTitle && idxTexts.sinopse.title) { sinTitle.innerHTML = idxTexts.sinopse.title; sinTitle.setAttribute('data-editable', 'index.sinopse.title'); }
                 
                 const sinText = document.querySelector('.synopsis-text');
                 if (sinText && idxTexts.sinopse.paragraphs) {
                   sinText.innerHTML = idxTexts.sinopse.paragraphs.map((p, i) => {
                     if (i === 1 || i === 4) {
-                      return `<div class="synopsis-highlight"><p>${p}</p></div>`;
+                      return `<div class="synopsis-highlight"><p data-editable="index.sinopse.paragraphs.${i}">${p}</p></div>`;
                     }
-                    return `<p>${p}</p>`;
+                    return `<p data-editable="index.sinopse.paragraphs.${i}">${p}</p>`;
                   }).join('');
                 }
               }
@@ -2495,23 +2508,23 @@
                       <div class="gem-icon-wrap">
                         <svg class="gem-icon"><use href="#gem-shape" /></svg>
                       </div>
-                      <h3 class="world-card-title">${cc.nome}</h3>
-                      <div class="world-card-subtitle">${cc.gema}</div>
-                      <p class="world-card-text">${cc.descricao}</p>
+                      <h3 class="world-card-title" data-editable="membros.cidade_celestial.nome">${cc.nome}</h3>
+                      <div class="world-card-subtitle" data-editable="membros.cidade_celestial.gema">${cc.gema}</div>
+                      <p class="world-card-text" data-editable="membros.cidade_celestial.descricao">${cc.descricao}</p>
                     </div>
                   `;
                 }
                 
-                reinos.forEach(r => {
+                reinos.forEach((r, i) => {
                   const gemColor = r.rc || '#c9a84c';
                   cardsHtml += `
                     <div class="world-card reveal" style="--gem-color: ${gemColor}">
                       <div class="gem-icon-wrap">
                         <svg class="gem-icon"><use href="#gem-shape" /></svg>
                       </div>
-                      <h3 class="world-card-title">${r.nome}</h3>
-                      <div class="world-card-subtitle">${r.gema}</div>
-                      <p class="world-card-text">${r.descricao}</p>
+                      <h3 class="world-card-title" data-editable="membros.reinos.${i}.nome">${r.nome}</h3>
+                      <div class="world-card-subtitle" data-editable="membros.reinos.${i}.gema">${r.gema}</div>
+                      <p class="world-card-text" data-editable="membros.reinos.${i}.descricao">${r.descricao}</p>
                     </div>
                   `;
                 });
@@ -2525,58 +2538,59 @@
               // Personagens
               if (idxTexts.personagens) {
                 const charEyebrow = document.querySelector('#personagens .section-eyebrow');
-                if (charEyebrow && idxTexts.personagens.eyebrow) charEyebrow.textContent = idxTexts.personagens.eyebrow;
+                if (charEyebrow && idxTexts.personagens.eyebrow) { charEyebrow.textContent = idxTexts.personagens.eyebrow; charEyebrow.setAttribute('data-editable', 'index.personagens.eyebrow'); }
                 
                 const charTitle = document.querySelector('#personagens .section-title');
-                if (charTitle && idxTexts.personagens.title) charTitle.innerHTML = idxTexts.personagens.title;
+                if (charTitle && idxTexts.personagens.title) { charTitle.innerHTML = idxTexts.personagens.title; charTitle.setAttribute('data-editable', 'index.personagens.title'); }
                 
                 if (idxTexts.personagens.celestria) {
                   const cel = idxTexts.personagens.celestria;
                   const celRole = document.querySelector('.char-card-celestria .char-role');
-                  if (celRole && cel.role) celRole.textContent = cel.role;
+                  if (celRole && cel.role) { celRole.textContent = cel.role; celRole.setAttribute('data-editable', 'index.personagens.celestria.role'); }
                   const celName = document.querySelector('.char-card-celestria .char-name');
-                  if (celName && cel.name) celName.textContent = cel.name;
+                  if (celName && cel.name) { celName.textContent = cel.name; celName.setAttribute('data-editable', 'index.personagens.celestria.name'); }
                   const celDesc = document.querySelector('.char-card-celestria .char-desc');
-                  if (celDesc && cel.desc) celDesc.innerHTML = cel.desc;
+                  if (celDesc && cel.desc) { celDesc.innerHTML = cel.desc; celDesc.setAttribute('data-editable', 'index.personagens.celestria.desc'); }
                 }
                 
                 if (idxTexts.personagens.taina) {
                   const tai = idxTexts.personagens.taina;
                   const taiRole = document.querySelector('.char-card-taina .char-role');
-                  if (taiRole && tai.role) taiRole.textContent = tai.role;
+                  if (taiRole && tai.role) { taiRole.textContent = tai.role; taiRole.setAttribute('data-editable', 'index.personagens.taina.role'); }
                   const taiName = document.querySelector('.char-card-taina .char-name');
-                  if (taiName && tai.name) taiName.textContent = tai.name;
+                  if (taiName && tai.name) { taiName.textContent = tai.name; taiName.setAttribute('data-editable', 'index.personagens.taina.name'); }
                   const taiDesc = document.querySelector('.char-card-taina .char-desc');
-                  if (taiDesc && tai.desc) taiDesc.innerHTML = tai.desc;
+                  if (taiDesc && tai.desc) { taiDesc.innerHTML = tai.desc; taiDesc.setAttribute('data-editable', 'index.personagens.taina.desc'); }
                 }
               }
               
               // Autora
               if (idxTexts.autora) {
                 const autEyebrow = document.querySelector('.author-name-lbl');
-                if (autEyebrow && idxTexts.autora.eyebrow) autEyebrow.textContent = idxTexts.autora.eyebrow;
+                if (autEyebrow && idxTexts.autora.eyebrow) { autEyebrow.textContent = idxTexts.autora.eyebrow; autEyebrow.setAttribute('data-editable', 'index.autora.eyebrow'); }
                 
                 const autName = document.querySelector('.author-name-big');
-                if (autName && idxTexts.autora.name) autName.textContent = idxTexts.autora.name;
+                if (autName && idxTexts.autora.name) { autName.textContent = idxTexts.autora.name; autName.setAttribute('data-editable', 'index.autora.name'); }
                 
                 const autBio = document.querySelector('.author-bio');
-                if (autBio && idxTexts.autora.bio) autBio.innerHTML = idxTexts.autora.bio;
+                if (autBio && idxTexts.autora.bio) { autBio.innerHTML = idxTexts.autora.bio; autBio.setAttribute('data-editable', 'index.autora.bio'); }
               }
               
               // Comunidade
               if (idxTexts.comunidade) {
                 const comTitle = document.querySelector('.presale-title');
-                if (comTitle && idxTexts.comunidade.title) comTitle.innerHTML = idxTexts.comunidade.title;
+                if (comTitle && idxTexts.comunidade.title) { comTitle.innerHTML = idxTexts.comunidade.title; comTitle.setAttribute('data-editable', 'index.comunidade.title'); }
                 
                 const comSub = document.querySelector('.presale-sub');
-                if (comSub && idxTexts.comunidade.desc) comSub.textContent = idxTexts.comunidade.desc;
+                if (comSub && idxTexts.comunidade.desc) { comSub.textContent = idxTexts.comunidade.desc; comSub.setAttribute('data-editable', 'index.comunidade.desc'); }
                 
                 const comNote = document.querySelector('.presale-note');
-                if (comNote && idxTexts.comunidade.note) comNote.textContent = idxTexts.comunidade.note;
+                if (comNote && idxTexts.comunidade.note) { comNote.textContent = idxTexts.comunidade.note; comNote.setAttribute('data-editable', 'index.comunidade.note'); }
                 
                 const comBtn = document.getElementById('emailSubmit');
                 if (comBtn && idxTexts.comunidade.button && comBtn.textContent !== 'Inscrita ✓') {
                   comBtn.textContent = idxTexts.comunidade.button;
+                  comBtn.setAttribute('data-editable', 'index.comunidade.button');
                 }
               }
             }
@@ -2584,7 +2598,7 @@
             // Footer copy
             if (data?.site?.footerCopy) {
               const foot = document.querySelector('.footer-copy');
-              if (foot) foot.textContent = data.site.footerCopy;
+              if (foot) { foot.textContent = data.site.footerCopy; foot.setAttribute('data-editable', 'site.footerCopy'); }
             }
 
             // Render other pigmentadoras dynamic cards
@@ -2605,10 +2619,10 @@
                       <div class="index-pigment-card-number">${p.num}</div>
                     </div>
                     <div class="index-pigment-card-body">
-                      <div class="index-pigment-card-realm">${p.realm}</div>
-                      <div class="index-pigment-card-name">${p.name}</div>
-                      <div class="index-pigment-card-power">${p.power}</div>
-                      <p class="index-pigment-card-desc">${p.desc}</p>
+                      <div class="index-pigment-card-realm" data-editable="membros.pigmentadoras.${i}.realm">${p.realm}</div>
+                      <div class="index-pigment-card-name" data-editable="membros.pigmentadoras.${i}.name">${p.name}</div>
+                      <div class="index-pigment-card-power" data-editable="membros.pigmentadoras.${i}.power">${p.power}</div>
+                      <p class="index-pigment-card-desc" data-editable="membros.pigmentadoras.${i}.desc">${p.desc}</p>
                     </div>
                   </div>
                 `;
@@ -2618,6 +2632,11 @@
               if (typeof observer !== 'undefined') {
                 grid.querySelectorAll('.reveal').forEach(el => observer.observe(el));
               }
+            }
+
+            // Notify parent to instrument editing triggers
+            if (window.parent && typeof window.parent.setupIframeEditor === 'function' && window.frameElement) {
+              window.parent.setupIframeEditor(window.frameElement, 'index');
             }
           })
           .catch(() => {}); // silently fail — fallback hardcoded links still work

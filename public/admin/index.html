@@ -730,6 +730,32 @@
         .members-stats { grid-template-columns: 1fr 1fr; }
         .table-search { width: 100%; }
       }
+      
+      /* Visual Editor Preview Styles */
+      .iframe-preview-container {
+        width: 100%;
+        height: 75vh;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+        background: #0f0514;
+        box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8);
+        position: relative;
+        margin-top: 16px;
+      }
+      .iframe-preview {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: transparent;
+      }
+      
+      /* Members dynamic action bar */
+      .membros-action-bar {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 20px;
+      }
     </style>
   </head>
   <body>
@@ -772,9 +798,13 @@
             <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
             Imagens
           </div>
-          <div class="sidebar-link" onclick="goTo('textos')" id="nav-textos">
-            <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-            Textos
+          <div class="sidebar-link" onclick="goTo('textos-index')" id="nav-textos-index">
+            <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Página Inicial
+          </div>
+          <div class="sidebar-link" onclick="goTo('textos-membros')" id="nav-textos-membros">
+            <svg class="sidebar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Página de Membros
           </div>
 
           <div class="sidebar-label">Suporte</div>
@@ -931,93 +961,49 @@
           </div>
 
           <!-- ── TEXTOS ── -->
-          <div class="page" id="page-textos">
+          <!-- ── PÁGINA INICIAL (EDITOR VISUAL) ── -->
+          <div class="page" id="page-textos-index">
             <div class="page-header">
-              <span class="page-eyebrow">Gerenciamento de Conteúdo</span>
-              <h1 class="page-title">Editar Textos do Site</h1>
-              <p class="page-desc">Selecione uma seção e clique nos textos ou itens de lore para editá-los com formatação. Todas as alterações serão aplicadas ao site após salvar.</p>
+              <span class="page-eyebrow">Edição Visual</span>
+              <h1 class="page-title">Editar Página Inicial</h1>
+              <p class="page-desc">Visualize e edite a página inicial do site em tempo real. Passe o mouse sobre os textos ou imagens e clique no lápis (✏️) ou botão para editar o conteúdo. Lembre-se de salvar para aplicar no ar.</p>
+            </div>
+            
+            <!-- Iframe de visualização -->
+            <div class="iframe-preview-container">
+              <iframe id="iframe-index-preview" class="iframe-preview"></iframe>
             </div>
 
-            <!-- Category selector -->
-            <div class="textos-cats">
-              <button class="textos-cat-btn active" onclick="setTextosCat('reinos')" id="cat-reinos">Nove Reinos & Cidade Celestial</button>
-              <button class="textos-cat-btn" onclick="setTextosCat('home')" id="cat-home">Página Inicial</button>
-              <button class="textos-cat-btn" onclick="setTextosCat('autora')" id="cat-autora">Sobre a Autora</button>
+            <!-- Global Action -->
+            <div style="margin-top: 24px;">
+              <button class="btn btn-primary" onclick="saveAllTexts()">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                Salvar Textos e publicar
+              </button>
+            </div>
+          </div>
+
+          <!-- ── PÁGINA DE MEMBROS (EDITOR VISUAL) ── -->
+          <div class="page" id="page-textos-membros">
+            <div class="page-header">
+              <span class="page-eyebrow">Edição Visual</span>
+              <h1 class="page-title">Editar Área de Membros</h1>
+              <p class="page-desc">Visualize e edite a área de membros em tempo real. Além de editar os textos e imagens usando as marcações do preview, você pode gerenciar os artigos do blog e as obras da galeria pelos botões abaixo.</p>
             </div>
 
-            <!-- Nove Reinos Grid -->
-            <div id="textosReinosContainer">
-              <div class="reinos-editor-grid" id="reinoEditorGrid"></div>
-              
-              <div class="card" id="reinoDetailsCard" style="display:none;">
-                <div class="card-title" id="reinoDetailsTitle">Lore do Reino</div>
-                <div class="form-group">
-                  <label class="form-label">Descrição Curta (Card da Home)</label>
-                  <div class="lore-item-edit-row" onclick="openTextEditor('reino-desc')">
-                    <div class="lore-item-edit-text" id="reinoDescText">Sem descrição cadastrada.</div>
-                  </div>
-                </div>
-                <div class="form-group" style="margin-top: 24px;">
-                  <label class="form-label">Itens de Lore Exclusivo (Lista de Balões)</label>
-                  <div class="lore-items-list" id="reinoLoreItemsList"></div>
-                </div>
-              </div>
+            <!-- Action Bar -->
+            <div class="membros-action-bar">
+              <button class="btn btn-outline" onclick="openAddBlogModal()" style="font-size: 0.8rem; display: inline-flex; align-items: center; gap: 6px;">
+                ➕ Adicionar Artigo ao Blog
+              </button>
+              <button class="btn btn-outline" onclick="openAddGalleryModal()" style="font-size: 0.8rem; display: inline-flex; align-items: center; gap: 6px;">
+                📷 Adicionar Arte à Galeria
+              </button>
             </div>
-
-            <!-- Página Inicial Text Blocks -->
-            <div id="textosHomeContainer" style="display:none;">
-              <div class="card">
-                <div class="card-title">Seção Principal (Hero)</div>
-                <div class="form-group">
-                  <label class="form-label">Tagline (Linha de Destaque)</label>
-                  <div class="lore-item-edit-row" onclick="openTextEditor('home-hero-tagline')">
-                    <div class="lore-item-edit-text" id="homeHeroTaglineText"></div>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="card">
-                <div class="card-title">Sinopse do Livro (Páginas de Leitura)</div>
-                <div class="form-group">
-                  <label class="form-label">Sinopse Curta (Seção do Livro)</label>
-                  <div class="lore-item-edit-row" onclick="openTextEditor('home-book-synopsis')">
-                    <div class="lore-item-edit-text" id="homeBookSynopsisText"></div>
-                  </div>
-                </div>
-                <div class="form-group" style="margin-top: 24px;">
-                  <label class="form-label">Parágrafos da Sinopse Longa (Seção Sinopse)</label>
-                  <div class="lore-items-list" id="homeSynopsisList"></div>
-                </div>
-              </div>
-
-              <div class="card">
-                <div class="card-title">As Protagonistas</div>
-                <div class="form-group">
-                  <label class="form-label">Descrição de Celestria</label>
-                  <div class="lore-item-edit-row" onclick="openTextEditor('home-char-celestria')">
-                    <div class="lore-item-edit-text" id="homeCharCelestriaText"></div>
-                  </div>
-                </div>
-                <div class="form-group" style="margin-top: 20px;">
-                  <label class="form-label">Descrição de Tainá</label>
-                  <div class="lore-item-edit-row" onclick="openTextEditor('home-char-taina')">
-                    <div class="lore-item-edit-text" id="homeCharTainaText"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Sobre a Autora -->
-            <div id="textosAutoraContainer" style="display:none;">
-              <div class="card">
-                <div class="card-title">Biografia de Mariana Rosa</div>
-                <div class="form-group">
-                  <label class="form-label">Texto da Biografia (Suporta HTML/parágrafos)</label>
-                  <div class="lore-item-edit-row" onclick="openTextEditor('autora-bio')">
-                    <div class="lore-item-edit-text" id="autoraBioText"></div>
-                  </div>
-                </div>
-              </div>
+            
+            <!-- Iframe de visualização -->
+            <div class="iframe-preview-container">
+              <iframe id="iframe-membros-preview" class="iframe-preview"></iframe>
             </div>
 
             <!-- Global Action -->
@@ -1406,7 +1392,10 @@
         if (!res.ok) throw new Error();
         siteContent = await res.json();
         fillLinkFields();
-        fieldTextsFields();
+        
+        // Carrega os iframes assim que os dados estão prontos
+        document.getElementById('iframe-index-preview').src = '/index.html';
+        document.getElementById('iframe-membros-preview').src = '/membros.html';
       }
 
       function fillLinkFields() {
@@ -1471,127 +1460,164 @@
 
       /* ── TEXTS EDITOR LOGIC ── */
       let currentEditorTarget = null;
-      let currentReinoIndex = null;
+      let activeIframeElement = null;
+      let activeIframePageType = null;
 
-      function setTextosCat(cat) {
-        document.querySelectorAll('.textos-cat-btn').forEach(btn => btn.classList.remove('active'));
-        document.getElementById('cat-' + cat).classList.add('active');
-        
-        document.getElementById('textosReinosContainer').style.display = (cat === 'reinos') ? 'block' : 'none';
-        document.getElementById('textosHomeContainer').style.display = (cat === 'home') ? 'block' : 'none';
-        document.getElementById('textosAutoraContainer').style.display = (cat === 'autora') ? 'block' : 'none';
-      }
+      // Event listeners for iframe preview loading
+      document.getElementById('iframe-index-preview').addEventListener('load', function() {
+        setupIframeEditor(this, 'index');
+      });
+      document.getElementById('iframe-membros-preview').addEventListener('load', function() {
+        setupIframeEditor(this, 'membros');
+      });
 
-      function fieldTextsFields() {
-        if (!siteContent) return;
-        
-        // 1. Reinos Editor Grid
-        renderReinosEditor();
-        
-        // 2. Home Texts
-        const hero = siteContent.index?.hero;
-        if (hero) {
-          document.getElementById('homeHeroTaglineText').innerHTML = hero.tagline || 'Sem tagline.';
+      function setupIframeEditor(iframe, pageType) {
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        if (!doc) return;
+
+        // 1. Inject styling into iframe for highlights and pencils (once only)
+        if (!doc.getElementById('admin-editor-style')) {
+          const style = doc.createElement('style');
+          style.id = 'admin-editor-style';
+          style.textContent = `
+          [data-editable], [data-editable-image], [data-editable-link] {
+            position: relative;
+            transition: outline 0.2s ease, background-color 0.2s ease;
+          }
+          [data-editable]:hover, [data-editable-image]:hover, [data-editable-link]:hover {
+            outline: 2px dashed #c9a84c !important;
+            background-color: rgba(201, 168, 76, 0.08) !important;
+          }
+          .admin-pencil-trigger {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 22px !important;
+            height: 22px !important;
+            background: #c9a84c !important;
+            color: #fff !important;
+            border-radius: 50% !important;
+            font-size: 11px !important;
+            line-height: 1 !important;
+            cursor: pointer !important;
+            margin-left: 6px !important;
+            vertical-align: middle !important;
+            border: 1px solid #fff !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+            transition: transform 0.2s, background 0.2s !important;
+            pointer-events: auto !important;
+            user-select: none !important;
+            font-family: Arial, sans-serif !important;
+          }
+          .admin-pencil-trigger:hover {
+            transform: scale(1.15) !important;
+            background: #b08d3b !important;
+          }
+          .admin-img-overlay-trigger {
+            position: absolute !important;
+            top: 10px !important;
+            right: 10px !important;
+            background: rgba(201, 168, 76, 0.9) !important;
+            color: #fff !important;
+            padding: 4px 8px !important;
+            border-radius: 4px !important;
+            font-size: 11px !important;
+            font-family: sans-serif !important;
+            cursor: pointer !important;
+            border: 1px solid #fff !important;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2) !important;
+            z-index: 99999 !important;
+          }
+          .admin-img-overlay-trigger:hover {
+            background: #c9a84c !important;
+          }
+        `;
+          doc.head.appendChild(style);
         }
-        
-        const book = siteContent.index?.book;
-        if (book) {
-          document.getElementById('homeBookSynopsisText').innerHTML = book.synopsis || 'Sem sinopse curta.';
-        }
-        
-        const sinopse = siteContent.index?.sinopse;
-        if (sinopse && sinopse.paragraphs) {
-          const list = document.getElementById('homeSynopsisList');
-          list.innerHTML = '';
-          sinopse.paragraphs.forEach((p, i) => {
-            const row = document.createElement('div');
-            row.className = 'lore-item-edit-row';
-            row.onclick = () => openTextEditor(`home-synopsis-${i}`, p, `Sinopse - Parágrafo ${i+1}`);
-            row.innerHTML = `
-              <div class="lore-item-edit-index">§${i+1}</div>
-              <div class="lore-item-edit-text">${p}</div>
-            `;
-            list.appendChild(row);
+
+        // 2. Add edit triggers to text elements
+
+        doc.querySelectorAll('[data-editable]').forEach(el => {
+          if (el.querySelector('.admin-pencil-trigger')) return;
+
+          const trigger = doc.createElement('span');
+          trigger.className = 'admin-pencil-trigger';
+          trigger.innerHTML = '✏️';
+          trigger.title = 'Editar texto';
+          trigger.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const targetPath = el.getAttribute('data-editable');
+            openTextEditorFromIframe(targetPath, el, pageType);
+          };
+          
+          if (['P', 'SPAN', 'H1', 'H2', 'H3', 'H4', 'BUTTON', 'A', 'DIV'].includes(el.tagName)) {
+            el.appendChild(trigger);
+          } else {
+            el.parentNode.insertBefore(trigger, el.nextSibling);
+          }
+        });
+
+        // 3. Add edit triggers to links
+        doc.querySelectorAll('[data-editable-link]').forEach(el => {
+          if (el.querySelector('.admin-pencil-trigger')) return;
+
+          const trigger = doc.createElement('span');
+          trigger.className = 'admin-pencil-trigger';
+          trigger.innerHTML = '🔗';
+          trigger.title = 'Editar link';
+          trigger.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const targetPath = el.getAttribute('data-editable-link');
+            openLinkEditorFromIframe(targetPath, el, pageType);
+          };
+          el.appendChild(trigger);
+        });
+
+        // 4. Add edit triggers to images
+        doc.querySelectorAll('[data-editable-image]').forEach(el => {
+          const parent = el.parentNode;
+          if (parent.querySelector('.admin-img-overlay-trigger')) return;
+
+          if (getComputedStyle(parent).position === 'static') {
+            parent.style.position = 'relative';
+          }
+
+          const trigger = doc.createElement('div');
+          trigger.className = 'admin-img-overlay-trigger';
+          trigger.innerHTML = '📷 Alterar Imagem';
+          trigger.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const targetPath = el.getAttribute('data-editable-image');
+            openImageEditorFromIframe(targetPath, el, pageType);
+          };
+          parent.appendChild(trigger);
+        });
+
+        // Prevent navigation on normal links inside iframe
+        doc.querySelectorAll('a').forEach(a => {
+          a.addEventListener('click', (e) => {
+            if (!e.target.classList.contains('admin-pencil-trigger') && !a.getAttribute('onclick')) {
+              e.preventDefault();
+            }
           });
-        }
-        
-        const chars = siteContent.index?.personagens;
-        if (chars) {
-          if (chars.celestria) {
-            document.getElementById('homeCharCelestriaText').innerHTML = chars.celestria.desc || 'Sem biografia.';
-          }
-          if (chars.taina) {
-            document.getElementById('homeCharTainaText').innerHTML = chars.taina.desc || 'Sem biografia.';
-          }
-        }
-        
-        // 3. Autora Texts
-        const autora = siteContent.index?.autora;
-        if (autora) {
-          document.getElementById('autoraBioText').innerHTML = autora.bio || 'Sem biografia.';
-        }
-      }
-
-      function renderReinosEditor() {
-        const grid = document.getElementById('reinoEditorGrid');
-        if (!grid) return;
-        grid.innerHTML = '';
-        
-        const reinos = siteContent.membros?.reinos || [];
-        const cc = siteContent.membros?.cidade_celestial;
-        
-        // Add all 10 regions
-        const listToRender = [...reinos];
-        if (cc) {
-          listToRender.push(cc);
-        }
-        
-        listToRender.forEach((r, i) => {
-          const isCC = (r.nome === "Cidade Celestial" || r.nome === cc?.nome);
-          const gemColor = r.rc || '#c9a84c';
-          const card = document.createElement('div');
-          card.className = 'reino-editor-card';
-          card.setAttribute('id', `reino-edit-card-${isCC ? 'cc' : i}`);
-          card.onclick = () => selectReinoForEdit(isCC ? 'cc' : i);
-          card.innerHTML = `
-            <span class="reino-editor-name">${r.nome}</span>
-            <div class="reino-editor-gem-dot" style="background:${gemColor}"></div>
-          `;
-          grid.appendChild(card);
         });
       }
 
-      function selectReinoForEdit(idx) {
-        document.querySelectorAll('.reino-editor-card').forEach(c => c.classList.remove('active'));
-        const activeCard = document.getElementById(`reino-edit-card-${idx}`);
-        if (activeCard) activeCard.classList.add('active');
+      function openTextEditorFromIframe(path, element, pageType) {
+        activeIframeElement = element;
+        activeIframePageType = pageType;
         
-        currentReinoIndex = idx;
-        const reinos = siteContent.membros?.reinos || [];
-        const cc = siteContent.membros?.cidade_celestial;
-        const r = (idx === 'cc') ? cc : reinos[idx];
+        const clone = element.cloneNode(true);
+        const trigger = clone.querySelector('.admin-pencil-trigger');
+        if (trigger) trigger.remove();
         
-        if (!r) return;
+        const cleanVal = clone.innerHTML.trim();
+        const title = `Editar Campo: ${path}`;
         
-        document.getElementById('reinoDetailsTitle').textContent = `Lore de ${r.nome}`;
-        document.getElementById('reinoDescText').innerHTML = r.descricao || 'Sem descrição.';
-        
-        const list = document.getElementById('reinoLoreItemsList');
-        list.innerHTML = '';
-        
-        const lore = r.lore || [];
-        lore.forEach((l, i) => {
-          const row = document.createElement('div');
-          row.className = 'lore-item-edit-row';
-          row.onclick = () => openTextEditor(`reino-lore-${i}`, l.texto || l.text, `Lore Exclusivo - Item ${i+1}`);
-          row.innerHTML = `
-            <div class="lore-item-edit-index">◈ ${String(i+1).padStart(2, '0')}</div>
-            <div class="lore-item-edit-text">${l.texto || l.text}</div>
-          `;
-          list.appendChild(row);
-        });
-        
-        document.getElementById('reinoDetailsCard').style.display = 'block';
+        openTextEditor(path, cleanVal, title);
       }
 
       function openTextEditor(target, value, title = 'Editar Texto') {
@@ -1599,29 +1625,6 @@
         document.getElementById('editorModalTitle').textContent = title;
         
         const editor = document.getElementById('editorArea');
-        
-        // Se o valor não foi passado, tenta obter o texto atual do elemento visual correspondente
-        if (value === undefined || value === null) {
-          if (target === 'reino-desc') {
-            value = document.getElementById('reinoDescText').innerHTML;
-          } else if (target === 'home-hero-tagline') {
-            value = document.getElementById('homeHeroTaglineText').innerHTML;
-          } else if (target === 'home-book-synopsis') {
-            value = document.getElementById('homeBookSynopsisText').innerHTML;
-          } else if (target === 'home-char-celestria') {
-            value = document.getElementById('homeCharCelestriaText').innerHTML;
-          } else if (target === 'home-char-taina') {
-            value = document.getElementById('homeCharTainaText').innerHTML;
-          } else if (target === 'autora-bio') {
-            value = document.getElementById('autoraBioText').innerHTML;
-          }
-        }
-        
-        // Limpa se for o texto de fallback padrão do HTML
-        if (value === 'Sem descrição.' || value === 'Sem descrição cadastrada.' || value === 'Sem biografia.') {
-          value = '';
-        }
-        
         editor.innerHTML = value || '';
         document.getElementById('editorModal').style.display = 'flex';
         editor.focus();
@@ -1640,6 +1643,8 @@
       function closeEditorModal() {
         document.getElementById('editorModal').style.display = 'none';
         currentEditorTarget = null;
+        activeIframeElement = null;
+        activeIframePageType = null;
       }
 
       function execEditorCommand(cmd) {
@@ -1662,69 +1667,345 @@
         const editor = document.getElementById('editorArea');
         const text = editor.innerHTML.trim();
         
-        if (currentEditorTarget === 'reino-desc') {
-          const reinos = siteContent.membros?.reinos || [];
-          const cc = siteContent.membros?.cidade_celestial;
-          const r = (currentReinoIndex === 'cc') ? cc : reinos[currentReinoIndex];
-          if (r) {
-            r.descricao = text;
-            document.getElementById('reinoDescText').innerHTML = text || 'Sem descrição.';
-          }
-        } 
-        else if (currentEditorTarget.startsWith('reino-lore-')) {
-          const idx = parseInt(currentEditorTarget.split('-')[2]);
-          const reinos = siteContent.membros?.reinos || [];
-          const cc = siteContent.membros?.cidade_celestial;
-          const r = (currentReinoIndex === 'cc') ? cc : reinos[currentReinoIndex];
-          if (r && r.lore && r.lore[idx]) {
-            r.lore[idx].texto = text;
-            r.lore[idx].text = text; // Update both just in case
-            selectReinoForEdit(currentReinoIndex); // refresh list
-          }
-        }
-        else if (currentEditorTarget === 'home-hero-tagline') {
-          siteContent.index.hero.tagline = text;
-          document.getElementById('homeHeroTaglineText').innerHTML = text;
-        }
-        else if (currentEditorTarget === 'home-book-synopsis') {
-          siteContent.index.book.synopsis = text;
-          document.getElementById('homeBookSynopsisText').innerHTML = text;
-        }
-        else if (currentEditorTarget.startsWith('home-synopsis-')) {
-          const idx = parseInt(currentEditorTarget.split('-')[2]);
-          if (siteContent.index?.sinopse?.paragraphs) {
-            siteContent.index.sinopse.paragraphs[idx] = text;
-            fieldTextsFields(); // refresh list
-          }
-        }
-        else if (currentEditorTarget === 'home-char-celestria') {
-          siteContent.index.personagens.celestria.desc = text;
-          document.getElementById('homeCharCelestriaText').innerHTML = text;
-        }
-        else if (currentEditorTarget === 'home-char-taina') {
-          siteContent.index.personagens.taina.desc = text;
-          document.getElementById('homeCharTainaText').innerHTML = text;
-        }
-        else if (currentEditorTarget === 'autora-bio') {
-          siteContent.index.autora.bio = text;
-          document.getElementById('autoraBioText').innerHTML = text;
+        if (currentEditorTarget) {
+          setDeepValue(siteContent, currentEditorTarget, text);
+          reloadIframePreview(activeIframePageType);
         }
         
         closeEditorModal();
         toast('✦ Alteração salva na memória. Clique em "Salvar Textos e publicar" para publicar.');
       }
 
+      function reloadIframePreview(pageType) {
+        const iframeId = (pageType === 'index') ? 'iframe-index-preview' : 'iframe-membros-preview';
+        const iframe = document.getElementById(iframeId);
+        if (iframe) {
+          iframe.contentWindow.location.reload();
+        }
+      }
+
+      function setDeepValue(obj, path, val) {
+        const parts = path.split('.');
+        let current = obj;
+        for (let i = 0; i < parts.length - 1; i++) {
+          const part = parts[i];
+          if (current[part] === undefined) {
+            if (!isNaN(parts[i+1])) {
+              current[part] = [];
+            } else {
+              current[part] = {};
+            }
+          }
+          current = current[part];
+        }
+        const last = parts[parts.length - 1];
+        current[last] = val;
+      }
+
       async function saveAllTexts() {
         if (!siteContent) { toast('Conteúdo não carregado ainda.', 'error'); return; }
-        
         toast('Publicando alterações... Aguarde.');
-        
         try {
           await saveToGitHub();
           toast('✦ Alteração publicada com sucesso! O site será atualizado em 2-3 minutos.');
         } catch(e) {
           toast('Erro ao publicar: ' + e.message, 'error');
         }
+      }
+
+      /* ── LINK EDITOR ── */
+      let currentLinkTarget = null;
+      let activeLinkElement = null;
+      
+      function openLinkEditorFromIframe(path, element, pageType) {
+        currentLinkTarget = path;
+        activeLinkElement = element;
+        document.getElementById('linkEditorInput').value = element.getAttribute('href') || '';
+        document.getElementById('linkEditorModal').style.display = 'flex';
+      }
+      
+      function closeLinkEditorModal() {
+        document.getElementById('linkEditorModal').style.display = 'none';
+        currentLinkTarget = null;
+        activeLinkElement = null;
+      }
+      
+      function saveLinkEditorValue() {
+        const url = document.getElementById('linkEditorInput').value.trim();
+        if (!url) { toast('Insira uma URL.', 'error'); return; }
+        
+        if (activeLinkElement) {
+          setDeepValue(siteContent, currentLinkTarget, url);
+          activeLinkElement.setAttribute('href', url);
+          closeLinkEditorModal();
+          toast('✦ Link alterado na memória. Clique em "Salvar Textos e publicar" para publicar.');
+        }
+      }
+
+      /* ── IMAGE EDITOR ── */
+      let currentImageTarget = null;
+      let activeImageElement = null;
+      
+      function openImageEditorFromIframe(path, element, pageType) {
+        currentImageTarget = path;
+        activeImageElement = element;
+        document.getElementById('imageEditorPreview').src = element.src || '';
+        document.getElementById('imageEditorFileInput').value = '';
+        document.getElementById('imageEditorModal').style.display = 'flex';
+      }
+      
+      function closeImageEditorModal() {
+        document.getElementById('imageEditorModal').style.display = 'none';
+        currentImageTarget = null;
+        activeImageElement = null;
+      }
+      
+      async function saveImageEditorValue() {
+        const fileInput = document.getElementById('imageEditorFileInput');
+        const file = fileInput.files[0];
+        if (!file) { toast('Por favor, selecione um arquivo de imagem.', 'error'); return; }
+        if (file.size > 4 * 1024 * 1024) { toast('Máximo 4MB.', 'error'); return; }
+        
+        const btn = document.getElementById('imageEditorSaveBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<div class="spinner"></div> Enviando...';
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = new Image();
+          img.onload = async function() {
+            try {
+              const safeBaseName = file.name
+                .substring(0, file.name.lastIndexOf('.'))
+                .toLowerCase()
+                .replace(/[^a-z0-9]/g, '-')
+                .replace(/-+/g, '-');
+              const finalFilename = `${safeBaseName}.png`;
+              
+              const canvas = document.createElement('canvas');
+              canvas.width = img.width;
+              canvas.height = img.height;
+              const ctx = canvas.getContext('2d');
+              ctx.drawImage(img, 0, 0);
+              const base64 = canvas.toDataURL('image/png').split(',')[1];
+              
+              const res = await fetch('/api/upload-image', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
+                body: JSON.stringify({ filename: finalFilename, base64: base64, mimeType: 'image/png' })
+              });
+              
+              if (!res.ok) {
+                const err = await res.json().catch(() => ({}));
+                throw new Error(err.error || 'Erro no upload');
+              }
+              const data = await res.json();
+              const imageUrl = data.url;
+              
+              if (activeImageElement) {
+                setDeepValue(siteContent, currentImageTarget, imageUrl);
+                activeImageElement.src = imageUrl;
+                closeImageEditorModal();
+                toast('✦ Ilustração enviada com sucesso! Clique em "Salvar Textos e publicar" para publicar.');
+              }
+            } catch (err) {
+              toast('Erro: ' + err.message, 'error');
+            } finally {
+              btn.disabled = false;
+              btn.innerHTML = 'Fazer Upload';
+            }
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+
+      /* ── ADD BLOG ARTICLE ── */
+      function openAddBlogModal() {
+        document.getElementById('addBlogTitle').value = '';
+        document.getElementById('addBlogCat').value = '';
+        document.getElementById('addBlogExcerpt').value = '';
+        document.getElementById('addBlogBody').value = '';
+        document.getElementById('addBlogFeatured').checked = false;
+        document.getElementById('addBlogModal').style.display = 'flex';
+      }
+      
+      function closeAddBlogModal() {
+        document.getElementById('addBlogModal').style.display = 'none';
+      }
+      
+      function saveNewBlogArticle() {
+        const title = document.getElementById('addBlogTitle').value.trim();
+        const cat = document.getElementById('addBlogCat').value.trim();
+        const excerpt = document.getElementById('addBlogExcerpt').value.trim();
+        const body = document.getElementById('addBlogBody').value.trim();
+        const featured = document.getElementById('addBlogFeatured').checked;
+        
+        if (!title || !cat || !excerpt || !body) {
+          toast('Preencha todos os campos obrigatórios.', 'error');
+          return;
+        }
+        
+        siteContent.membros = siteContent.membros || {};
+        siteContent.membros.blog = siteContent.membros.blog || [];
+        
+        const maxId = siteContent.membros.blog.reduce((max, p) => p.id > max ? p.id : max, 0);
+        const newId = maxId + 1;
+        
+        if (featured) {
+          siteContent.membros.blog.forEach(p => p.featured = false);
+        }
+        
+        const newPost = {
+          id: newId,
+          eyebrow: cat.split('·')[0].trim(),
+          cat: cat,
+          title: title,
+          excerpt: excerpt,
+          body: body,
+          featured: featured
+        };
+        
+        siteContent.membros.blog.unshift(newPost);
+        closeAddBlogModal();
+        reloadIframePreview('membros');
+        toast('✦ Novo artigo adicionado à memória. Clique em "Salvar Textos e publicar" para publicar.');
+      }
+
+      /* ── ADD GALLERY IMAGE ── */
+      function openAddGalleryModal() {
+        document.getElementById('addGalleryTitle').value = '';
+        document.getElementById('addGalleryFileInput').value = '';
+        document.getElementById('addGalleryPreview').style.display = 'none';
+        document.getElementById('addGalleryPreview').src = '';
+        document.getElementById('addGalleryProgress').style.display = 'none';
+        document.getElementById('addGalleryProgressBar').style.width = '0%';
+        document.getElementById('addGalleryModal').style.display = 'flex';
+      }
+      
+      function closeAddGalleryModal() {
+        document.getElementById('addGalleryModal').style.display = 'none';
+      }
+      
+      function onAddGalleryFileSelect(input) {
+        const file = input.files[0];
+        if (!file) return;
+        if (file.size > 4 * 1024 * 1024) { toast('Máximo 4MB.', 'error'); return; }
+        
+        const reader = new FileReader();
+        reader.onload = e => {
+          const preview = document.getElementById('addGalleryPreview');
+          preview.src = e.target.result;
+          preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+      
+      async function saveNewGalleryImage() {
+        const title = document.getElementById('addGalleryTitle').value.trim();
+        const fileInput = document.getElementById('addGalleryFileInput');
+        const file = fileInput.files[0];
+        
+        if (!title) { toast('Digite um título para a obra.', 'error'); return; }
+        if (!file) { toast('Selecione uma imagem.', 'error'); return; }
+        
+        const btn = document.getElementById('addGallerySaveBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<div class="spinner"></div> Enviando...';
+        
+        const progressContainer = document.getElementById('addGalleryProgress');
+        const progressBar = document.getElementById('addGalleryProgressBar');
+        const progressText = document.getElementById('addGalleryProgressText');
+        
+        progressContainer.style.display = 'block';
+        progressBar.style.width = '10%';
+        progressText.textContent = 'Carregando imagem...';
+        
+        const fileReader = new FileReader();
+        fileReader.onload = function(event) {
+          const img = new Image();
+          img.onload = async function() {
+            try {
+              const safeBaseName = file.name
+                .substring(0, file.name.lastIndexOf('.'))
+                .toLowerCase()
+                .replace(/[^a-z0-9]/g, '-')
+                .replace(/-+/g, '-');
+              
+              progressBar.style.width = '30%';
+              progressText.textContent = 'Gerando PNG original...';
+              const canvasPng = document.createElement('canvas');
+              canvasPng.width = img.width;
+              canvasPng.height = img.height;
+              const ctxPng = canvasPng.getContext('2d');
+              ctxPng.drawImage(img, 0, 0);
+              const pngBase64 = canvasPng.toDataURL('image/png').split(',')[1];
+              
+              progressBar.style.width = '50%';
+              progressText.textContent = 'Gerando JPG comprimido...';
+              const canvasJpg = document.createElement('canvas');
+              canvasJpg.width = Math.max(1, Math.round(img.width * 0.5));
+              canvasJpg.height = Math.max(1, Math.round(img.height * 0.5));
+              const ctxJpg = canvasJpg.getContext('2d');
+              ctxJpg.drawImage(img, 0, 0, canvasJpg.width, canvasJpg.height);
+              const jpgBase64 = canvasJpg.toDataURL('image/jpeg', 0.85).split(',')[1];
+              
+              progressBar.style.width = '70%';
+              progressText.textContent = 'Enviando PNG...';
+              const pngFilename = `${safeBaseName}.png`;
+              const resPng = await fetch('/api/upload-image', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
+                body: JSON.stringify({ filename: pngFilename, base64: pngBase64, mimeType: 'image/png' })
+              });
+              if (!resPng.ok) {
+                const errPng = await resPng.json().catch(() => ({}));
+                throw new Error(errPng.error || 'Erro no PNG');
+              }
+              
+              progressBar.style.width = '85%';
+              progressText.textContent = 'Enviando JPG...';
+              const jpgFilename = `${safeBaseName}.jpg`;
+              const resJpg = await fetch('/api/upload-image', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
+                body: JSON.stringify({ filename: jpgFilename, base64: jpgBase64, mimeType: 'image/jpeg' })
+              });
+              if (!resJpg.ok) {
+                const errJpg = await resJpg.json().catch(() => ({}));
+                throw new Error(errJpg.error || 'Erro no JPG');
+              }
+              
+              progressBar.style.width = '95%';
+              progressText.textContent = 'Atualizando galeria...';
+              
+              siteContent.membros = siteContent.membros || {};
+              siteContent.membros.gallery = siteContent.membros.gallery || [];
+              
+              siteContent.membros.gallery.push({
+                title: title,
+                thumb: `images/${jpgFilename}`,
+                download: `images/${pngFilename}`
+              });
+              
+              progressBar.style.width = '100%';
+              progressText.textContent = 'Sucesso!';
+              
+              closeAddGalleryModal();
+              reloadIframePreview('membros');
+              toast('✦ Nova arte adicionada com sucesso. Clique em "Salvar Textos e publicar" para publicar.');
+              
+            } catch (err) {
+              toast('Erro: ' + err.message, 'error');
+            } finally {
+              btn.disabled = false;
+              btn.innerHTML = 'Fazer Upload';
+              progressContainer.style.display = 'none';
+            }
+          };
+          img.src = event.target.result;
+        };
+        fileReader.readAsDataURL(file);
       }
 
       /* ── MEMBERS ── */
@@ -2028,6 +2309,118 @@
           <div style="flex: 1;"></div>
           <button class="btn btn-outline" onclick="closeEditorModal()">Cancelar</button>
           <button class="btn btn-primary" onclick="saveEditorText()">Salvar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── LINK EDITOR MODAL ── -->
+    <div id="linkEditorModal" class="editor-modal" style="display: none;">
+      <div class="editor-modal-content">
+        <div class="editor-modal-header">
+          <span class="editor-modal-title">Editar Link</span>
+          <button class="editor-modal-close" onclick="closeLinkEditorModal()">&times;</button>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Endereço do Link (URL)</label>
+          <input type="url" id="linkEditorInput" class="form-input" placeholder="https://..." />
+        </div>
+        <div class="editor-actions">
+          <div style="flex: 1;"></div>
+          <button class="btn btn-outline" onclick="closeLinkEditorModal()">Cancelar</button>
+          <button class="btn btn-primary" onclick="saveLinkEditorValue()">Salvar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── IMAGE EDITOR MODAL ── -->
+    <div id="imageEditorModal" class="editor-modal" style="display: none;">
+      <div class="editor-modal-content">
+        <div class="editor-modal-header">
+          <span class="editor-modal-title">Alterar Imagem</span>
+          <button class="editor-modal-close" onclick="closeImageEditorModal()">&times;</button>
+        </div>
+        <div style="text-align: center;">
+          <img id="imageEditorPreview" src="" style="max-height: 180px; max-width: 100%; object-fit: contain; margin-bottom: 16px; border: 1px solid var(--border); border-radius: 4px;" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Selecionar Nova Imagem (PNG, JPG, WEBP · Máx 4MB)</label>
+          <input type="file" id="imageEditorFileInput" class="form-input" accept="image/*" />
+        </div>
+        <div class="editor-actions">
+          <div style="flex: 1;"></div>
+          <button class="btn btn-outline" onclick="closeImageEditorModal()">Cancelar</button>
+          <button class="btn btn-primary" id="imageEditorSaveBtn" onclick="saveImageEditorValue()">Fazer Upload</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ADD BLOG MODAL ── -->
+    <div id="addBlogModal" class="editor-modal" style="display: none;">
+      <div class="editor-modal-content" style="max-width: 750px;">
+        <div class="editor-modal-header">
+          <span class="editor-modal-title">Adicionar Artigo ao Blog</span>
+          <button class="editor-modal-close" onclick="closeAddBlogModal()">&times;</button>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Título do Artigo</label>
+          <input type="text" id="addBlogTitle" class="form-input" placeholder="Ex: A Magia de Celestria" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Categoria</label>
+          <input type="text" id="addBlogCat" class="form-input" placeholder="Ex: Contos · O Reino Celestial" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Resumo (Excerpt)</label>
+          <textarea id="addBlogExcerpt" class="form-input" rows="3" placeholder="Resumo curto que aparece na listagem do blog..." style="resize: vertical; font-family: inherit;"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Conteúdo do Artigo (Corpo)</label>
+          <textarea id="addBlogBody" class="form-input" rows="8" placeholder="Texto do artigo. Você pode usar quebras de linha e HTML básico..." style="resize: vertical; font-family: inherit;"></textarea>
+        </div>
+        <div class="form-group">
+          <label class="checklist-item">
+            <input type="checkbox" id="addBlogFeatured" />
+            <span>Destacar este artigo (ficará com destaque no topo do blog)</span>
+          </label>
+        </div>
+        <div class="editor-actions">
+          <div style="flex: 1;"></div>
+          <button class="btn btn-outline" onclick="closeAddBlogModal()">Cancelar</button>
+          <button class="btn btn-primary" onclick="saveNewBlogArticle()">Adicionar Artigo</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── ADD GALLERY MODAL ── -->
+    <div id="addGalleryModal" class="editor-modal" style="display: none;">
+      <div class="editor-modal-content">
+        <div class="editor-modal-header">
+          <span class="editor-modal-title">Adicionar Arte à Galeria</span>
+          <button class="editor-modal-close" onclick="closeAddGalleryModal()">&times;</button>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Título da Arte</label>
+          <input type="text" id="addGalleryTitle" class="form-input" placeholder="Ex: Tainá — A Pigmentadora" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Selecionar Imagem</label>
+          <input type="file" id="addGalleryFileInput" class="form-input" accept="image/*" onchange="onAddGalleryFileSelect(this)" />
+        </div>
+        <div style="text-align: center;">
+          <img id="addGalleryPreview" src="" style="display: none; max-height: 150px; max-width: 100%; object-fit: contain; margin-top: 12px; border: 1px solid var(--border); border-radius: 4px;" />
+        </div>
+        
+        <div id="addGalleryProgress" style="display: none; margin-top: 12px;">
+          <div class="upload-progress" style="display: block;">
+            <div class="upload-progress-bar" id="addGalleryProgressBar" style="width: 0%;"></div>
+          </div>
+          <div id="addGalleryProgressText" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px; text-align: center;">Processando...</div>
+        </div>
+        
+        <div class="editor-actions">
+          <div style="flex: 1;"></div>
+          <button class="btn btn-outline" onclick="closeAddGalleryModal()">Cancelar</button>
+          <button class="btn btn-primary" id="addGallerySaveBtn" onclick="saveNewGalleryImage()">Adicionar Arte</button>
         </div>
       </div>
     </div>
