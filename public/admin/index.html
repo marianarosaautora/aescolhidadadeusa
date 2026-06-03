@@ -961,6 +961,12 @@
           </div>
 
           <!-- ── TEXTOS ── -->
+          <!-- Banner de aviso do token GitHub (aparece se token expirado) -->
+          <div id="githubTokenAlert" style="display:none; background: rgba(255,51,51,0.1); border: 1px solid rgba(255,51,51,0.4); border-radius: 6px; padding: 16px 20px; margin-bottom: 0; color: #ff7070; font-size: 0.85rem; line-height: 1.6;">
+            ⚠️ <strong>Token do GitHub expirado.</strong> Não é possível publicar alterações até renovar o token.<br>
+            <span style="font-size: 0.78rem; opacity: 0.85;">Acesse o <a href="https://github.com/settings/tokens" target="_blank" style="color: #ff9090;">GitHub → Settings → Developer Settings → Personal Access Tokens</a> → gere um novo token com permissão <code>contents:write</code> → depois cole o valor em <a href="https://vercel.com" target="_blank" style="color: #ff9090;">Vercel → seu projeto → Settings → Environment Variables → GITHUB_TOKEN</a> → clique em Redeploy.</span>
+          </div>
+
           <!-- ── PÁGINA INICIAL (EDITOR VISUAL) ── -->
           <div class="page" id="page-textos-index">
             <div class="page-header">
@@ -1291,6 +1297,27 @@
                   </ol>
                 </div>
               </div>
+
+              <!-- Problema 6 -->
+              <div class="problem-card" style="border-left-color: #f5a623;">
+                <div class="problem-title">⚠️ Erro "Bad credentials" ao clicar em "Salvar Textos e publicar"</div>
+                <div class="problem-solution">
+                  <strong>O que significa:</strong>
+                  <p style="font-size: 0.8rem; color: var(--text-muted); margin: 8px 0;">O token de acesso ao GitHub (GITHUB_TOKEN) expirou. Esse token tem prazo de validade e precisa ser renovado periodicamente.</p>
+                  <strong>O que fazer (passo a passo):</strong>
+                  <ol style="padding-left: 20px; font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; margin-top: 8px;">
+                    <li>Acesse o <a href="https://github.com/settings/tokens" target="_blank" style="color: var(--gold);">GitHub.com</a> e faça login com o e-mail <code>aescolhidadadeusa@outlook.com</code>.</li>
+                    <li>Vá em: <strong>foto do perfil (canto superior direito)</strong> → <strong>Settings</strong> → <strong>Developer Settings</strong> → <strong>Personal access tokens</strong> → <strong>Tokens (classic)</strong>.</li>
+                    <li>Clique em <strong>Generate new token (classic)</strong>.</li>
+                    <li>Dê um nome (ex: <code>vercel-cms</code>), escolha expiração <strong>1 year</strong> e marque a permissão <strong>repo</strong> (ou <strong>public_repo</strong>).</li>
+                    <li>Clique em <strong>Generate token</strong> e <strong>copie o valor</strong> (começa com <code>ghp_</code>). Guarde em lugar seguro — ele aparece só uma vez.</li>
+                    <li>Acesse a <a href="https://vercel.com" target="_blank" style="color: var(--gold);">Vercel.com</a> → entre no projeto <code>aescolhidadadeusa</code> → aba <strong>Settings</strong> → <strong>Environment Variables</strong>.</li>
+                    <li>Encontre a variável <code>GITHUB_TOKEN</code>, clique para editar e cole o novo token.</li>
+                    <li>Clique em <strong>Save</strong> e depois em <strong>Deployments</strong> → clique nos 3 pontos do último deploy → <strong>Redeploy</strong>.</li>
+                    <li>Aguarde 2-3 minutos e tente salvar novamente pelo painel.</li>
+                  </ol>
+                </div>
+              </div>
             </div>
 
             <!-- Manutenção Preventiva -->
@@ -1383,7 +1410,8 @@
         el.textContent = msg;
         el.className = 'show ' + type;
         clearTimeout(el._t);
-        el._t = setTimeout(() => { el.className = ''; }, 3500);
+        const duration = type === 'error' ? 7000 : 3500;
+        el._t = setTimeout(() => { el.className = ''; }, duration);
       }
 
       /* ── CONTENT.JSON ── */
@@ -1531,6 +1559,15 @@
           .admin-img-overlay-trigger:hover {
             background: #c9a84c !important;
           }
+          /* Desabilita cursor personalizado dentro do iframe admin */
+          *, *::before, *::after {
+            cursor: default !important;
+          }
+          a, button, [onclick], [data-editable], [data-editable-image], [data-editable-link],
+          .admin-pencil-trigger, .admin-img-overlay-trigger {
+            cursor: pointer !important;
+          }
+          #cursorBrush { display: none !important; }
         `;
           doc.head.appendChild(style);
         }
@@ -1707,9 +1744,19 @@
         toast('Publicando alterações... Aguarde.');
         try {
           await saveToGitHub();
+          const alertEl = document.getElementById('githubTokenAlert');
+          if (alertEl) alertEl.style.display = 'none';
           toast('✦ Alteração publicada com sucesso! O site será atualizado em 2-3 minutos.');
         } catch(e) {
-          toast('Erro ao publicar: ' + e.message, 'error');
+          let errMsg = e.message;
+          const isCredentialsError = errMsg && (errMsg.toLowerCase().includes('bad credentials') || errMsg.toLowerCase().includes('unauthorized'));
+          if (isCredentialsError) {
+            errMsg = 'Token do GitHub expirado. Veja o Manual → Problema 6 para renovar.';
+            // Show the alert banner in both editor pages
+            const alertEl = document.getElementById('githubTokenAlert');
+            if (alertEl) alertEl.style.display = 'block';
+          }
+          toast('Erro ao publicar: ' + errMsg, 'error');
         }
       }
 
