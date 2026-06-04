@@ -1,8 +1,6 @@
 // api/get-upload-url.js
 // Gera uma URL assinada (Presigned URL) para o upload de arquivos direto ao Supabase Storage.
 
-import { createClient } from '@supabase/supabase-js';
-
 export default async function handler(req, res) {
   // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -42,25 +40,38 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Faltam variáveis SUPABASE_URL ou SUPABASE_SERVICE_ROLE_KEY no Vercel.' });
   }
 
-  // Inicializa o cliente do Supabase com a chave mestra de serviço (bypassa RLS)
-  const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
-
   try {
-    // Gera URL assinada de upload que é válida por 15 minutos (900s)
-    const { data, error } = await supabase.storage
-      .from(bucket)
-      .createSignedUploadUrl(safeFilename);
+    // Chamada direta para a API REST do Supabase Storage para gerar a URL de upload assinada
+    const signUrl = `${SUPABASE_URL}/storage/v1/object/upload/sign/${bucket}/${safeFilename}`;
+    const supabaseRes = await fetch(signUrl, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+        'apikey': SUPABASE_SERVICE_ROLE_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({})
+    });
 
-    if (error) {
-      throw new Error(error.message || 'Erro ao gerar URL assinada de upload');
+    if (!supabaseRes.ok) {
+      const errText = await supabaseRes.text().catch(() => '');
+      throw new Error(`Erro do Supabase Storage: ${supabaseRes.status} ${supabaseRes.statusText} — ${errText}`);
     }
+
+    const data = await supabaseRes.json();
+    if (!data.url) {
+      throw new Error('O Supabase Storage não retornou uma URL de upload válida.');
+    }
+
+    // Monta a URL assinada completa (data.url já começa com /)
+    const signedUrl = `${SUPABASE_URL}${data.url}`;
 
     // A URL pública para download / exibição posterior no site
     const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${safeFilename}`;
 
     return res.status(200).json({
       ok: true,
-      signedUrl: data.signedUrl,
+      signedUrl: signedUrl,
       publicUrl: publicUrl,
       filename: safeFilename
     });
