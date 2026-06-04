@@ -1532,6 +1532,17 @@
         color: #ffffff22;
         font-style: italic;
       }
+      .footer-mobile-block {
+        display: inline;
+      }
+      .footer-link {
+        color: var(--gold-dim);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      .footer-link:hover {
+        color: var(--gold-light);
+      }
 
       /* ── HEADER NAV ── */
       header {
@@ -1710,6 +1721,10 @@
       @media (max-width: 768px) {
         /* Remove mouse personalizado no mobile */
         body { cursor: auto !important; }
+        .footer-mobile-block {
+          display: block;
+          margin-top: 6px;
+        }
         .cursor-brush { display: none !important; }
         a, button, .btn-gold, .btn-ghost, .nav-cta, .social-link, input { cursor: pointer !important; }
         .index-pigmentadoras-grid {
@@ -2387,8 +2402,8 @@
       <a href="#top" class="footer-logo">A Escolhida da Deusa</a>
       <p class="footer-sub">Mariana Rosa · Romantasia Sáfica</p>
       <div class="footer-sep"></div>
-      <p class="footer-copy" data-editable="site.footerCopy">
-        © 2026 Mariana Rosa · Todos os direitos reservados.
+      <p class="footer-copy">
+        <span class="footer-copy-text" data-editable="site.footerCopy">© 2026 Mariana Rosa · Todos os direitos reservados.</span><span class="footer-mobile-block"> · Desenvolvido por <a href="https://carolgonzaga.site/" target="_blank" class="footer-link">CarolGonzaga</a></span>
       </p>
     </footer>
 
@@ -2597,7 +2612,7 @@
             
             // Footer copy
             if (data?.site?.footerCopy) {
-              const foot = document.querySelector('.footer-copy');
+              const foot = document.querySelector('.footer-copy-text');
               if (foot) { foot.textContent = data.site.footerCopy; foot.setAttribute('data-editable', 'site.footerCopy'); }
             }
 
