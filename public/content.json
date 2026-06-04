@@ -95,7 +95,9 @@
       "button": "Entrar"
     },
     "images": {
-      "bookCover": "https://cdn.jsdelivr.net/gh/marianarosaautora/aescolhidadadeusa@main/public/images/celestria.png"
+      "bookCover": "src/assets/capa.png",
+      "celestriaIllust": "src/assets/Celestria.png",
+      "tainaIllust": "src/assets/Taina.png"
     }
   },
   "membros": {
