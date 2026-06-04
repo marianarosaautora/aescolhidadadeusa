@@ -552,7 +552,7 @@
       animation: fadeUp 1.2s 0.4s forwards;
     }
 
-    .welcome-h1 span {
+    .welcome-h1 span:not([data-editable]) {
       background: linear-gradient(135deg,
           var(--gold) 0%,
           var(--gold-light) 45%,
@@ -1493,7 +1493,7 @@
     }
 
     .book-bio {
-      font-size: clamp(0.8rem, 1vw, 0.95rem);
+      font-size: clamp(0.68rem, 1vw, 0.82rem);
       line-height: 1.65;
       color: var(--ink-mid);
       flex: 1; overflow: hidden;
@@ -1502,7 +1502,7 @@
     .book-bio p { margin-bottom: 6px; text-align: justify; }
 
     .book-bio-right {
-      font-size: clamp(0.8rem, 1vw, 0.95rem);
+      font-size: clamp(0.68rem, 1vw, 0.82rem);
       line-height: 1.65;
       color: var(--ink-mid);
       flex: 1; overflow: hidden;
@@ -1674,16 +1674,10 @@
         display: none !important;
       }
       .book-bio, .book-bio-right {
-        font-size: 1.05rem; /* Aumentado em mais 4px (de 0.8rem para 1.05rem) */
+        font-size: 0.8rem;
       }
       .book-name {
-        font-size: 1.25rem;
-      }
-      .book-realm {
-        font-size: 0.7rem;
-      }
-      .book-power-tag {
-        font-size: 0.65rem;
+        font-size: 1rem;
       }
       /* Margens dos botões internos em formato pergaminho */
       .bio-nav-back {
@@ -1696,16 +1690,7 @@
 
     @media (max-width: 480px) {
       .book-bio, .book-bio-right {
-        font-size: 0.97rem; /* Aumentado em mais 4px (de 0.72rem para 0.97rem) */
-      }
-      .book-name {
-        font-size: 1.15rem;
-      }
-      .book-realm {
-        font-size: 0.65rem;
-      }
-      .book-power-tag {
-        font-size: 0.6rem;
+        font-size: 0.72rem;
       }
       .book-outer {
         max-width: 100%;

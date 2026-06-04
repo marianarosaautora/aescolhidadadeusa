@@ -2,7 +2,8 @@
   "site": {
     "title": "A Escolhida da Deusa",
     "author": "Mariana Rosa",
-    "description": "Romantasia Sáfica — Os Nove Reinos"
+    "description": "Romantasia Sáfica — Os Nove Reinos",
+    "footerCopy": "© 2026 Mariana Rosa · Todos os direitos reservados."
   },
   "social": {
     "instagram": "https://instagram.com/mari_mrosa",
@@ -93,6 +94,11 @@
       "desc": "Cadastre seu e-mail para ter acesso ao diário completo da autora, ilustrações exclusivas e conteúdos adicionais do livro.",
       "note": "Sem spam. Só o universo vivo da história e seus lançamentos. ✦",
       "button": "Entrar"
+    },
+    "images": {
+      "bookCover": "src/assets/capa.png",
+      "celestriaIllust": "src/assets/Celestria.png",
+      "tainaIllust": "src/assets/Taina.png"
     }
   },
   "membros": {
