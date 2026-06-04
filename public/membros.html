@@ -2523,6 +2523,13 @@
     .footer-copy {
       font-size: 0.78rem;
       color: #ffffff22;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     .footer-back {
@@ -2616,6 +2623,11 @@
     }
 
     @media (max-width: 768px) {
+      .footer-copy {
+        flex-direction: column;
+        gap: 6px;
+        text-align: center;
+      }
       header {
         display: flex;
         justify-content: space-between;
@@ -3420,9 +3432,7 @@
 
       <div class="footer-sep"></div>
       <p class="footer-copy">
-        © 2026 desenvolvido por
-        <a href="https://carolgonzaga.site/" target="_blank" class="footer-link">CarolGonzaga</a><span
-          class="footer-mobile-block"> · Conteúdo exclusivo para membros.</span>
+        <span>© 2026 desenvolvido por <a href="https://carolgonzaga.site/" target="_blank" class="footer-link">CarolGonzaga</a></span><span class="footer-mobile-block">Conteúdo exclusivo para membros.</span>
       </p>
     </footer>
   </div>
