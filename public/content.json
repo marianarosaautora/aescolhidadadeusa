@@ -93,6 +93,9 @@
       "desc": "Cadastre seu e-mail para ter acesso ao diário completo da autora, ilustrações exclusivas e conteúdos adicionais do livro.",
       "note": "Sem spam. Só o universo vivo da história e seus lançamentos. ✦",
       "button": "Entrar"
+    },
+    "images": {
+      "bookCover": "https://cdn.jsdelivr.net/gh/marianarosaautora/aescolhidadadeusa@main/public/images/celestria.png"
     }
   },
   "membros": {
