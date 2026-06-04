@@ -627,6 +627,11 @@
         "title": "A Escolhida da Deusa — Celestria e Tainá",
         "thumb": "src/assets/gallery/arte 5.jpg",
         "download": "src/assets/gallery/arte 5.png"
+      },
+      {
+        "title": "Alana - Pigmentadora Caramelo",
+        "thumb": "https://rdvocdklisynkmhawxnv.supabase.co/storage/v1/object/public/gallery/alana-thumb.jpg",
+        "download": "https://rdvocdklisynkmhawxnv.supabase.co/storage/v1/object/public/gallery/alana.jpeg"
       }
     ],
     "cidade_celestial": {
