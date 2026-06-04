@@ -64,7 +64,7 @@ export default async function handler(req, res) {
     }
 
     // Monta a URL assinada completa (data.url já começa com /)
-    const signedUrl = `${SUPABASE_URL}${data.url}`;
+    const signedUrl = `${SUPABASE_URL}/storage/v1${data.url}`;
 
     // A URL pública para download / exibição posterior no site
     const publicUrl = `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${safeFilename}`;
