@@ -930,7 +930,7 @@
                 <input type="file" id="fileInput" accept="image/*" onchange="onFileSelect(this)" />
                 <span class="upload-icon">🖼️</span>
                 <div class="upload-text">Clique ou arraste uma imagem aqui</div>
-                <div class="upload-hint">PNG, JPG, WEBP · Máx. 4MB</div>
+                <div class="upload-hint">PNG, JPG, WEBP · Máx. 10MB</div>
               </div>
               <div class="upload-preview" id="uploadPreview">
                 <img id="previewImg" src="" alt="Preview" />
@@ -1789,6 +1789,39 @@
         }
       }
 
+      async function uploadFileToStorage(fileOrBlob, filename, bucket) {
+        const res = await fetch('/api/get-upload-url', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + TOKEN
+          },
+          body: JSON.stringify({ filename: filename, bucket: bucket })
+        });
+        
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.error || 'Falha ao obter URL de upload do servidor');
+        }
+        
+        const { signedUrl, publicUrl, filename: safeFilename } = data;
+        
+        const uploadRes = await fetch(signedUrl, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': fileOrBlob.type || 'application/octet-stream'
+          },
+          body: fileOrBlob
+        });
+        
+        if (!uploadRes.ok) {
+          const errText = await uploadRes.text().catch(() => '');
+          throw new Error(`Erro ao fazer upload direto no storage: ${uploadRes.statusText} ${errText}`);
+        }
+        
+        return { publicUrl, filename: safeFilename };
+      }
+
       /* ── IMAGE EDITOR ── */
       let currentImageTarget = null;
       let activeImageElement = null;
@@ -1811,60 +1844,28 @@
         const fileInput = document.getElementById('imageEditorFileInput');
         const file = fileInput.files[0];
         if (!file) { toast('Por favor, selecione um arquivo de imagem.', 'error'); return; }
-        if (file.size > 4 * 1024 * 1024) { toast('Máximo 4MB.', 'error'); return; }
+        if (file.size > 10 * 1024 * 1024) { toast('Arquivo muito grande. O limite máximo é de 10MB.', 'error'); return; }
         
         const btn = document.getElementById('imageEditorSaveBtn');
         btn.disabled = true;
         btn.innerHTML = '<div class="spinner"></div> Enviando...';
         
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const img = new Image();
-          img.onload = async function() {
-            try {
-              const safeBaseName = file.name
-                .substring(0, file.name.lastIndexOf('.'))
-                .toLowerCase()
-                .replace(/[^a-z0-9]/g, '-')
-                .replace(/-+/g, '-');
-              const finalFilename = `${safeBaseName}.png`;
-              
-              const canvas = document.createElement('canvas');
-              canvas.width = img.width;
-              canvas.height = img.height;
-              const ctx = canvas.getContext('2d');
-              ctx.drawImage(img, 0, 0);
-              const base64 = canvas.toDataURL('image/png').split(',')[1];
-              
-              const res = await fetch('/api/upload-image', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
-                body: JSON.stringify({ filename: finalFilename, base64: base64, mimeType: 'image/png' })
-              });
-              
-              if (!res.ok) {
-                const err = await res.json().catch(() => ({}));
-                throw new Error(err.error || 'Erro no upload');
-              }
-              const data = await res.json();
-              const imageUrl = data.url;
-              
-              if (activeImageElement) {
-                setDeepValue(siteContent, currentImageTarget, imageUrl);
-                activeImageElement.src = imageUrl;
-                closeImageEditorModal();
-                toast('✦ Ilustração enviada com sucesso! Clique em "Salvar Textos e publicar" para publicar.');
-              }
-            } catch (err) {
-              toast('Erro: ' + err.message, 'error');
-            } finally {
-              btn.disabled = false;
-              btn.innerHTML = 'Fazer Upload';
-            }
-          };
-          img.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
+        try {
+          const uploadRes = await uploadFileToStorage(file, file.name, 'gallery');
+          const imageUrl = uploadRes.publicUrl;
+          
+          if (activeImageElement) {
+            setDeepValue(siteContent, currentImageTarget, imageUrl);
+            activeImageElement.src = imageUrl;
+            closeImageEditorModal();
+            toast('✦ Ilustração enviada com sucesso! Clique em "Salvar Textos e publicar" para publicar.');
+          }
+        } catch (err) {
+          toast('Erro: ' + err.message, 'error');
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = 'Fazer Upload';
+        }
       }
 
       /* ── ADD BLOG ARTICLE ── */
@@ -1937,7 +1938,7 @@
       function onAddGalleryFileSelect(input) {
         const file = input.files[0];
         if (!file) return;
-        if (file.size > 4 * 1024 * 1024) { toast('Máximo 4MB.', 'error'); return; }
+        if (file.size > 10 * 1024 * 1024) { toast('Máximo 10MB.', 'error'); return; }
         
         const reader = new FileReader();
         reader.onload = e => {
@@ -1955,6 +1956,7 @@
         
         if (!title) { toast('Digite um título para a obra.', 'error'); return; }
         if (!file) { toast('Selecione uma imagem.', 'error'); return; }
+        if (file.size > 10 * 1024 * 1024) { toast('Arquivo muito grande. O limite máximo é de 10MB.', 'error'); return; }
         
         const btn = document.getElementById('addGallerySaveBtn');
         btn.disabled = true;
@@ -1966,7 +1968,7 @@
         
         progressContainer.style.display = 'block';
         progressBar.style.width = '10%';
-        progressText.textContent = 'Carregando imagem...';
+        progressText.textContent = 'Carregando imagem original...';
         
         const fileReader = new FileReader();
         fileReader.onload = function(event) {
@@ -1979,50 +1981,35 @@
                 .replace(/[^a-z0-9]/g, '-')
                 .replace(/-+/g, '-');
               
-              progressBar.style.width = '30%';
-              progressText.textContent = 'Gerando PNG original...';
-              const canvasPng = document.createElement('canvas');
-              canvasPng.width = img.width;
-              canvasPng.height = img.height;
-              const ctxPng = canvasPng.getContext('2d');
-              ctxPng.drawImage(img, 0, 0);
-              const pngBase64 = canvasPng.toDataURL('image/png').split(',')[1];
+              // 1. Upload original PNG
+              progressBar.style.width = '35%';
+              progressText.textContent = 'Enviando arquivo original...';
               
-              progressBar.style.width = '50%';
-              progressText.textContent = 'Gerando JPG comprimido...';
+              const downloadRes = await uploadFileToStorage(file, file.name, 'gallery');
+              const downloadUrl = downloadRes.publicUrl;
+              
+              // 2. Generate and upload JPG thumbnail (50% size)
+              progressBar.style.width = '70%';
+              progressText.textContent = 'Gerando miniatura JPG (50%)...';
+              
               const canvasJpg = document.createElement('canvas');
               canvasJpg.width = Math.max(1, Math.round(img.width * 0.5));
               canvasJpg.height = Math.max(1, Math.round(img.height * 0.5));
               const ctxJpg = canvasJpg.getContext('2d');
               ctxJpg.drawImage(img, 0, 0, canvasJpg.width, canvasJpg.height);
-              const jpgBase64 = canvasJpg.toDataURL('image/jpeg', 0.85).split(',')[1];
               
-              progressBar.style.width = '70%';
-              progressText.textContent = 'Enviando PNG...';
-              const pngFilename = `${safeBaseName}.png`;
-              const resPng = await fetch('/api/upload-image', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
-                body: JSON.stringify({ filename: pngFilename, base64: pngBase64, mimeType: 'image/png' })
+              const thumbBlob = await new Promise((resolve) => {
+                canvasJpg.toBlob((b) => resolve(b), 'image/jpeg', 0.85);
               });
-              if (!resPng.ok) {
-                const errPng = await resPng.json().catch(() => ({}));
-                throw new Error(errPng.error || 'Erro no PNG');
-              }
               
               progressBar.style.width = '85%';
-              progressText.textContent = 'Enviando JPG...';
-              const jpgFilename = `${safeBaseName}.jpg`;
-              const resJpg = await fetch('/api/upload-image', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
-                body: JSON.stringify({ filename: jpgFilename, base64: jpgBase64, mimeType: 'image/jpeg' })
-              });
-              if (!resJpg.ok) {
-                const errJpg = await resJpg.json().catch(() => ({}));
-                throw new Error(errJpg.error || 'Erro no JPG');
-              }
+              progressText.textContent = 'Enviando miniatura...';
               
+              const thumbFilename = `${safeBaseName}-thumb.jpg`;
+              const thumbRes = await uploadFileToStorage(thumbBlob, thumbFilename, 'gallery');
+              const thumbUrl = thumbRes.publicUrl;
+              
+              // 3. Save to content.json
               progressBar.style.width = '95%';
               progressText.textContent = 'Atualizando galeria...';
               
@@ -2031,8 +2018,8 @@
               
               siteContent.membros.gallery.push({
                 title: title,
-                thumb: `images/${jpgFilename}`,
-                download: `images/${pngFilename}`
+                thumb: thumbUrl,
+                download: downloadUrl
               });
               
               progressBar.style.width = '100%';
@@ -2046,7 +2033,7 @@
               toast('Erro: ' + err.message, 'error');
             } finally {
               btn.disabled = false;
-              btn.innerHTML = 'Fazer Upload';
+              btn.innerHTML = 'Adicionar Arte';
               progressContainer.style.display = 'none';
             }
           };
@@ -2169,7 +2156,7 @@
       function onFileSelect(input) {
         const file = input.files[0];
         if (!file) return;
-        if (file.size > 4 * 1024 * 1024) { toast('Máximo 4MB.', 'error'); return; }
+        if (file.size > 10 * 1024 * 1024) { toast('Tamanho máximo permitido: 10MB.', 'error'); return; }
         pendingFile = file;
         const reader = new FileReader();
         reader.onload = e => {
@@ -2188,13 +2175,17 @@
           return;
         }
 
+        if (pendingFile.size > 10 * 1024 * 1024) {
+          toast('Arquivo muito grande. O limite máximo é de 10MB.', 'error');
+          return;
+        }
+
         const btn = document.getElementById('uploadBtn');
         btn.disabled = true;
         btn.innerHTML = '<div class="spinner"></div> Processando imagem...';
         document.getElementById('uploadProgress').style.display = 'block';
         document.getElementById('uploadProgressBar').style.width = '10%';
 
-        // Generate sanitized safe base filename
         const safeBaseName = pendingFile.name
           .substring(0, pendingFile.name.lastIndexOf('.'))
           .toLowerCase()
@@ -2206,58 +2197,36 @@
           const img = new Image();
           img.onload = async function() {
             try {
-              // 1. PNG version (original size)
+              // 1. Upload original PNG
               document.getElementById('uploadProgressBar').style.width = '30%';
-              btn.innerHTML = '<div class="spinner"></div> Gerando PNG original...';
-              const canvasPng = document.createElement('canvas');
-              canvasPng.width = img.width;
-              canvasPng.height = img.height;
-              const ctxPng = canvasPng.getContext('2d');
-              ctxPng.drawImage(img, 0, 0);
-              const pngBase64 = canvasPng.toDataURL('image/png').split(',')[1];
+              btn.innerHTML = '<div class="spinner"></div> Enviando arquivo original...';
+              
+              const downloadRes = await uploadFileToStorage(pendingFile, pendingFile.name, 'gallery');
+              const downloadUrl = downloadRes.publicUrl;
 
-              // 2. JPG version (50% size)
-              document.getElementById('uploadProgressBar').style.width = '50%';
-              btn.innerHTML = '<div class="spinner"></div> Gerando JPG (50% do tamanho)...';
+              // 2. Generate and upload JPG thumbnail (50% size)
+              document.getElementById('uploadProgressBar').style.width = '60%';
+              btn.innerHTML = '<div class="spinner"></div> Gerando miniatura JPG (50%)...';
+              
               const canvasJpg = document.createElement('canvas');
               canvasJpg.width = Math.max(1, Math.round(img.width * 0.5));
               canvasJpg.height = Math.max(1, Math.round(img.height * 0.5));
               const ctxJpg = canvasJpg.getContext('2d');
               ctxJpg.drawImage(img, 0, 0, canvasJpg.width, canvasJpg.height);
-              const jpgBase64 = canvasJpg.toDataURL('image/jpeg', 0.85).split(',')[1];
-
-              // 3. Upload PNG
-              document.getElementById('uploadProgressBar').style.width = '70%';
-              btn.innerHTML = '<div class="spinner"></div> Enviando PNG original...';
-              const pngFilename = `${safeBaseName}.png`;
-              const resPng = await fetch('/api/upload-image', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
-                body: JSON.stringify({ filename: pngFilename, base64: pngBase64, mimeType: 'image/png' })
+              
+              const thumbBlob = await new Promise((resolve) => {
+                canvasJpg.toBlob((b) => resolve(b), 'image/jpeg', 0.85);
               });
-              if (!resPng.ok) {
-                const errPng = await resPng.json().catch(() => ({}));
-                throw new Error(errPng.error || 'Erro ao enviar PNG');
-              }
-              const dataPng = await resPng.json();
 
-              // 4. Upload JPG
-              document.getElementById('uploadProgressBar').style.width = '85%';
-              btn.innerHTML = '<div class="spinner"></div> Enviando JPG comprimido...';
-              const jpgFilename = `${safeBaseName}.jpg`;
-              const resJpg = await fetch('/api/upload-image', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + TOKEN },
-                body: JSON.stringify({ filename: jpgFilename, base64: jpgBase64, mimeType: 'image/jpeg' })
-              });
-              if (!resJpg.ok) {
-                const errJpg = await resJpg.json().catch(() => ({}));
-                throw new Error(errJpg.error || 'Erro ao enviar JPG');
-              }
-              const dataJpg = await resJpg.json();
+              document.getElementById('uploadProgressBar').style.width = '80%';
+              btn.innerHTML = '<div class="spinner"></div> Enviando miniatura...';
+              
+              const thumbFilename = `${safeBaseName}-thumb.jpg`;
+              const thumbRes = await uploadFileToStorage(thumbBlob, thumbFilename, 'gallery');
+              const thumbUrl = thumbRes.publicUrl;
 
-              // 5. Update content.json config
-              document.getElementById('uploadProgressBar').style.width = '95%';
+              // 3. Update content.json config
+              document.getElementById('uploadProgressBar').style.width = '90%';
               btn.innerHTML = '<div class="spinner"></div> Salvando configuração...';
               
               if (!siteContent) {
@@ -2267,11 +2236,10 @@
               siteContent.membros = siteContent.membros || {};
               siteContent.membros.gallery = siteContent.membros.gallery || [];
               
-              // Add to gallery using relative path from root
               siteContent.membros.gallery.push({
                 title: title,
-                thumb: `images/${jpgFilename}`,
-                download: `images/${pngFilename}`
+                thumb: thumbUrl,
+                download: downloadUrl
               });
 
               await saveToGitHub();
@@ -2390,7 +2358,7 @@
           <img id="imageEditorPreview" src="" style="max-height: 180px; max-width: 100%; object-fit: contain; margin-bottom: 16px; border: 1px solid var(--border); border-radius: 4px;" />
         </div>
         <div class="form-group">
-          <label class="form-label">Selecionar Nova Imagem (PNG, JPG, WEBP · Máx 4MB)</label>
+          <label class="form-label">Selecionar Nova Imagem (PNG, JPG, WEBP · Máx 10MB)</label>
           <input type="file" id="imageEditorFileInput" class="form-input" accept="image/*" />
         </div>
         <div class="editor-actions">
