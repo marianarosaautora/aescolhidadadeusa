@@ -959,7 +959,7 @@
             </div>
 
             <div class="card">
-              <div class="card-title">Imagens Enviadas</div>
+              <div class="card-title">Galeria da Área de Membros</div>
               <div id="galleryLoading" class="loading-state">
                 <div class="spinner"></div> Carregando imagens...
               </div>
@@ -1413,6 +1413,9 @@
         document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
         document.getElementById('page-' + page).classList.add('active');
         document.getElementById('nav-' + page).classList.add('active');
+        if (page === 'imagens') {
+          loadGallery();
+        }
       }
 
       /* ── TOAST ── */
@@ -2135,26 +2138,67 @@
       /* ── GALLERY ── */
       async function loadGallery() {
         try {
-          const res = await fetch('https://api.github.com/repos/marianarosaautora/aescolhidadadeusa/contents/public/images');
-          const files = await res.json();
+          if (!siteContent) {
+            await fetchContent();
+          }
           document.getElementById('galleryLoading').style.display = 'none';
-          const images = Array.isArray(files) ? files.filter(f => /\.(png|jpg|jpeg|webp|gif)$/i.test(f.name)) : [];
-
-          if (!images.length) { document.getElementById('galleryEmpty').style.display = 'block'; return; }
+          const gallery = siteContent?.membros?.gallery || [];
 
           const grid = document.getElementById('adminGallery');
+          if (!gallery.length) {
+            document.getElementById('galleryEmpty').style.display = 'block';
+            grid.style.display = 'none';
+            return;
+          }
+
+          document.getElementById('galleryEmpty').style.display = 'none';
           grid.style.display = 'grid';
           grid.innerHTML = '';
-          images.forEach(f => {
-            const url = `https://cdn.jsdelivr.net/gh/marianarosaautora/aescolhidadadeusa@main/public/images/${f.name}`;
-            const item = document.createElement('div');
-            item.className = 'gallery-item';
-            item.innerHTML = `<img src="${url}" alt="${f.name}" loading="lazy" /><div class="gallery-item-overlay"><div class="gallery-item-name">${f.name}</div><button class="copy-url-btn" onclick="copyURL('${url}',event)">Copiar URL</button></div>`;
-            grid.appendChild(item);
+          
+          gallery.forEach((item, idx) => {
+            const el = document.createElement('div');
+            el.className = 'gallery-item';
+            el.innerHTML = `
+              <img src="${item.thumb}" alt="${item.title}" loading="lazy" />
+              <div class="gallery-item-overlay">
+                <div class="gallery-item-name" style="font-weight: 600; margin-bottom: 4px; font-size: 0.7rem; line-height: 1.3;">${item.title}</div>
+                <div style="display: flex; flex-direction: column; gap: 6px; width: 100%; align-items: center;">
+                  <button class="copy-url-btn" style="width: 90%; font-size: 0.5rem; padding: 4px 6px;" onclick="copyURL('${item.download}', event)">Copiar Link</button>
+                  <button class="copy-url-btn" style="width: 90%; font-size: 0.5rem; padding: 4px 6px; background: rgba(255, 51, 51, 0.2); border-color: rgba(255, 51, 51, 0.4); color: #ff5555;" onclick="deleteGalleryItem(${idx}, event)">Remover</button>
+                </div>
+              </div>
+            `;
+            grid.appendChild(el);
           });
         } catch(e) {
           document.getElementById('galleryLoading').style.display = 'none';
           document.getElementById('galleryEmpty').style.display = 'block';
+        }
+      }
+
+      async function deleteGalleryItem(idx, e) {
+        if (e) e.stopPropagation();
+        
+        if (!confirm('Deseja realmente remover esta imagem da galeria? Esta ação atualizará o site.')) {
+          return;
+        }
+        
+        siteContent.membros = siteContent.membros || {};
+        siteContent.membros.gallery = siteContent.membros.gallery || [];
+        
+        // Remove o item do array
+        siteContent.membros.gallery.splice(idx, 1);
+        
+        toast('Removendo imagem da galeria... Aguarde.');
+        try {
+          await saveToGitHub();
+          toast('✦ Imagem removida com sucesso!');
+          loadGallery();
+          reloadIframePreview('membros');
+        } catch (err) {
+          toast('Erro ao remover: ' + err.message, 'error');
+          await fetchContent();
+          loadGallery();
         }
       }
 
